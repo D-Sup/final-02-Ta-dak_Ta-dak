@@ -11,13 +11,12 @@ import { useSetRecoilState } from 'recoil'
 import { IsLogin, UserAtom } from '../../recoil/AtomUserState';
 
 import Alert from '../common/Alert';
-import useAlertControl from '../../hooks/useAlertControl';
-
+import { useModalStack } from '../../hooks/useModalStack';
 
 export default function WebHeader() {
   const navigate = useNavigate()
 
-  const { openAlert, AlertComponent } = useAlertControl();
+  const { push } = useModalStack();
 
   const setUserValue = useSetRecoilState(UserAtom);
   const setIsLogin = useSetRecoilState(IsLogin);
@@ -36,18 +35,13 @@ export default function WebHeader() {
     navigate('/feed');
   }
 
-  const handleLogout = (event) =>{
-    if (event.target.textContent === '로그아웃') {
-      setUserValue({})
-      setIsLogin(false)
-      sessionStorage.removeItem('user')
-      navigate('/splash');
-    } 
+  const handleLogout = (event) => {
+    setUserValue({})
+    setIsLogin(false)
+    sessionStorage.removeItem('user')
+    navigate('/splash');
   }
 
-  <AlertComponent>
-    <Alert alertMsg={'로그아웃 하시겠습니까?'} choice={['취소', '로그아웃']} handleFunc={handleLogout} />
-  </AlertComponent>
   return (
     <>
       {!hideHeader &&
@@ -60,13 +54,17 @@ export default function WebHeader() {
           </WebLogoStyle>
           <BtnStyle>
             <DarkModeBtn />
-            <IconLogout onClick={openAlert} style={{ width: '24px', height: '24px', cursor: 'pointer'}} />
+            <IconLogout onClick={() => {
+              push(Alert,
+                '로그아웃 하시겠습니까?',
+                ['취소', '로그아웃'],
+                [null, handleLogout],
+                'AlertModal'
+              )
+            }} style={{ width: '24px', height: '24px', cursor: 'pointer' }} />
           </BtnStyle>
         </WebHeaderStyle>
       }
-      <AlertComponent>
-        <Alert alertMsg={'로그아웃 하시겠습니까?'} choice={['취소', '로그아웃']} handleFunc={handleLogout} />
-      </AlertComponent>
     </>
   )
 }

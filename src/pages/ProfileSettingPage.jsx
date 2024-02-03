@@ -5,7 +5,7 @@ import { SignUpAtom } from '../recoil/AtomSignupState'
 import { postAccountValid } from '../api/signupAPI'
 import { postSignUp } from '../api/signupAPI'
 import useImageUploader from '../hooks/useImageUploader'
-import useAlertControl from '../hooks/useAlertControl';
+import { useModalStack } from '../hooks/useModalStack';
 import styled from 'styled-components'
 
 import { Input } from '../components/common/Input'
@@ -17,7 +17,7 @@ export default function ProfileSettingPage() {
   const navigate = useNavigate();
   const [reqFrame, setReqFrame] = useRecoilState(SignUpAtom)
   const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
-  const { openAlert, AlertComponent } = useAlertControl();
+  const { push } = useModalStack();
   const [username, setUsername] = useState('');
   const [id, setId] = useState('');
   const [introduce, setIntroduce] = useState('');
@@ -25,7 +25,6 @@ export default function ProfileSettingPage() {
   const [idValid, setIdValid] = useState(true)
   const [usernameAlertMsg, setUsernameAlertMsg] = useState('');
   const [idAlertMsg, setIdAlertMsg] = useState('');
-  const [beforeBtnClick, setBeforeBtnClick] = useState(true);
 
   const handleIdValid = async () => {
     const pattern = /^[A-Za-z0-9_.]+$/;
@@ -76,8 +75,12 @@ export default function ProfileSettingPage() {
       if (username && id && usernameValid && idValid) {
         const result = await postSignUp(reqFrame);
         if (result) {
-          setBeforeBtnClick(false);
-          openAlert();
+          push(Alert,
+            '회원가입이 완료되었습니다.',
+            ['확인'],
+            [handleAlert],
+            'AlertModal'
+          )
           const timer = setTimeout(() => {
             navigate('/login')
           }, 3000)
@@ -92,7 +95,12 @@ export default function ProfileSettingPage() {
 
   useEffect(() => {
     if (uploadValidity === '유효하지 않은 파일') {
-      openAlert();
+      push(Alert,
+        '잘못된 업로드입니다.',
+        ['확인'],
+        [null],
+        'AlertModal'
+      )
     }
   }, [uploadValidity])
 
@@ -137,11 +145,6 @@ export default function ProfileSettingPage() {
           <GreenLgBtn type='submit' contents={'타닥타닥 시작하기'} /> :
           <GreyLgBtn type='submit' contents={'타닥타닥 시작하기'} />}
       </ProfileSignUpPageStyle>
-      <AlertComponent>
-        {beforeBtnClick ?
-          <Alert alertMsg={'잘못된 업로드입니다.'} choice={['확인']} /> :
-          <Alert alertMsg={'회원가입이 완료되었습니다.'} choice={['확인']} handleFunc={handleAlert} />}
-      </AlertComponent>
     </>
   )
 }

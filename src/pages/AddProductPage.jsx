@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { postProduct, editProduct } from "../api/productAPI";
 import useImageUploader from "../hooks/useImageUploader";
-import useAlertControl from "../hooks/useAlertControl";
+import { useModalStack } from "../hooks/useModalStack";
 import styled from "styled-components"
 
 import UploadHeader from '../components/header/UploadHeader';
@@ -17,15 +17,14 @@ export default function AddProductPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const getItem = location.state?.saleItem || null;
-  const { handleImageChange, imageURL, imagePath, uploadValidity} = useImageUploader();
-  const { openAlert, AlertComponent } = useAlertControl();
+  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
+  const { push } = useModalStack();
   const [productName, setProductName] = useState(getItem?.itemName || '');
   const [productPrice, setProductPrice] = useState(getItem?.price.toLocaleString() || '');
   const [productNameMsg, setProductNameMsg] = useState('');
   const [productExplain, setProductExplain] = useState(getItem?.link || null);
   const [productNameValid, setProductNameValid] = useState(true);
   const [productPriceValid, setProductPriceValid] = useState(true);
-  const [alertState, setAlertState] = useState('');
 
   const handleProductName = (event) => {
     setProductName(event.target.value.toLocaleString())
@@ -51,25 +50,33 @@ export default function AddProductPage() {
   }
 
   const handleUploadBtnClick = async () => {
-    if (productName && productPrice ) {
-      if (location.pathname==='/addproduct' && imagePath === false) {
-        openAlert() 
-        setAlertState('상품 이미지가 없습니다.')
-      } else if (location.pathname==='/addproduct') {
-        await postProduct(productName, Number(productPrice.replace(/,/g, '')), productExplain, imagePath) 
+    if (productName && productPrice) {
+      if (location.pathname === '/addproduct' && imagePath === false) {
+        push(Alert,
+          '상품 이미지가 없습니다.',
+          ['확인'],
+          [null],
+          'AlertModal'
+        )
+      } else if (location.pathname === '/addproduct') {
+        await postProduct(productName, Number(productPrice.replace(/,/g, '')), productExplain, imagePath)
         navigate(-1);
-      } else if (location.pathname==='/editproduct') {
+      } else if (location.pathname === '/editproduct') {
         await editProduct(getItem.id, productName, Number(productPrice.replace(/,/g, '')), productExplain, imagePath || getItem?.itemImage)
         navigate(-1);
       }
     }
   }
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(uploadValidity);
     if (uploadValidity === '유효하지 않은 파일') {
-      setAlertState('잘못된 업로드입니다.')
-      openAlert();
+      push(Alert,
+        '잘못된 업로드입니다.',
+        ['확인'],
+        [null],
+        'AlertModal'
+      )
     }
   }, [uploadValidity])
 
@@ -83,7 +90,7 @@ export default function AddProductPage() {
           <FileInputStyle>
             <img src={imageURL || getItem?.itemImage || emptyImg} alt='' className='showImg' />
             <div className='uploadImgBtn'>
-              <FileUploadSm id={'uploading-img'} onChange={handleImageChange} aria-label="FileInput"/>
+              <FileUploadSm id={'uploading-img'} onChange={handleImageChange} aria-label="FileInput" />
             </div>
           </FileInputStyle>
         </div>
@@ -95,7 +102,7 @@ export default function AddProductPage() {
             placeholder={'2~15자 이내여야 합니다.'}
             valid={productNameValid}
             alertMsg={productNameMsg}
-            value={productName|| getItem?.productName}
+            value={productName || getItem?.productName}
             onChange={handleProductName}
           />
           <Input
@@ -119,10 +126,6 @@ export default function AddProductPage() {
           aria-label="상품 설명 편집기"
         ></textarea>
       </AddProductPageStyle>
-      <AlertComponent>
-        {alertState==='잘못된 업로드입니다.' && <Alert alertMsg={alertState} choice={['확인']}/>}
-        {alertState==='상품 이미지가 없습니다.' && <Alert alertMsg={alertState} choice={['확인']}/>}
-      </AlertComponent>
     </>
   )
 }

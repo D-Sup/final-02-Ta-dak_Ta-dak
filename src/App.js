@@ -1,7 +1,10 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
-import { useRecoilValue, useSetRecoilState } from 'recoil'
+import { useRecoilValue } from 'recoil'
 import { DarkModeAtom } from './recoil/AtomDarkModeState'
 import styled from 'styled-components'
+
+import { useModalStack } from './hooks/useModalStack';
+import { ModalStack } from './util/ModalStack';
 
 import DefaultTheme from './style/theme/DefaultTheme'
 import DarkTheme from './style/theme/DarkTheme'
@@ -32,6 +35,7 @@ import WebBillboard from './components/pcVersion/WebBillboard';
 
 function App() {
 
+  const { push, update, replace } = useModalStack();
   const darkMode = useRecoilValue(DarkModeAtom);
 
   const location = useLocation();
@@ -51,7 +55,7 @@ function App() {
   return (
     <PcStyle>
       <WebHeaderStyle>
-        <WebHeader/>
+        <WebHeader />
       </WebHeaderStyle>
       <MainStyle>
         <WebNavBarStyle>
@@ -111,6 +115,7 @@ function App() {
         </WebFollowersRecommendStyle>
       </MainStyle>
       {darkMode ? <DarkTheme /> : <DefaultTheme />}
+      <ModalStack />
     </PcStyle>
   )
 }

@@ -1,11 +1,20 @@
 import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+import { useLocation } from "react-router-dom"
+import { useModalStack } from '../../hooks/useModalStack';
+import { deleteComment, reportComment } from '../../api/commentAPI'
 
+import Alert from './Alert';
+import Modal from './Modal';
 import { ProfileSm } from './Profile';
 import { ReactComponent as IconMore } from '../../assets/img/s-icon-more.svg'
 
-export default function Comment({ item, setSelectComment, openModal }) {
+export default function Comment({ item, myInfo, setReset }) {
 
+  const { push, clear } = useModalStack();
+
+  const location = useLocation();
+  const postId = location.pathname.replace('/postdetail/', '');
   const history = new Date(item.createdAt).getTime();
   const today = new Date().getTime();
   const subtract = today - history
@@ -27,6 +36,25 @@ export default function Comment({ item, setSelectComment, openModal }) {
     navigate(`/profile/${item.author.accountname}`);
   };
 
+  const deleteReq = async () => {
+    await deleteComment(postId, item.id)
+    setReset(true)
+    clear();
+  }
+
+  const reportReq = async () => {
+    const response = await reportComment(postId, item.id)
+    setReset(true)
+    if (response) {
+      push(Alert,
+        '신고가 접수되었습니다.',
+        ['확인'],
+        [clear],
+        'AlertModal'
+      )
+    }
+  }
+
   return (
     <>
       <CommentContainerStyle>
@@ -44,8 +72,21 @@ export default function Comment({ item, setSelectComment, openModal }) {
           <IconMore
             className="commentMoreButton"
             onClick={() => {
-              setSelectComment(item);
-              openModal();
+              if (item.author?.accountname === myInfo.accountname) {
+                push(Modal,
+                  {},
+                  ['삭제'],
+                  [deleteReq],
+                  'SlideUpModal'
+                )
+              } else {
+                push(Modal,
+                  {},
+                  ['신고'],
+                  [reportReq],
+                  'SlideUpModal'
+                )
+              }
             }}
           />
         </div>

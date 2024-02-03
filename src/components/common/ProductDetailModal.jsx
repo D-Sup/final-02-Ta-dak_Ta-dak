@@ -1,31 +1,23 @@
 import { useRef } from 'react';
-import { useNavigate, useLocation} from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
+import { useModalStack } from '../../hooks/useModalStack';
 import { deleteProduct } from '../../api/productAPI';
-import useAlertControl from '../../hooks/useAlertControl';
 import styled, { keyframes } from 'styled-components';
 
 import Alert from './Alert';
 import { ReactComponent as Xbutton } from '../../assets/img/x.svg';
 import { ReactComponent as Garland } from '../../assets/img/garland.svg';
 
-export default function ProductDetailModal({ saleItem, setIsModalOpen }) {
-  const { openAlert, AlertComponent } = useAlertControl();
+export default function ProductDetailModal({ saleItem, closeModal }) {
+  const { push } = useModalStack();
+
   const navigate = useNavigate();
   const location = useLocation();
   const selectedId = (location.pathname.split('/'))[2];
 
-  const productDetailModalRef = useRef(null);
-  const handleBackgroundClick = (event) => {
-    // 클릭한 대상이 컴포넌트 내부가 아닌지 확인
-    if (
-      productDetailModalRef.current &&
-      !productDetailModalRef.current.contains(event.target)
-    ) {
-      setIsModalOpen(false);
-    }
-  };
 
   const handleGoAddproduct = () => {
+    closeModal();
     navigate('/editproduct', {
       state: {
         saleItem,
@@ -34,18 +26,20 @@ export default function ProductDetailModal({ saleItem, setIsModalOpen }) {
   };
 
   const handleDeleteReq = async (event) => {
-    if (event.target.textContent === '확인') {
     await deleteProduct(saleItem.id);
     window.location.reload();
-    }
   };
+
+  const deleteProductConfirm = () => {
+    push(Alert, '삭제하시겠습니까?', ['취소', '확인'], [null, handleDeleteReq], 'AlertModal')
+  }
 
   return (
     <>
-      <BackgorundStyle onClick={handleBackgroundClick}>
-        <ProductDtailModalStyle ref={productDetailModalRef}>
+      <BackgroundStyle>
+        <ProductDetailModalStyle >
           <XbuttonStyle>
-            <Xbutton onClick={() => setIsModalOpen(false)} />
+            {/* <Xbutton onClick={() => setIsModalOpen(false)} /> */}
           </XbuttonStyle>
           <GarlandStyle></GarlandStyle>
           <img src={saleItem.itemImage} alt={saleItem.itemName} />
@@ -58,61 +52,33 @@ export default function ProductDetailModal({ saleItem, setIsModalOpen }) {
               <button className="modifyBtn" onClick={handleGoAddproduct}>
                 수정
               </button>
-              <button className="deleteBtn" onClick={openAlert}> 삭제</button>
+              <button className="deleteBtn" onClick={deleteProductConfirm}> 삭제</button>
             </>
           )}
-        </ProductDtailModalStyle>
-      </BackgorundStyle>
-      <AlertComponent>
-        <Alert alertMsg={'삭제하시겠습니까?'} choice={['취소','확인']} handleFunc={handleDeleteReq}/>
-      </AlertComponent>
+        </ProductDetailModalStyle>
+      </BackgroundStyle>
 
     </>
   );
 }
 
-const fadeIn = keyframes`
-from {
-  opacity: 0;
-}
-to {
-  opacity: 1;
-}
-`;
-
-const BackgorundStyle = styled.div`
-  width : var(--basic-width);
-  height: var(--basic-height);
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  background: var(--modal-blur-color);
-  backdrop-filter: blur(2px);
-  animation: ${fadeIn} 0.3s ease-in;
+const BackgroundStyle = styled.div`
+  padding: 10px 20px;
   cursor: pointer;
-  /* 팔로우 추천 프로필 이미지 배경 위에 나타나는 것 방지 */
   z-index: 2;
-
-  @media (min-width: 768px) {
-    width: 100%;
-  }
 `;
 
-const ProductDtailModalStyle = styled.div`
+const ProductDetailModalStyle = styled.div`
   position: relative;
-  width: 303px;
-  height: 458px;
   background-color: var(--modal-background-color);
   border-radius: 20px;
-  margin: calc((var(--basic-height) - 458px) / 2) auto;
-  padding: 50px 34px 20px 34px;
+  margin: auto;
+  padding: 50px 34px 50px 34px;
   cursor: auto;
 
   img {
     display: block;
-    width: 235px;
-    height: 153px;
+    width: 100%;
     margin: 0 auto;
     z-index: 1;
     object-fit: cover;
@@ -172,7 +138,7 @@ const ProductDtailModalStyle = styled.div`
     border-radius: 25px;
     position: absolute;
     right: 112px;
-    bottom: 22px;
+    bottom: 0;
   }
 
   .deleteBtn {
@@ -183,40 +149,7 @@ const ProductDtailModalStyle = styled.div`
     border-radius: 25px;
     position: absolute;
     right: 32px;
-    bottom: 22px;
-  }
-
-  @media (min-width: 768px) {
-    width: 400px;
-    height: 600px;
-    padding: 50px 44px 20px 44px;
-    margin: calc((var(--basic-height) - 600px) / 2) auto;
-
-    img {
-      width: 308px;
-      height: 200px;
-    }
-
-    h2 {
-      margin-top: 16px;
-    }
-
-    pre {
-      height: 166px;
-    }
-    .modifyBtn {
-      width: 100px;
-      height: 47px;
-      right: 138px;
-      bottom: 22px;
-    }
-
-    .deleteBtn {
-      width: 100px;
-      height: 47px;
-      right: 32px;
-      bottom: 22px;
-    }
+    bottom: 0;
   }
 `;
 

@@ -18,6 +18,9 @@ export const ResetStyle = createGlobalStyle`
     -ms-user-select: auto;
     user-select: auto;
   }
+  li {
+    list-style-type: none;
+  }
   input {
     border: none;
   }

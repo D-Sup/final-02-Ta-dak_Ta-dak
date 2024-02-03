@@ -1,14 +1,13 @@
-import { useState, useRef, useEffect } from 'react';
+import { useState, useRef } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../recoil/AtomUserState';
+import { useModalStack } from '../../hooks/useModalStack';
 import { postLike, deleteLike } from '../../api/heartAPI';
 import { deletePost, reportPost } from '../../api/postAPI';
-import useModalControl from '../../hooks/useModalControl';
-import useAlertControl from '../../hooks/useAlertControl';
 import styled, { keyframes } from 'styled-components';
 
-import { Modal } from './Modal';
+import Modal from './Modal';
 import Alert from './Alert';
 import SearchProfile from './SearchProfile';
 import useLazyLoading from '../../hooks/useLazyLoading';
@@ -25,10 +24,8 @@ export default function Post({ post }) {
   const myInfo = useRecoilValue(UserAtom);
   const [like, setLike] = useState(post.hearted);
   const [contentMore, setContentMore] = useState(true);
-  const [alertState, setAlertState] = useState('');
   const isLike = post.hearted;
-  const { openModal, ModalComponent } = useModalControl();
-  const { openAlert, AlertComponent } = useAlertControl();
+  const { push, clear } = useModalStack();
   const id = post.id || post._id;
 
   const observeImage = useRef(null);
@@ -44,8 +41,24 @@ export default function Post({ post }) {
 
   const reportPostReq = async () => {
     const response = await reportPost(id);
-    response && setAlertState('신고가 접수되었습니다.')
-    openAlert();
+    if (response) {
+      push(Alert,
+        '신고가 접수되었습니다.',
+        ['확인'],
+        [clear],
+        'AlertModal'
+      )
+    }
+  }
+
+  const updatePostDirection = async () => {
+    navigate('/editpost', {
+      state: {
+        id: id,
+        content: post.content,
+        image: post.image
+      }
+    })
   }
 
   const deletePostReq = async () => {
@@ -56,23 +69,18 @@ export default function Post({ post }) {
       await deletePost(id)
       window.location.reload();
     }
+    clear();
   }
 
-  const handleModal = (event) => {
-    if (event.target.textContent === '삭제') {
-      openAlert();
-    } else if (event.target.textContent === '수정') {
-      navigate('/editpost', {
-        state: {
-          id: id,
-          content: post.content,
-          image: post.image
-        }
-      })
-    } else if (event.target.textContent === '확인') {
-      deletePostReq();
-    }
+  const deletePostConfirm = async () => {
+    push(Alert,
+      '게시글을 삭제할까요?',
+      ['취소', '확인'],
+      [null, deletePostReq],
+      'AlertModal'
+    )
   }
+
 
   const timeFormat = (time) => {
     const originalDate = new Date(time);
@@ -83,12 +91,24 @@ export default function Post({ post }) {
     return formattedDate
   }
 
+
   return (
     <>
       <PostStyle>
         <button className='postMoreButton' aria-label="PostMoreBtn" onClick={() => {
-          openModal()
-          setAlertState('게시글을 삭제할까요?')
+          post.author?.accountname === myInfo.accountname ?
+            push(Modal,
+              {},
+              ['삭제', '수정'],
+              [deletePostConfirm, updatePostDirection],
+              'SlideUpModal'
+            ) :
+            push(Modal,
+              {},
+              ['신고'],
+              [reportPostReq],
+              'SlideUpModal'
+            )
         }} />
         <div className='profileComponent'>
           <SearchProfile info={post.author} />
@@ -140,17 +160,6 @@ export default function Post({ post }) {
           <span className='postDate'>{timeFormat(post.createdAt)}</span>
         </PostContainerStyle>
       </PostStyle>
-
-      <AlertComponent>
-        {alertState === '신고가 접수되었습니다.' && <Alert alertMsg={alertState} choice={['확인']} />}
-        {alertState === '게시글을 삭제할까요?' && <Alert alertMsg={alertState} choice={['취소', '확인']} handleFunc={handleModal} />}
-      </AlertComponent>
-
-      <ModalComponent>
-        {post.author?.accountname === myInfo.accountname ?
-          <Modal contents={['삭제', '수정']} handleFunc={handleModal} /> :
-          <Modal contents={['신고']} handleFunc={reportPostReq} />}
-      </ModalComponent>
     </>
   );
 }

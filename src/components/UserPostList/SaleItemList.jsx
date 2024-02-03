@@ -1,25 +1,20 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 import SaleItem from '../common/SaleItem';
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
-import ProductDetailModal from '../common/ProductDetailModal';
 
-export default function SaleItemList({saleItem}) {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [items, setItems] = useState('');
+
+export default function SaleItemList({ saleItem }) {
 
   return (
     <>
       <h2 className="a11y-hidden">판매상폼</h2>
       {saleItem.length !== 0 ? (
         <SaleItemListStyle>
-          {saleItem.map((item, index) => (
-            <SaleItem saleItem={item} key={item.id} setIsModalOpen={setIsModalOpen} setItems={setItems}/>
+          {saleItem.map((item) => (
+            <SaleItem saleItem={item} key={item.id} />
           ))}
-          {isModalOpen && (
-            <ProductDetailModal saleItem={items} setIsModalOpen={setIsModalOpen}/>
-          )}
+
         </SaleItemListStyle>
       ) : (
         <NoVisiblePost>

@@ -1,19 +1,19 @@
 import styled, { keyframes } from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useModalStack } from '../hooks/useModalStack';
 
-import useModalControl from "../hooks/useModalControl";
 import useImageUploader from '../hooks/useImageUploader';
 
-import  ChatHeader  from '../components/header/ChatHeader';
+import Modal from './../components/common/Modal';
+import ChatHeader from '../components/header/ChatHeader';
 import { ProfileSm } from '../components/common/Profile';
 import { FileUploadSm } from '../components/common/FileUpload';
-import { Modal } from './../components/common/Modal';
 
 import dummyData from '../dummyData/chatDummyData.json';
 
 export default function ChatRoom() {
-  const location = useLocation();  
+  const location = useLocation();
   const navigate = useNavigate();
   const userId = location.pathname.split("/")[2]
   const userInfo = location.state;
@@ -21,46 +21,48 @@ export default function ChatRoom() {
   const [chatHistory, setChatHistory] = useState(selectedData.messages || []);
   const [chatMessage, setChatMessage] = useState('');
   const chatContainerRef = useRef(null);
-  const { openModal, ModalComponent } = useModalControl();
   const { handleImageChange, imagePath } = useImageUploader();
-  
+
+  const { push, pop } = useModalStack();
+
   const handleChatRoomOut = () => {
     navigate(-1)
+    pop()
   }
 
   const handleSendButtonClick = () => {
     const newChat = {
-      Msg: chatMessage, 
-      createdAt: new Date().toLocaleDateString([], { 
-      year: '2-digit',
-      month: '2-digit',
-      day: '2-digit',
-      hour: '2-digit',
-      minute: '2-digit',
-      }) 
+      Msg: chatMessage,
+      createdAt: new Date().toLocaleDateString([], {
+        year: '2-digit',
+        month: '2-digit',
+        day: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+      })
     };
     if (chatMessage !== '') {
       setChatHistory([...chatHistory, newChat]);
       setChatMessage('');
-      }
+    }
   };
 
   useEffect(() => {
     if (imagePath) {
       const newChat = {
         Img: imagePath,
-        createdAt: new Date().toLocaleDateString([], { 
-        year: '2-digit',
-        month: '2-digit',
-        day: '2-digit',
-        hour: '2-digit',
-        minute: '2-digit',
-        }) 
+        createdAt: new Date().toLocaleDateString([], {
+          year: '2-digit',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        })
       };
       setChatHistory([...chatHistory, newChat]);
     }
 
-  }, [imagePath]); 
+  }, [imagePath]);
 
   useEffect(() => {
     if (chatContainerRef.current) {
@@ -70,7 +72,7 @@ export default function ChatRoom() {
 
   return (
     <>
-      <ChatHeader name={selectedData.name || userInfo.username} isButton={true} handleFunc={openModal} />
+      <ChatHeader name={selectedData.name || userInfo.username} isButton={true} handleFunc={() => push(Modal, {}, ['채팅방 나가기'], [handleChatRoomOut], 'SlideUpModal')} />
       <ChatRoomPageStyle ref={chatContainerRef} >
         {chatHistory?.map((item, index) => {
           return (
@@ -91,18 +93,15 @@ export default function ChatRoom() {
         }
         )}
       </ChatRoomPageStyle>
-        <SendStyle aria-label='전송'>
-          <div className='upload' >
-            <FileUploadSm id="uploading-img" onChange={handleImageChange} aria-label='파일 업로드' /> 
-          </div>  
-          <InputStyle type={'text'} placeholder='메시지 입력하기...' value={chatMessage} onChange={(e) => setChatMessage(e.target.value)} 
+      <SendStyle aria-label='전송'>
+        <div className='upload' >
+          <FileUploadSm id="uploading-img" onChange={handleImageChange} aria-label='파일 업로드' />
+        </div>
+        <InputStyle type={'text'} placeholder='메시지 입력하기...' value={chatMessage} onChange={(e) => setChatMessage(e.target.value)}
           onKeyPress={(e) => e.key === 'Enter' && handleSendButtonClick()}
           aria-label='텍스트 입력' autoFocus />
-          <button id='send' onClick={handleSendButtonClick} disabled={!chatMessage} aria-label='전송 버튼'>전송</button>
-        </SendStyle>
-      <ModalComponent>
-        <Modal contents={['채팅방 나가기']} handleFunc={handleChatRoomOut} />
-      </ModalComponent>
+        <button id='send' onClick={handleSendButtonClick} disabled={!chatMessage} aria-label='전송 버튼'>전송</button>
+      </SendStyle>
     </>
   );
 }

@@ -2,7 +2,7 @@ import useImageUploader from '../hooks/useImageUploader';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
-import useAlertControl from '../hooks/useAlertControl';
+import { useModalStack } from '../hooks/useModalStack';
 import { UserAtom } from '../recoil/AtomUserState';
 import { editPost } from '../api/postAPI';
 import { uploadImage } from '../api/uploadimgAPI';
@@ -15,9 +15,9 @@ import Alert from '../components/common/Alert';
 
 export default function UploadPage() {
   const { handleImageChange, imageURL, imagePath, uploadValidity } =
-    useImageUploader();   
-    
-  const { openAlert, AlertComponent } = useAlertControl();
+    useImageUploader();
+
+  const { push } = useModalStack();
   const navigate = useNavigate();
   const location = useLocation();
   const userInfo = useRecoilValue(UserAtom);
@@ -43,7 +43,12 @@ export default function UploadPage() {
 
   useEffect(() => {
     if (uploadValidity === '유효하지 않은 파일') {
-      openAlert();
+      push(Alert,
+        '잘못된 업로드입니다.',
+        ['확인'],
+        [null],
+        'AlertModal'
+      )
     }
     else if (location.pathname === '/editpost') {
       setValid(true);
@@ -58,12 +63,12 @@ export default function UploadPage() {
 
   return (
     <>
-        <h1 className="a11y-hidden">게시물 업로드</h1>
-        <UploadHeader
-          valid={valid}
-          contents={'업로드'}
-          handleUploadBtnClick={handleUploadBtnClick}
-        />
+      <h1 className="a11y-hidden">게시물 업로드</h1>
+      <UploadHeader
+        valid={valid}
+        contents={'업로드'}
+        handleUploadBtnClick={handleUploadBtnClick}
+      />
       <UploadPageStyle>
 
         <PostWrapperStyle>
@@ -84,16 +89,13 @@ export default function UploadPage() {
                 className="showImg"
               />
             ) : null}
-            
+
             <div className="uploadImgBtn">
               <FileUploadMd id={'uploading-img'} onChange={handleImageChange} aria-label="FileInput" />
             </div>
           </div>
         </PostWrapperStyle>
       </UploadPageStyle>
-      <AlertComponent>
-        <Alert alertMsg={'잘못된 업로드입니다.'} choice={['확인']} />
-      </AlertComponent>
     </>
   );
 }
