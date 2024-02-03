@@ -16,24 +16,11 @@ import FireWood from "./img/firewood.svg"
 import Mouse from "./img/mouse.svg"
 
 export default function Loader() {
-
-  const [isLoading, setIsLoading] = useState(true);
-  const darkMode  = useRecoilValue(DarkModeAtom);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 2000);
-
-    return () => {
-      clearTimeout(timer);
-      setIsLoading(true);
-    };
-  });
+  const darkMode = useRecoilValue(DarkModeAtom);
 
   return (
     <LoaderStyle>
-      {isLoading && <div className="loader">
+      {<div className="loader">
         <div>
           <Circle darkMode={darkMode}></Circle>
           <div className="bar-1"></div>
@@ -89,7 +76,7 @@ const Circle = styled.div`
   height: 150px;
   border-radius: 50%;
   /* background-color: ; */
-  background-color: ${({darkMode}) => (darkMode) ? 'rgb(229, 214, 174)' : ''};
+  background-color: ${({ darkMode }) => (darkMode) ? 'rgb(229, 214, 174)' : ''};
   /* filter: blur(3px); */
   animation: circle .3s ease forwards;
 `;
