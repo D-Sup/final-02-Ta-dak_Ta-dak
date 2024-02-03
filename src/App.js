@@ -4,7 +4,7 @@ import { DarkModeAtom } from './recoil/AtomDarkModeState'
 import styled from 'styled-components'
 
 import { useModalStack } from './hooks/useModalStack';
-import { ModalStack } from './util/ModalStack';
+import { ModalStack } from './utils/ModalStack';
 
 import DefaultTheme from './style/theme/DefaultTheme'
 import DarkTheme from './style/theme/DarkTheme'

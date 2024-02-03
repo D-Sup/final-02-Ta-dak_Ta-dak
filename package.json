@@ -1,5 +1,5 @@
 {
-  "homepage": "https://frontendschool5.github.io/final-02-Ta-dak_Ta-dak/",
+  "homepage": "https://D-Sup.github.io/final-02-Ta-dak_Ta-dak/",
   "name": "my-app",
   "version": "0.1.0",
   "private": true,
@@ -10,7 +10,6 @@
     "axios": "^1.4.0",
     "browser-image-compression": "^2.0.2",
     "eslint-plugin-jsx-a11y": "^6.7.1",
-    "gh-pages": "^5.0.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-inlinesvg": "^3.0.2",
@@ -49,5 +48,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "gh-pages": "^6.1.1"
   }
 }
