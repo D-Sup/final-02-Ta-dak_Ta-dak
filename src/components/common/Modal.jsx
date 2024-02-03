@@ -1,19 +1,20 @@
 import styled from 'styled-components'
 
-export function Modal({ contents, handleFunc }) {
+export default function Modal({ selectOptions, actions }) {
+
+  function handleSelectOption(action) {
+    action && action();
+  }
 
   return (
     <ModalStyle>
-      <div className='bar'></div>
-      <ul>
-        {contents.map((item, index) => {
-          return (
-            <li key={index}>
-              <button className='settingComponent' onClick={handleFunc}>{item}</button>
-            </li>
-          );
-        })}
-      </ul>
+      {selectOptions.map((selectOption, index) => {
+        return (
+          <li key={index}>
+            <button className='settingComponent' onClick={() => handleSelectOption(actions[index])}>{selectOption}</button>
+          </li>
+        );
+      })}
     </ModalStyle>
   )
 }
@@ -23,20 +24,12 @@ const ModalStyle = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: var(--basic-width);
+  width: 100%;
   left: 26px;
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   font-size: var(--font-size-md);
   background-color: var(--modal-color);
-
-.bar {
-  width: 50px;
-  height: 4px; 
-  margin: 18px 0;   
-  background: #DBDBDB;
-  border-radius: 5px;
-}
 
 button{
   text-align: left;
@@ -47,10 +40,16 @@ button{
   }
 }
 
+li {
+  width: inherit;
+}
+
 .settingComponent {
   padding-left: 24px;
   line-height: 46px;
-  width: var(--basic-width);
+  width: inherit;
+  /* width: 100vw; */
+  /* max-width: 500px; */
   height: 46px;
   left: 26px;
 }

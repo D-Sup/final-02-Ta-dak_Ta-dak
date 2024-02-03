@@ -1,16 +1,22 @@
 import styled from 'styled-components';
 
-export default function Alert({ alertMsg, choice, handleFunc }) {
+export default function Alert({ props, selectOptions, actions, closeModal }) {
+
+  function handleSelectOption(action) {
+    closeModal();
+    action && action()
+  }
+
   return (
-    <div>
-    <AlertStyle>
-      <p>{alertMsg}</p>
-      <ButtonStyle>
-      <button className='cancle' onClick={handleFunc}>{choice[0]}</button>
-      {choice[1] && <button className='delete' onClick={handleFunc}>{choice[1]}</button>}
-      </ButtonStyle>
-    </AlertStyle>
-    </div>
+    <>
+      <AlertStyle>
+        <p>{props}</p>
+        <ButtonStyle>
+          <button className='cancel' onClick={() => handleSelectOption(actions[0])}>{selectOptions[0]}</button>
+          {selectOptions[1] && <button className='delete' onClick={() => handleSelectOption(actions[1])}>{selectOptions[1]}</button>}
+        </ButtonStyle>
+      </AlertStyle>
+    </>
   );
 }
 
@@ -42,7 +48,7 @@ const AlertStyle = styled.div`
     }
   }
 
-  .cancle {
+  .cancel {
     flex-grow: 1;
     flex-basis: 0;
     display: inline-block;
