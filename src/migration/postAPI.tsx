@@ -12,9 +12,10 @@
 //   return json.posts
 // }
 
+// @ts-expect-error TS(2307): Cannot find module './settingAxios' or its corresp... Remove this comment to see the full error message
 import { axiosAuth } from "./settingAxios";
 
-export const getPost = async (loadPostSeq) => {
+export const getPost = async (loadPostSeq: any) => {
   const reqUrl = `/post/feed/?limit=5&skip=${loadPostSeq}`;
   try {
     const response = await axiosAuth.get(reqUrl)
@@ -26,7 +27,7 @@ export const getPost = async (loadPostSeq) => {
   }
 }
 
-export const getPostAll = async (loadPostSeq) => {
+export const getPostAll = async (loadPostSeq: any) => {
   const reqUrl = `/post/?limit=5&skip=${loadPostSeq}`;
   try {
     const response = await axiosAuth.get(reqUrl)
@@ -38,7 +39,7 @@ export const getPostAll = async (loadPostSeq) => {
   }
 }
 
-export const getPostDetail = async (postId) => {
+export const getPostDetail = async (postId: any) => {
   const reqUrl = `/post/${postId}`;
   try {
     const response = await axiosAuth.get(reqUrl)
@@ -50,7 +51,7 @@ export const getPostDetail = async (postId) => {
   }
 }
 
-export const deletePost = async (postId) => {
+export const deletePost = async (postId: any) => {
   const reqUrl = `/post/${postId}`;
   try {
     const response = await axiosAuth.delete(reqUrl)
@@ -62,7 +63,7 @@ export const deletePost = async (postId) => {
   }
 }
 
-export const reportPost = async (postId) => {
+export const reportPost = async (postId: any) => {
   const reqUrl = `/post/${postId}/report`;
   try {
     const response = await axiosAuth.post(reqUrl)
@@ -75,7 +76,7 @@ export const reportPost = async (postId) => {
   }
 }
 
-export const editPost = async (postId, content, image) => {
+export const editPost = async (postId: any, content: any, image: any) => {
   const reqUrl = `/post/${postId}`;
   const body = {
     "post": {
