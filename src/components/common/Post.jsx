@@ -59,6 +59,7 @@ export default function Post({ post }) {
         image: post.image
       }
     })
+    clear();
   }
 
   const deletePostReq = async () => {
