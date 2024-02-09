@@ -6,14 +6,17 @@ import GlobalStyle from './style/GlobalStyle';
 import ResetStyle from './style/ResetStyle';
 import App from './App';
 
-const container = document.getElementById('root');
+const container = document.getElementById('root')!;
 const root = createRoot(container);
 root.render(
-  <RecoilRoot>
-    <HashRouter>
-      <GlobalStyle />
-      <ResetStyle />
-      <App />
-    </HashRouter>
-  </RecoilRoot>
+  <React.StrictMode>
+    <RecoilRoot>
+      <HashRouter>
+        <GlobalStyle />
+        <ResetStyle />
+        <App />
+      </HashRouter>
+    </RecoilRoot>
+  </React.StrictMode>,
+
 );

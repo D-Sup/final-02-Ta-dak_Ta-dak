@@ -8,11 +8,11 @@ import { getRecFollowingList } from '../../api/followListAPI';
 export default function FollowersRecommend() {
   const [myFollowList, setMyFollowList] = useState([])
   const [recFollowList, setRecFollowList] = useState([])
-  const myAccountname = JSON.parse(sessionStorage.getItem('user')).UserAtom.accountname;
-  const myId = JSON.parse(sessionStorage.getItem('user')).UserAtom.id;
+  const myAccountname = JSON.parse(sessionStorage.getItem('user'))?.UserAtom.accountname;
+  const myId = JSON.parse(sessionStorage.getItem('user'))?.UserAtom.id;
 
   useEffect(() => {
-    async function fetchMyFollowList(){
+    async function fetchMyFollowList() {
       let list = await getRecFollowingList(myAccountname);
       setMyFollowList((prevValue) => [...prevValue, ...list]);
     }
@@ -28,37 +28,37 @@ export default function FollowersRecommend() {
 
     myFollowList.forEach(async (item, index) => {
       let list = await getRecFollowingList(item.accountname);
-      list.forEach((item, index)=>{
+      list.forEach((item, index) => {
         if (seen.has(item._id)) {
           let flag = true;
 
           // myFollowList(이미 팔로잉중인 리스트)에 포함되면 제외
-          for(let i = 0; i< [...myFollowList].length; i++){
-            if([...myFollowList][i]._id === item._id){
+          for (let i = 0; i < [...myFollowList].length; i++) {
+            if ([...myFollowList][i]._id === item._id) {
               flag = false;
               break;
             }
           }
-          
+
           // 나인 경우 제외
-          if(myId === item._id) flag = false;
+          if (myId === item._id) flag = false;
 
           // 이미 추천리스트에 들어가있는 경우 제외
-          for(let i = 0 ; i<[...duplicatedFollowSet].length; i++){
-            if([...duplicatedFollowSet][i]._id === item._id){
+          for (let i = 0; i < [...duplicatedFollowSet].length; i++) {
+            if ([...duplicatedFollowSet][i]._id === item._id) {
               flag = false;
               break;
             }
           }
           flag && duplicatedFollowSet.add(item);
-          
+
         } else {
           seen.add(item._id);
         }
       })
       setRecFollowList([...duplicatedFollowSet]);
     })
-    
+
   }, [myFollowList]);
 
   return (

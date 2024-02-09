@@ -8,7 +8,7 @@ import Alert from './Alert';
 import { ReactComponent as Xbutton } from '../../assets/img/x.svg';
 import { ReactComponent as Garland } from '../../assets/img/garland.svg';
 
-export default function ProductDetailModal({ saleItem, closeModal }) {
+const ProductDetailModal = ({ saleItem, closeModal }) => {
   const { push } = useModalStack();
 
   const navigate = useNavigate();
@@ -61,6 +61,8 @@ export default function ProductDetailModal({ saleItem, closeModal }) {
     </>
   );
 }
+
+export default ProductDetailModal
 
 const BackgroundStyle = styled.div`
   padding: 10px 20px;

@@ -1,45 +1,49 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil';
-import { IsLogin, UserAtom} from '../recoil/AtomUserState';
+
+import { IsLogin, UserAtom } from '../recoil/AtomUserState';
+import { loginReq } from '../api/loginAPI';
+
 import styled from 'styled-components';
 
-import { Input } from '../components/common/Input';
+import Input from '../components/common/Input';
 import { GreenLgBtn, GreyLgBtn } from '../components/common/Button';
-import { loginReq } from '../api/loginAPI';
-import { ReactComponent as CheckIcon } from '../assets/img/icon-check.svg';
 
-export default function LoginPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [valid, setValid] = useState(true);
-  const [alertMsg, setAlertMsg] = useState('');
+import CheckIcon from '../assets/img/icon-check.svg';
+
+const LoginPage = () => {
+
   const [userValue, setUserValue] = useRecoilState(UserAtom);
-  const [isLogin, setIsLogin] = useRecoilState(IsLogin);
-  const [isChecked, setIsChecked] = useState(false);
+
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [valid, setValid] = useState<boolean>(true);
+  const [alertMsg, setAlertMsg] = useState<string>('');
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(IsLogin);
+  const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const navigate = useNavigate();
 
-  const handleEmailInput = (event) => {
+  const handleEmailInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(event.target.value);
   };
 
-  const handlePasswordInput = (event) => {
+  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setPassword(event.target.value);
   };
 
-  const handleInputFocus = (event) => {
+  const handleInputFocus = (): void => {
     setValid(true);
     setAlertMsg('');
   };
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     event.preventDefault();
 
     if (!isLogin) {
       const User = await loginReq(email, password);
-      console.log(User)
-      if (User.status === 422) {
+      if ('status' in User) {
         // 로그인 실패한 경우
         setValid(false);
         setAlertMsg(User.message);
@@ -47,10 +51,10 @@ export default function LoginPage() {
         setPassword('');
       } else {
         // 로그인 성공한 경우
-        // UserAtom에 로그인된 회원 정보 저장
         const userInfo = User.user;
-        setUserValue({...userValue,
-          id:userInfo._id,
+        setUserValue({
+          ...userValue,
+          id: userInfo._id,
           accountname: userInfo.accountname,
           token: userInfo.token,
           refreshToken: userInfo.refreshToken,
@@ -60,8 +64,6 @@ export default function LoginPage() {
         setIsLogin(true);
         navigate('/feed');
       }
-    } else{
-      alert('이미 로그인돼잇음')
     }
   };
 
@@ -112,8 +114,8 @@ export default function LoginPage() {
             <StyledInput type="checkbox"
               checked={isChecked}
               onChange={handleCheckboxChange}
-              className="custom-checkbox"/>
-              체험용 계정 사용하기
+              className="custom-checkbox" />
+            체험용 계정 사용하기
           </Styledlabel>
           <p>|</p>
           <SignUpLink href="#/signup">이메일로 회원가입</SignUpLink>
@@ -122,6 +124,8 @@ export default function LoginPage() {
     </>
   );
 }
+
+export default LoginPage;
 
 const LoginPageStyle = styled.section`
   padding: 34px;

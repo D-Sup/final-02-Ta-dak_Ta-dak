@@ -1,10 +1,10 @@
-import { useEffect } from 'react';
+import { useEffect, RefObject } from 'react';
 
-export default function useLazyLoading(observeImage, imgSrc) {
-  useEffect(()=>{
+const useLazyLoading = (observeImage: RefObject<HTMLImageElement>, imgSrc: string): void => {
+  useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
+        if (entry.isIntersecting && observeImage.current) {
           observeImage.current.src = imgSrc;
           observer.unobserve(entry.target);
         }
@@ -18,4 +18,6 @@ export default function useLazyLoading(observeImage, imgSrc) {
     };
   }, [])
 }
+
+export default useLazyLoading
 

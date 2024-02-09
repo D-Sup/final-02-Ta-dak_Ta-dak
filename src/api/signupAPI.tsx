@@ -47,7 +47,9 @@ export const postSignUp = async (user: SignUpInfo): Promise<boolean> => {
     user
   };
   try {
-    const { status } = await axiosUnauth.post(reqUrl, body)
+    const { data, status } = await axiosUnauth.post(reqUrl, body)
+    console.log(data);
+
     return status >= 200 && status < 300;
   } catch (error) {
     throw error

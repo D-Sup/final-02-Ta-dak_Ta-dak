@@ -1,6 +1,6 @@
 const { createGlobalStyle } = require('styled-components');
 
-export const DarkTheme = createGlobalStyle`
+const DarkTheme = createGlobalStyle`
 
   :root {
 

@@ -1,82 +1,6 @@
 import styled from 'styled-components';
 import Top from '../../assets/img/Top.png';
 
-export function GreenLgBtn({ contents, handleFunc }) {
-  return <GreenLgBtnStyle onClick={handleFunc}>{contents}</GreenLgBtnStyle>;
-}
-
-export function GreenMdBtn({ contents, handleFunc }) {
-  return <GreenMdBtnStyle onClick={handleFunc}>{contents}</GreenMdBtnStyle>;
-}
-
-export function GreenMsBtn({ contents, handleFunc }) {
-  return <GreenMsBtnStyle onClick={handleFunc}>{contents}</GreenMsBtnStyle>;
-}
-
-export function GreenSmBtn({ contents, handleFunc }) {
-  return <GreenSmBtnStyle onClick={handleFunc}>{contents}</GreenSmBtnStyle>;
-}
-
-export function GreenBackBtn({ contents, handleFunc }) {
-  return <GreenBackBtnStyle onClick={handleFunc}>{contents}</GreenBackBtnStyle>;
-}
-
-export function BoldLgBtn({ contents, handleFunc }) {
-  return <BoldLgBtnStyle onClick={handleFunc}>{contents}</BoldLgBtnStyle>;
-}
-
-export function BoldMdBtn({ contents, handleFunc }) {
-  return <BoldMdBtnStyle onClick={handleFunc}>{contents}</BoldMdBtnStyle>;
-}
-
-export function BoldMsBtn({ contents, handleFunc }) {
-  return <BoldMsBtnStyle onClick={handleFunc}>{contents}</BoldMsBtnStyle>;
-}
-
-export function BoldSmBtn({ contents, handleFunc }) {
-  return <BoldSmBtnStyle onClick={handleFunc}>{contents}</BoldSmBtnStyle>;
-}
-
-export function WhiteLgBtn({ contents, handleFunc }) {
-  return <WhiteLgBtnStyle onClick={handleFunc}>{contents}</WhiteLgBtnStyle>;
-}
-
-export function WhiteMdBtn({ contents, handleFunc }) {
-  return <WhiteMdBtnStyle onClick={handleFunc}>{contents}</WhiteMdBtnStyle>;
-}
-
-export function WhiteMsBtn({ contents, handleFunc }) {
-  return <WhiteMsBtnStyle onClick={handleFunc}>{contents}</WhiteMsBtnStyle>;
-}
-
-export function WhiteSmBtn({ contents, handleFunc }) {
-  return <WhiteSmBtnStyle onClick={handleFunc}>{contents}</WhiteSmBtnStyle>;
-}
-
-export function GreyLgBtn({ contents }) {
-  return <GreyLgBtnStyle disabled>{contents}</GreyLgBtnStyle>;
-}
-
-export function GreyMdBtn({ contents }) {
-  return <GreyMdBtnStyle disabled>{contents}</GreyMdBtnStyle>;
-}
-
-export function GreyMsBtn({ contents }) {
-  return <GreyMsBtnStyle disabled>{contents}</GreyMsBtnStyle>;
-}
-
-export function GreySmBtn({ contents }) {
-  return <GreySmBtnStyle disabled>{contents}</GreySmBtnStyle>;
-}
-
-export function YellowBtn({ contents, handleFunc }) {
-  return <YellowBtnStyle onClick={handleFunc}>{contents}</YellowBtnStyle>;
-}
-
-export function TopBtn({ handleFunc }) {
-  return <TopBtnStyle onClick={handleFunc}></TopBtnStyle>;
-}
-
 const YellowBtnStyle = styled.button`
   width: 120px;
   height: 41px;
@@ -105,7 +29,6 @@ const GreenLgBtnStyle = styled.button`
 
   @media (min-width: 768px) {
     width: 500px;
-    /* height: 48px; */
   }
 `;
 
@@ -227,3 +150,37 @@ const TopBtnStyle = styled.button`
   background: url(${Top}) no-repeat center center;
   border-radius: 50px;
 `;
+
+
+interface ButtonProps {
+  contents: string,
+  handleFunc?: () => void
+  type: 'button' | 'submit' | 'reset';
+}
+
+const createButtonComponent = (StyledButton: any, additionalProps: { disabled?: boolean } = { disabled: false }): (props: ButtonProps) => JSX.Element => {
+  return ({ contents, handleFunc, ...rest }: ButtonProps): JSX.Element => {
+    const handleClick = handleFunc ? handleFunc : () => { };
+    return <StyledButton onClick={handleClick} {...rest} {...additionalProps}>{contents}</StyledButton>;
+  }
+}
+
+export const GreenLgBtn = createButtonComponent(GreenLgBtnStyle);
+export const GreenMdBtn = createButtonComponent(GreenMdBtnStyle);
+export const GreenMsBtn = createButtonComponent(GreenMsBtnStyle);
+export const GreenSmBtn = createButtonComponent(GreenSmBtnStyle);
+export const GreenBackBtn = createButtonComponent(GreenBackBtnStyle);
+export const BoldLgBtn = createButtonComponent(BoldLgBtnStyle);
+export const BoldMdBtn = createButtonComponent(BoldMdBtnStyle);
+export const BoldMsBtn = createButtonComponent(BoldMsBtnStyle);
+export const BoldSmBtn = createButtonComponent(BoldSmBtnStyle);
+export const WhiteLgBtn = createButtonComponent(WhiteLgBtnStyle);
+export const WhiteMdBtn = createButtonComponent(WhiteMdBtnStyle);
+export const WhiteMsBtn = createButtonComponent(WhiteMsBtnStyle);
+export const WhiteSmBtn = createButtonComponent(WhiteSmBtnStyle);
+export const GreyLgBtn = createButtonComponent(GreyLgBtnStyle, { disabled: true });
+export const GreyMdBtn = createButtonComponent(GreyMdBtnStyle, { disabled: true });
+export const GreyMsBtn = createButtonComponent(GreyMsBtnStyle, { disabled: true });
+export const GreySmBtn = createButtonComponent(GreySmBtnStyle, { disabled: true });
+export const YellowBtn = createButtonComponent(YellowBtnStyle);
+export const TopBtn = createButtonComponent(TopBtnStyle);

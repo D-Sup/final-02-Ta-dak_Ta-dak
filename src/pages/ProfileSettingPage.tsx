@@ -1,32 +1,39 @@
 import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { useRecoilState } from 'recoil'
+import useImageUploader from '../hooks/useImageUploader'
+import { useModalStack } from '../hooks/useModalStack';
+
 import { SignUpAtom } from '../recoil/AtomSignupState'
 import { postAccountValid } from '../api/signupAPI'
 import { postSignUp } from '../api/signupAPI'
-import useImageUploader from '../hooks/useImageUploader'
-import { useModalStack } from '../hooks/useModalStack';
+
 import styled from 'styled-components'
 
-import { Input } from '../components/common/Input'
+import Alert from '../components/common/Alert';
+import Input from '../components/common/Input'
 import { FileUploadLg } from '../components/common/FileUpload'
 import { GreenLgBtn, GreyLgBtn } from '../components/common/Button'
-import Alert from '../components/common/Alert';
 
 export default function ProfileSettingPage() {
-  const navigate = useNavigate();
-  const [reqFrame, setReqFrame] = useRecoilState(SignUpAtom)
-  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
-  const { push } = useModalStack();
-  const [username, setUsername] = useState('');
-  const [id, setId] = useState('');
-  const [introduce, setIntroduce] = useState('');
-  const [usernameValid, setUsernameValid] = useState(true)
-  const [idValid, setIdValid] = useState(true)
-  const [usernameAlertMsg, setUsernameAlertMsg] = useState('');
-  const [idAlertMsg, setIdAlertMsg] = useState('');
 
-  const handleIdValid = async () => {
+  const [reqFrame, setReqFrame] = useRecoilState(SignUpAtom)
+
+  const [username, setUsername] = useState<string>('');
+  const [id, setId] = useState<string>('');
+  const [introduce, setIntroduce] = useState<string>('');
+  const [usernameValid, setUsernameValid] = useState<boolean>(true)
+  const [idValid, setIdValid] = useState<boolean>(true)
+  const [usernameAlertMsg, setUsernameAlertMsg] = useState<string>('');
+  const [idAlertMsg, setIdAlertMsg] = useState<string>('');
+
+  const { push } = useModalStack();
+
+  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
+
+  const navigate = useNavigate();
+
+  const handleIdValid = async (): Promise<void> => {
     const pattern = /^[A-Za-z0-9_.]+$/;
     if (pattern.test(id)) {
       const Msg = await postAccountValid(id)
@@ -38,7 +45,7 @@ export default function ProfileSettingPage() {
     }
   }
 
-  const handleUsernameValid = (event) => {
+  const handleUsernameValid = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     if (value.length >= 2 && value.length <= 10) {
       setUsernameAlertMsg('');
@@ -50,17 +57,18 @@ export default function ProfileSettingPage() {
     setUsername(value);
   }
 
-  const handleAlert = () => {
+  const handleAlert = (): void => {
     navigate('/splash')
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
 
     if (username && id && usernameValid && idValid) {
       setReqFrame(prevValue => {
         return {
-          ...prevValue,
+          email: prevValue.email,
+          password: prevValue.password,
           username: username,
           accountname: id,
           intro: introduce,
@@ -111,7 +119,8 @@ export default function ProfileSettingPage() {
           <h1>프로필 설정</h1>
           <p>나중에 언제든지 변경할 수 있습니다.</p>
         </div>
-        <FileUploadLg id={'user-profile'} onChange={handleImageChange} url={imageURL} />
+        <FileUploadLg id={'user-profile'} onChange={handleImageChange} url={typeof imageURL === 'string' ? imageURL : undefined} />
+
         <div>
           <Input id={'user-username'}
             type={'text'}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react'
-import { useNavigate } from "react-router-dom";
 import { Link } from 'react-router-dom';
+
 import styled, { keyframes } from 'styled-components'
+
 import { ReactComponent as Tadak } from '../assets/img/tadak.svg';
 import { ReactComponent as Fire } from '../assets/img/fire.svg';
 import { ReactComponent as WoodFire } from '../assets/img/woodfire.svg';
@@ -13,14 +14,14 @@ import { ReactComponent as Google } from '../assets/img/icon-google.svg';
 import { ReactComponent as Facebook } from '../assets/img/icon-facebook.svg';
 import { ReactComponent as ArrowTop } from '../assets/img/icon-arrow-top.svg';
 
-export default function SplashPage() {
+const SplashPage = () => {
 
-  const [isLoginModal, setIsLoginModal] = useState(false);
+  const [isLoginModal, setIsLoginModal] = useState<boolean>(false);
 
-  useEffect(()=>{
+  useEffect(() => {
     const timer = setTimeout(() => setIsLoginModal(true), 1500)
     return () => clearTimeout(timer)
-  },[])
+  }, [])
 
   return (
     <>
@@ -36,48 +37,48 @@ export default function SplashPage() {
           </CharacterStyle>
           <SubTitleStyle></SubTitleStyle>
         </SplashCharacterContainer>
-          {/* <LoginModalContainer> */}
-            <LoginModalStyle isLoginModal={isLoginModal}>
-              <button className="toggleBtn" type="button" onClick={()=>{setIsLoginModal(preV=>!preV)}}>
-                <span>
-                  <ArrowTop width={40}/>
-                </span>
-              </button>
-              <ul>
-                <li>
-                  <BtnSocialStyle className='kakao' aria-label='카카오로 로그인'>
-                    <Kakao></Kakao>
-                    <p>카카오톡 계정으로 로그인</p>
-                  </BtnSocialStyle>
-                </li>
-                <li>
-                  <BtnSocialStyle className='google' aria-label='구글로 로그인'>
-                    <Google></Google>
-                    <p>구글 계정으로 로그인</p>
-                  </BtnSocialStyle>
-                </li>
-                <li>
-                  <BtnSocialStyle className='facebook' aria-label='페이스북으로 로그인'>
-                    <Facebook></Facebook>
-                    <p>페이스북 계정으로 로그인</p>
-                  </BtnSocialStyle>
-                </li>
-              </ul>
-              <div>
-                <Link to="/login">
-                  <button className='email-login'>이메일로 로그인</button>
-                </Link>
-                <span>|</span>
-                <Link to="/signup">
-                  <button className='Signup'>회원가입</button>
-                </Link>
-              </div>
-            </LoginModalStyle>
-          {/* </LoginModalContainer> */}
+        <LoginModalStyle isLoginModal={isLoginModal}>
+          <button className="toggleBtn" type="button" onClick={() => { setIsLoginModal(preV => !preV) }}>
+            <span>
+              <ArrowTop width={40} />
+            </span>
+          </button>
+          <ul>
+            <li>
+              <BtnSocialStyle className='kakao' aria-label='카카오로 로그인'>
+                <Kakao></Kakao>
+                <p>카카오톡 계정으로 로그인</p>
+              </BtnSocialStyle>
+            </li>
+            <li>
+              <BtnSocialStyle className='google' aria-label='구글로 로그인'>
+                <Google></Google>
+                <p>구글 계정으로 로그인</p>
+              </BtnSocialStyle>
+            </li>
+            <li>
+              <BtnSocialStyle className='facebook' aria-label='페이스북으로 로그인'>
+                <Facebook></Facebook>
+                <p>페이스북 계정으로 로그인</p>
+              </BtnSocialStyle>
+            </li>
+          </ul>
+          <div>
+            <Link to="/login">
+              <button className='email-login'>이메일로 로그인</button>
+            </Link>
+            <span>|</span>
+            <Link to="/signup">
+              <button className='Signup'>회원가입</button>
+            </Link>
+          </div>
+        </LoginModalStyle>
       </SplashPageStyle>
     </>
   )
 }
+
+export default SplashPage
 
 const SplashCharacterContainer = styled.div`
   position: absolute;
@@ -200,7 +201,7 @@ const SubTitleStyle = styled(SubTitle)`
   margin-top: 300px;
 `;
 
-const LoginModalStyle = styled.article`
+const LoginModalStyle = styled.article<{ isLoginModal: boolean }>`
   width: var(--basic-width);
   height: 500px;
   border-radius: 20px;
@@ -208,7 +209,7 @@ const LoginModalStyle = styled.article`
   position: absolute;
   bottom: 0;
   transition: 1s;
-  transform: ${( props ) => (props.isLoginModal ? 'translateY(30%)' : 'translateY(100%)')};
+  transform: ${(props) => (props.isLoginModal ? 'translateY(30%)' : 'translateY(100%)')};
   z-index: 101;
 
   .toggleBtn {
@@ -225,7 +226,7 @@ const LoginModalStyle = styled.article`
     opacity: 0.9;
     span {
       display: block;
-      transform: ${({isLoginModal}) => (isLoginModal ? 'rotate(180deg)' : 'rotate(0)')};
+      transform: ${({ isLoginModal }) => (isLoginModal ? 'rotate(180deg)' : 'rotate(0)')};
       transition: .2s;
     }
   }

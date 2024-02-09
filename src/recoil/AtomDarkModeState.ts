@@ -8,7 +8,7 @@ const {persistAtom} = recoilPersist({
   storage: sessionStorage,
 })
 
-export const DarkModeAtom = atom({
+export const DarkModeAtom = atom<boolean>({
   key: 'DarkModeAtom',
   default: false,
   effects_UNSTABLE: [persistAtom],

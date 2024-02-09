@@ -2,38 +2,42 @@ import styled from 'styled-components';
 
 import { ProfileLg } from './Profile';
 
-import IconUploadLg from '../../assets/img/upload-file.svg'
 import IconUploadMd from '../../assets/img/s-upload-file.svg'
 import IconUploadSm from '../../assets/img/s-upload-file.svg'
 
-// 프로필+사진파일추가 110*110 (36*36)   
-export function FileUploadLg(props) {
+interface FileUploadProps {
+  id: string,
+  url?: string,
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => Promise<void>
+}
+
+export const FileUploadLg = ({ id, url = '', ...rest }: FileUploadProps): JSX.Element => {
   return (
     <>
-      <FileLgLabelStyle htmlFor={props.id}>
-        <ProfileLg url={props.url} />
+      <FileLgLabelStyle htmlFor={id}>
+        <ProfileLg url={url} />
       </FileLgLabelStyle>
-      <FileInputStyle {...props} id={props.id} aria-label="FileInput" type='file'></FileInputStyle>
+      <FileInputStyle {...rest} id={id} aria-label="FileInput" type='file'></FileInputStyle>
     </>
-  ); 
+  );
 }
 
 // 사진파일추가 36*36  => 50*50
-export function FileUploadMd(props) {
+export const FileUploadMd = ({ id, ...rest }: FileUploadProps): JSX.Element => {
   return (
     <>
-      <FileMdLabelStyle htmlFor={props.id}></FileMdLabelStyle>
-      <FileInputStyle {...props} id={props.id} type='file'></FileInputStyle>
+      <FileMdLabelStyle htmlFor={id}></FileMdLabelStyle>
+      <FileInputStyle {...rest} id={id} type='file'></FileInputStyle>
     </>
   );
 }
 
 // 사진파일추가 50*50  => 36*36
-export function FileUploadSm(props) {
+export const FileUploadSm = ({ id, ...rest }: FileUploadProps): JSX.Element => {
   return (
     <>
-      <FileSmLabelStyle htmlFor={props.id}></FileSmLabelStyle>
-      <FileInputStyle {...props} id={props.id} type='file'></FileInputStyle>
+      <FileSmLabelStyle htmlFor={id}></FileSmLabelStyle>
+      <FileInputStyle {...rest} id={id} type='file'></FileInputStyle>
     </>
   );
 }

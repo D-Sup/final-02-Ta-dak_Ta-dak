@@ -1,6 +1,6 @@
 import { Navigate, Outlet } from "react-router";
 import { useRecoilValue } from "recoil";
-import { IsLoginSelector } from "../recoil/AtomUserState";
+import { IsLoginSelector } from "recoil/AtomUserState";
 
 export const NonLoginProtectedRoute = () => {
   const isLogin = useRecoilValue(IsLoginSelector);

@@ -5,7 +5,7 @@ import { useRecoilValue } from 'recoil';
 import { useModalStack } from '../hooks/useModalStack';
 import { UserAtom } from '../recoil/AtomUserState';
 import { editPost } from '../api/postAPI';
-import { uploadImage } from '../api/uploadimgAPI';
+import { upload } from '../api/uploadAPI';
 import styled from 'styled-components';
 
 import UploadHeader from '../components/header/UploadHeader';
@@ -33,8 +33,8 @@ export default function UploadPage() {
 
   const handleUploadBtnClick = async () => {
     if (location.pathname === '/upload') {
-      const uploadPost = await uploadImage(text, imagePath || '');
-      navigate(`/profile/${uploadPost.post.author.accountname}`);
+      const uploadPost = await upload(text, imagePath || '');
+      // navigate(`/profile/${uploadPost.post.author.accountname}`);
     } else if (location.pathname === '/editpost') {
       await editPost(locationValue.id, text, imagePath || locationValue?.image);
       navigate(-1);

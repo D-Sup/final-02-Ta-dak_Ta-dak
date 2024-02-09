@@ -1,6 +1,19 @@
 import styled from 'styled-components';
 
-export function Input(props) {
+interface InputProps {
+  id: string,
+  type: 'text' | 'email' | 'password';
+  label: string
+  value: string,
+  valid: boolean,
+  placeholder?: string,
+  alertMsg?: string,
+  onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  onFocus?: (event: React.ChangeEvent<HTMLInputElement>) => void,
+  onBlur?: (event: React.ChangeEvent<HTMLInputElement>) => void
+}
+
+const Input = (props: InputProps) => {
 
   return (
     <>
@@ -24,6 +37,8 @@ export function Input(props) {
   );
 }
 
+export default Input;
+
 const InputContainerStyle = styled.div`
   width: 322px;
   margin-bottom: 16px;
@@ -43,7 +58,7 @@ const LabelStyle = styled.label`
   color: var(--common-text-color-2);
 `;
 
-const InputStyle = styled.input`
+const InputStyle = styled.input<{ valid: boolean }>`
   background-color: transparent;
   width: 100%;
   font-size: var(--font--size-md);

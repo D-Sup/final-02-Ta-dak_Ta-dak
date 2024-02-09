@@ -1,28 +1,34 @@
+import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
+
+import { GreenBackBtn } from '../components/common/Button';
 
 import { ReactComponent as SleepBonFire } from '../assets/img/sleepbonfire.svg';
 import { ReactComponent as CantFindPage } from '../assets/img/cant-find-page.svg';
-import { GreenBackBtn } from '../components/common/Button';
-import { useNavigate } from 'react-router-dom';
 
-export default function Page404() {
+const Page404 = () => {
+
   const navigate = useNavigate();
 
-  const handleGoHome = () => {
+  const handleGoHome = (): void => {
     navigate('/feed');
   }
 
+
   return (
     <>
-    <Page404Wrapper>
-      <SleepBonFire />
-      <CantFindPage />
-      <GreenBackBtn handleFunc={handleGoHome} type='button' contents={'홈으로 돌아가기'} />
-    </Page404Wrapper>
+      <Page404Wrapper>
+        <SleepBonFire />
+        <CantFindPage />
+        <GreenBackBtn handleFunc={handleGoHome} type='button' contents={'홈으로 돌아가기'} />
+      </Page404Wrapper>
     </>
   )
 }
-  
+
+export default Page404
+
 const Page404Wrapper = styled.div`
   display: flex;
   flex-direction: column;

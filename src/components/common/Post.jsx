@@ -31,12 +31,12 @@ export default function Post({ post }) {
   const observeImage = useRef(null);
   useLazyLoading(observeImage, post.image);
 
-  const postLikeReq = async () => {
-    await postLike(id);
+  const postLikeReq = () => {
+    postLike(id);
   }
 
-  const deleteLikeReq = async () => {
-    await deleteLike(id);
+  const deleteLikeReq = () => {
+    deleteLike(id);
   }
 
   const reportPostReq = async () => {

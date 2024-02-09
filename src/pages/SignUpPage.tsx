@@ -1,29 +1,33 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
-import { SignUpAtom } from "../recoil/AtomSignupState";
-import styled from "styled-components"
 
-import { Input } from "../components/common/Input"
-import { GreenLgBtn, GreyLgBtn } from "../components/common/Button";
+import { SignUpAtom } from "../recoil/AtomSignupState";
 import { postEmailValid } from "../api/signupAPI";
 
+import styled from "styled-components"
+
+import Input from "../components/common/Input"
+import { GreenLgBtn, GreyLgBtn } from "../components/common/Button";
+
 export default function SignUpPage() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [emailValid, setEmailValid] = useState(true)
-  const [passwordValid, setPasswordValid] = useState(true)
-  const [emailAlertMsg, setEmailAlertMsg] = useState('');
-  const [passwordAlertMsg, setPasswordAlertMsg] = useState('');
+
   const setReqFrame = useSetRecoilState(SignUpAtom);
 
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [emailValid, setEmailValid] = useState<boolean>(true)
+  const [passwordValid, setPasswordValid] = useState<boolean>(true)
+  const [emailAlertMsg, setEmailAlertMsg] = useState<string>('');
+  const [passwordAlertMsg, setPasswordAlertMsg] = useState<string>('');
+
   const navigate = useNavigate()
-  
-  const handleEmailInput = (event) => {
+
+  const handleEmailInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setEmail(event.target.value)
   }
 
-  const handlePasswordInput = (event) => {
+  const handlePasswordInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value
     setPassword(value)
     if (value.length >= 6) {
@@ -35,21 +39,27 @@ export default function SignUpPage() {
     }
   }
 
-  const handleEmailValid = async (event) => {
+  const handleEmailValid = async (event: React.ChangeEvent<HTMLInputElement>): Promise<void> => {
     const Msg = await postEmailValid(event.target.value);
     setEmailAlertMsg(Msg)
     Msg === '사용 가능한 이메일 입니다.' ? setEmailValid(true) : setEmailValid(false)
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    if(email && password && emailValid && passwordValid) {
-      setReqFrame({ email, password })
+    if (email && password && emailValid && passwordValid) {
+      setReqFrame({
+        email,
+        password,
+        username: '',
+        accountname: '',
+        intro: '',
+        image: ''
+      })
       navigate('/signup/profile')
-    } else {
-      setReqFrame(false)
-    } 
+    }
   }
+
 
   return (
     <>
@@ -77,7 +87,7 @@ export default function SignUpPage() {
             alertMsg={passwordAlertMsg}
             onChange={handlePasswordInput}
           />
-          {email && password && emailValid && passwordValid?
+          {email && password && emailValid && passwordValid ?
             <GreenLgBtn type='submit' contents={'다음'} /> :
             <GreyLgBtn type='submit' contents={'다음'} />}
         </form>

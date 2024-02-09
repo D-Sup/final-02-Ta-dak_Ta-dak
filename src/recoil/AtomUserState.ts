@@ -8,15 +8,35 @@ const {persistAtom} = recoilPersist({
   storage: sessionStorage,
 })
 
+interface UserAtomType {
+  id: string,
+  username: string,
+  accountname: string,
+  token: string,
+  refreshToken: string,
+  image: string
+  following: string[],
+  follower: string[],
+};
+
 // 로그인된 유저 정보 저장
-export const UserAtom = atom({
+export const UserAtom = atom<UserAtomType>({
   key: 'UserAtom',
-  default: {},
+  default: {
+    id: '',
+    username: '',
+    accountname: '',
+    token: '',
+    refreshToken: '',
+    image: '',
+    following: [],
+    follower: [],
+  },
   effects_UNSTABLE: [persistAtom],
 });
 
 // 로그인된 유저 존재 여부
-export const IsLogin = atom({
+export const IsLogin = atom<boolean>({
   key: 'IsLogin',
   default: false,
   effects_UNSTABLE: [persistAtom],
