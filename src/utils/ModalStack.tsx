@@ -1,25 +1,31 @@
 import { useState, useEffect } from 'react';
 import { useRecoilValue } from 'recoil';
-import { modalStackAtom } from '../recoil/AtomModalStackState';
 import { useModalStack } from '../hooks/useModalStack';
+import { modalStackAtom } from '../recoil/AtomModalStackState';
+
+import { ModalStackAtomType } from '../recoil/AtomModalStackState';
 
 import styled, { css } from 'styled-components';
 
-const ModalComponent = ({ modal }) => {
+const ModalComponent = ({ modal }: { modal: ModalStackAtomType }) => {
   const { Component, props, selectOptions, actions, modalType } = modal;
   const { pop } = useModalStack();
-  const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   useEffect(() => {
     setIsOpen(true);
   }, []);
 
-  const close = () => {
+  const close = (): void => {
     setIsOpen(false);
     setTimeout(() => {
       pop();
     }, 400)
   };
+
+  if (!Component) {
+    return null;
+  }
 
   switch (modalType) {
     case 'AlertModal':
@@ -48,14 +54,16 @@ const ModalComponent = ({ modal }) => {
         <>
           <SlideUpModalWrapper isOpen={isOpen}>
             <div className='bar'></div>
-            <Component closeModal={close} {...props} />
+            {
+              typeof props !== 'string' &&
+              <Component closeModal={close} {...props} />
+            }
           </SlideUpModalWrapper>
           <SlideUpBackdrop onClick={close} isOpen={isOpen}>
           </SlideUpBackdrop>
         </>
       )
   }
-
 };
 
 const ModalStack = () => {
@@ -88,7 +96,7 @@ const slideDown = css`
   transform: translate(-50%, 100%);
 `;
 
-const BackdropStyle = css`
+const BackdropStyle = css<{ isOpen: boolean }>`
   position: fixed;
   top: 0;
   left: 0;
@@ -106,7 +114,7 @@ const AlertBackdrop = styled.div`
   z-index: 9999;
 `;
 
-const AlertModalWrapper = styled.div`
+const AlertModalWrapper = styled.div<{ isOpen: boolean }>`
   z-index: 99999;
   position: absolute;
   top: 50%;
@@ -126,7 +134,7 @@ const SlideUpBackdrop = styled.div`
     z-index: 999;
   `;
 
-const SlideUpModalWrapper = styled.div`
+const SlideUpModalWrapper = styled.div<{ isOpen: boolean }>`
   z-index: 9999;
   position: fixed;
   bottom: 0;

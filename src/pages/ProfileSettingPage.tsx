@@ -106,7 +106,7 @@ export default function ProfileSettingPage() {
       push(Alert,
         '잘못된 업로드입니다.',
         ['확인'],
-        [null],
+        [null, handleSubmit],
         'AlertModal'
       )
     }

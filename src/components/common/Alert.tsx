@@ -1,16 +1,27 @@
 import styled from 'styled-components';
 
-export default function Alert({ props, selectOptions, actions, closeModal }) {
+import { ModalStackAtomType } from 'recoil/AtomModalStackState';
 
-  function handleSelectOption(action) {
+interface AlertProps extends ModalStackAtomType {
+  closeModal: () => void
+}
+
+export default function Alert({ props, selectOptions = [], actions = [], closeModal }: AlertProps) {
+
+  function handleSelectOption(action: ((...args: any[]) => void) | null): void {
     closeModal();
-    action && action()
+    if (action !== null) {
+      action();
+    };
   }
 
   return (
     <>
       <AlertStyle>
-        <p>{props}</p>
+        {
+          typeof props === 'string' &&
+          <p>{props}</p>
+        }
         <ButtonStyle>
           <button className='cancel' onClick={() => handleSelectOption(actions[0])}>{selectOptions[0]}</button>
           {selectOptions[1] && <button className='delete' onClick={() => handleSelectOption(actions[1])}>{selectOptions[1]}</button>}

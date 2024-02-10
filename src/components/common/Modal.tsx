@@ -1,9 +1,13 @@
 import styled from 'styled-components'
 
-export default function Modal({ selectOptions, actions }) {
+import { ModalStackAtomType } from 'recoil/AtomModalStackState';
 
-  function handleSelectOption(action) {
-    action && action();
+export default function Modal({ selectOptions = [], actions = [] }: ModalStackAtomType) {
+
+  function handleSelectOption(action: ((...args: any[]) => void) | null): void {
+    if (action !== null) {
+      action();
+    };
   }
 
   return (

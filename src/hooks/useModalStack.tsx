@@ -1,18 +1,27 @@
 import { useResetRecoilState, useSetRecoilState } from 'recoil';
 import { modalStackAtom } from '../recoil/AtomModalStackState';
 
+import { ModalStackAtomType } from '../recoil/AtomModalStackState';
+
 export const useModalStack = () => {
   const setModalStack = useSetRecoilState(modalStackAtom);
   const resetModalStack = useResetRecoilState(modalStackAtom);
 
-  const push = (ModalComponent, props = {}, selectOptions = [], actions = [], modalType = '') => {
+
+  const push = (
+    Component: React.ComponentType<any> | null,
+    props: { [key: string]: string } | string = {},
+    selectOptions: string[] = [],
+    actions: (((...args: any[]) => void) | null)[] = [],
+    modalType: 'AlertModal' | 'SlideUpModal' | '' = ''
+  ): void => {
     setModalStack((Prev) => [
       ...Prev,
-      { Component: ModalComponent, props, selectOptions, actions, modalType },
+      { Component, props, selectOptions, actions, modalType },
     ]);
   };
 
-  const pop = () => {
+  const pop = (): void => {
     setModalStack((Prev) => {
       const newModalStack = [...Prev];
       newModalStack.pop();
@@ -20,22 +29,22 @@ export const useModalStack = () => {
     });
   };
 
-  const update = (newProps) => {
+  const update = (newProps: { [key: string]: string }): void => {
     setModalStack((Prev) => {
       const newModalStack = [...Prev];
       const lastIndex = newModalStack.length - 1;
       newModalStack[lastIndex] = {
         ...newModalStack[lastIndex],
-        props: { ...newModalStack[lastIndex].props, ...newProps },
+        props: { ...(newModalStack[lastIndex].props as { [key: string]: string }), ...newProps }
       };
       return newModalStack;
     });
   };
 
-  const replace = (ModalComponent, newProps = {}) => {
+  const replace = ({ Component, props = {} }: Pick<ModalStackAtomType, 'Component' | 'props'>) => {
     setModalStack((Prev) => {
       const newModalStack = [...Prev];
-      newModalStack[newModalStack.length - 1] = { Component: ModalComponent, props: newProps };
+      newModalStack[newModalStack.length - 1] = { Component, props };
       return newModalStack;
     });
   };
