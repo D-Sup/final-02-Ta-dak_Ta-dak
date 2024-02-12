@@ -1,16 +1,17 @@
 import styled from 'styled-components';
 
 import Post from '../common/Post';
+
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
-export default function PostList({ visiblePost }) {
+const PostList = ({ visiblePost }: { visiblePost: Posts[] }): JSX.Element => {
 
   return (
     <>
       <h2 className="a11y-hidden">포스트</h2>
       {visiblePost.length !== 0 ? (
         <PostListStyle>
-          {visiblePost.map((item, index) => (
+          {visiblePost.map((item) => (
             <Post post={item} key={item.id} />
           ))}
         </PostListStyle>
@@ -28,6 +29,8 @@ export default function PostList({ visiblePost }) {
   );
 }
 
+export default PostList;
+
 const PostListStyle = styled.div`
   width: 100%;
   max-width: var(--basic-width);
@@ -38,8 +41,8 @@ const PostListStyle = styled.div`
   }
 
   p {
-    /* 7줄 넘어가면 말줄임 */
     display: -webkit-box;
+    /* 7줄 넘어가면 말줄임 */
     -webkit-line-clamp: 7;
     -webkit-box-orient: vertical;
     overflow: hidden;

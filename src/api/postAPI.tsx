@@ -1,6 +1,6 @@
 import { axiosAuth } from "./settingAxios";
 
-export const getPost = async (loadPostSeq: string): Promise<GetPostResponse> => {
+export const getPost = async (loadPostSeq: number): Promise<GetPostResponse> => {
   const reqUrl = `/post/feed/?limit=5&skip=${loadPostSeq}`;
   try {
     const { data } = await axiosAuth.get(reqUrl)
@@ -10,7 +10,7 @@ export const getPost = async (loadPostSeq: string): Promise<GetPostResponse> => 
   }
 }
 
-export const getPostAll = async (loadPostSeq: string): Promise<GetPostResponse> => {
+export const getPostAll = async (loadPostSeq: number): Promise<GetPostResponse> => {
   const reqUrl = `/post/?limit=5&skip=${loadPostSeq}`;
   try {
     const { data } = await axiosAuth.get(reqUrl)

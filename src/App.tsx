@@ -16,7 +16,7 @@ import SignUpPage from './pages/SignUpPage';
 import ProfileSettingPage from './pages/ProfileSettingPage';
 // import UserTutorialPage from './pages/UserTutorialPage';
 // import { NavBar } from './components/common/NavBar';
-// import FeedHomePage from './pages/FeedHomePage';
+import FeedHomePage from './pages/FeedHomePage';
 // import PostDetail from './pages/PostDetail';
 // import UploadPage from './pages/UploadPage';
 // import AddProductPage from './pages/AddProductPage';
@@ -83,8 +83,8 @@ const App = () => {
                 {/* <Route path='/upload' element={<UploadPage />} /> */}
                 {/* <Route path='/feed/nonfollow' element={<UserTutorialPage />} /> */}
                 {/* <Route path='/editpost' element={<UploadPage />} /> */}
-                {/* <Route path='/feed' element={<FeedHomePage />} /> */}
-                {/* <Route path='/recommendfeed' element={<FeedHomePage />} /> */}
+                <Route path='/feed' element={<FeedHomePage />} />
+                <Route path='/recommendfeed' element={<FeedHomePage />} />
                 {/* <Route path='/addproduct' element={<AddProductPage />} /> */}
                 {/* <Route path='/profilemodification' element={<ProfileModificationPage />} /> */}
                 {/* <Route path='/chat' element={<ChatListPage />} /> */}

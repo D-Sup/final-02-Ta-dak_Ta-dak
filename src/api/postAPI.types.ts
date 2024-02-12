@@ -1,6 +1,6 @@
 interface GetPostResponse {
   data?: number,
-  posts: Posts | []
+  posts: Posts[] | []
 }
 
 interface Posts {

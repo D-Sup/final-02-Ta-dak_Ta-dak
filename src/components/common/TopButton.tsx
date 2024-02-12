@@ -1,10 +1,12 @@
+import { useState, useEffect, RefObject } from "react";
+
 import styled from "styled-components"
+
 import { ReactComponent as TopArrow } from "../../assets/img/icon-top-arrow.svg";
-import { useState, useEffect } from "react";
 
-export default function TopButton({elementRef}) {
+const TopButton = ({ elementRef }: { elementRef: RefObject<HTMLDivElement> }): JSX.Element => {
 
-  const [scrolling, setScrolling] = useState();
+  const [scrolling, setScrolling] = useState<boolean>(false);
 
   const handleScrollToTop = () => {
     if (elementRef.current) {
@@ -21,28 +23,30 @@ export default function TopButton({elementRef}) {
       }
     };
 
-    element.addEventListener('scroll', handleScroll);
+    element?.addEventListener('scroll', handleScroll);
 
     return () => {
-      element.removeEventListener('scroll', handleScroll);
+      element?.removeEventListener('scroll', handleScroll);
     };
   }, [elementRef]);
 
   return (
     <>
-    {
-      scrolling &&
-      <DarkModeBtnContainer scrolling={scrolling.toString()} onClick={handleScrollToTop}>
-        <DarkModeBtnStyle>
-          <TopArrow />
-        </DarkModeBtnStyle>
-      </DarkModeBtnContainer> 
-    }
+      {
+        scrolling &&
+        <DarkModeBtnContainer scrolling={scrolling} onClick={handleScrollToTop}>
+          <DarkModeBtnStyle>
+            <TopArrow />
+          </DarkModeBtnStyle>
+        </DarkModeBtnContainer>
+      }
     </>
   )
 }
 
-const DarkModeBtnContainer = styled.div`
+export default TopButton;
+
+const DarkModeBtnContainer = styled.div<{ scrolling: boolean }>`
   pointer-events: none;
   position: absolute;
   top: 50%;

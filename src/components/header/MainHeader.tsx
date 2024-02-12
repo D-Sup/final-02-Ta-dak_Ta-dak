@@ -1,10 +1,12 @@
 import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import DarkModeBtn from '../DarkModeBtn';
-import {ReactComponent as IconSearch} from '../../assets/img/icon-search.svg';
 
-export default function MainHeader() {
+import { ReactComponent as IconSearch } from '../../assets/img/icon-search.svg';
+
+const MainHeader = (): JSX.Element => {
 
   const navigate = useNavigate();
 
@@ -14,10 +16,12 @@ export default function MainHeader() {
       <DarkModeBtnPosition>
         <DarkModeBtn />
       </DarkModeBtnPosition>
-      <IconSearch style={{cursor: 'pointer'}} onClick={()=> navigate('/search')}/>
+      <IconSearch style={{ cursor: 'pointer' }} onClick={() => navigate('/search')} />
     </MainHeaderStyle>
   );
 }
+
+export default MainHeader
 
 const MainHeaderStyle = styled.div`
   position: relative;

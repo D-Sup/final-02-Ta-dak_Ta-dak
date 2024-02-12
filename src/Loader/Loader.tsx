@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-
 import { useRecoilValue } from 'recoil';
 import { DarkModeAtom } from '../recoil/AtomDarkModeState';
-import styled from "styled-components"
+
+import styled from "styled-components";
+
 import Leaf_1 from "./img/leaf.svg"
 import Leaf_2 from "./img/leaf-2.svg"
 import Leaf_3 from "./img/leaf-3.svg"
@@ -15,7 +15,7 @@ import Fire from "./img/fire.svg"
 import FireWood from "./img/firewood.svg"
 import Mouse from "./img/mouse.svg"
 
-export default function Loader() {
+const Loader = (): JSX.Element => {
   const darkMode = useRecoilValue(DarkModeAtom);
 
   return (
@@ -67,7 +67,9 @@ export default function Loader() {
   )
 }
 
-const Circle = styled.div`
+export default Loader;
+
+const Circle = styled.div<{ darkMode: boolean }>`
   position: absolute;
   left: 70px;
   top: 60%;

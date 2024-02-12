@@ -23,13 +23,13 @@ export const ProfileLg = ({ url = '' }: ProfileProps): JSX.Element => {
 }
 
 export const ProfileMd = ({ url = '' }: ProfileProps): JSX.Element => {
-  const observeImage = useRef(null);
+  const observeImage = useRef<HTMLImageElement>(null);
   useLazyLoading(observeImage, getProfileSrc(url));
   return <ProfileMdStyle ref={observeImage} alt="Medium Profile" />
 }
 
 export const ProfileSm = ({ url = '', confirm = false }: ProfileProps) => {
-  const observeImage = useRef(null);
+  const observeImage = useRef<HTMLImageElement>(null);
   useLazyLoading(observeImage, getProfileSrc(url));
   return (
     <ProfileContainer confirm={confirm}>
