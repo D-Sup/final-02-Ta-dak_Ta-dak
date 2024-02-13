@@ -1,15 +1,23 @@
 import { useNavigate } from 'react-router-dom'
+
 import styled from 'styled-components';
 
 import DarkModeBtn from '../DarkModeBtn';
+
 import { ReactComponent as IconArrowLeft } from '../../assets/img/icon-arrow-left.svg'
 import { ReactComponent as IconSMore } from '../../assets/img/icon-more.svg'
 
-export default function ChatHeader({ name, isButton, handleFunc }) {
+interface ChatHeaderProps {
+  name: string,
+  isButton: boolean,
+  handleFunc: () => void
+}
+
+const ChatHeader = ({ name, isButton, handleFunc }: ChatHeaderProps) => {
 
   const navigate = useNavigate();
 
-  function handleGoBack() {
+  function handleGoBack(): void {
     navigate(-1)
   }
 
@@ -28,6 +36,8 @@ export default function ChatHeader({ name, isButton, handleFunc }) {
     </ChatHeaderStyle>
   );
 }
+
+export default ChatHeader
 
 const ChatHeaderStyle = styled.div`
   position: relative;

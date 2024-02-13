@@ -1,13 +1,16 @@
+import { useNavigate } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import BasicHeader from '../components/header/BasicHeader';
 import { ProfileSm } from '../components/common/Profile';
-import { useNavigate } from 'react-router-dom';
 
 import dummyData from '../dummyData/chatDummyData.json';
 
 export default function ChatList() {
+
   const navigate = useNavigate();
+
 
   return (
     <>
@@ -24,11 +27,11 @@ export default function ChatList() {
                   navigate(`/chatroom/${item.accountname}`);
                 }}
               >
-                <ProfileSm url={''} confirm={!item.messages.slice().reverse().find(message => message.receive === true).confirm}/>
+                <ProfileSm url={''} confirm={!item.messages.slice().reverse().find(message => message.receive === true)?.confirm} />
                 <div className="text">
                   <span>{item.name}</span>
                   <div className="chatroomlink">
-                    <p>{item.messages.slice().reverse().find(message => message.Msg !== undefined).Msg}</p>
+                    <p>{item.messages.slice().reverse().find(message => message.Msg !== undefined)?.Msg}</p>
                     <div className="date">{`${lastMessageCreatedAt[0]}${lastMessageCreatedAt[1]}${lastMessageCreatedAt[2]}`}</div>
                   </div>
                 </div>

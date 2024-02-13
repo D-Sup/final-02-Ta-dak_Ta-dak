@@ -13,7 +13,7 @@ const getProfileSrc = (url: string): string => {
 }
 
 interface ProfileProps {
-  url: string,
+  url?: string,
   confirm?: boolean
 }
 
@@ -28,7 +28,7 @@ export const ProfileMd = ({ url = '' }: ProfileProps): JSX.Element => {
   return <ProfileMdStyle ref={observeImage} alt="Medium Profile" />
 }
 
-export const ProfileSm = ({ url = '', confirm = false }: ProfileProps) => {
+export const ProfileSm = ({ url = '', confirm = false }: ProfileProps): JSX.Element => {
   const observeImage = useRef<HTMLImageElement>(null);
   useLazyLoading(observeImage, getProfileSrc(url));
   return (

@@ -23,8 +23,8 @@ import FeedHomePage from './pages/FeedHomePage';
 // import SearchPage from './pages/SearchPage';
 // import ProfilePage from './pages/ProfilePage';
 // import ProfileModificationPage from './pages/ProfileModificationPage'
-// import ChatListPage from './pages/ChatListPage'
-// import ChatRoomPage from './pages/ChatRoomPage'
+import ChatListPage from './pages/ChatListPage'
+import ChatRoomPage from './pages/ChatRoomPage'
 // import FollowListPage from './pages/FollowListPage';
 import { NonLoginProtectedRoute, LoginProtectedRoute } from 'Routes/ProtectedRoute';
 // import WebHeader from './components/pcVersion/WebHeader';
@@ -87,8 +87,8 @@ const App = () => {
                 <Route path='/recommendfeed' element={<FeedHomePage />} />
                 {/* <Route path='/addproduct' element={<AddProductPage />} /> */}
                 {/* <Route path='/profilemodification' element={<ProfileModificationPage />} /> */}
-                {/* <Route path='/chat' element={<ChatListPage />} /> */}
-                {/* <Route path='/chatroom/*' element={<ChatRoomPage />} /> */}
+                <Route path='/chat' element={<ChatListPage />} />
+                <Route path='/chatroom/*' element={<ChatRoomPage />} />
                 {/* <Route path='/search' element={<SearchPage />} /> */}
                 {/* <Route path='/postdetail/*' element={<PostDetail />} /> */}
                 {/* <Route path='/addproduct' element={<AddProductPage />} /> */}

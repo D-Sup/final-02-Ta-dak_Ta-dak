@@ -1,26 +1,34 @@
 
 import { useNavigate } from 'react-router-dom'
+
 import styled from 'styled-components';
 
 import DarkModeBtn from '../DarkModeBtn';
-import {ReactComponent as IconArrowLeft} from '../../assets/img/icon-arrow-left.svg'
-import {ReactComponent as IconSMore} from '../../assets/img/icon-more.svg'
 
-export default function BasicHeader({isButton, handleFunc}) {
+import { ReactComponent as IconArrowLeft } from '../../assets/img/icon-arrow-left.svg'
+import { ReactComponent as IconSMore } from '../../assets/img/icon-more.svg'
+
+interface BasicHeaderProps {
+  isButton: boolean,
+  handleFunc?: () => void;
+}
+
+export default function BasicHeader({ isButton, handleFunc }: BasicHeaderProps) {
 
   const navigate = useNavigate();
 
-  function handleGoBack() {
+  function handleGoBack(): void {
     navigate(-1)
   }
 
+
   return (
     <BasicHeaderStyle>
-      <IconArrowLeft onClick={handleGoBack} style={{cursor:'pointer'}}/>
+      <IconArrowLeft onClick={handleGoBack} style={{ cursor: 'pointer' }} />
       <DarkModeBtnPosition isButton={isButton}>
         <DarkModeBtn />
       </DarkModeBtnPosition>
-      {isButton && <IconSMore onClick={handleFunc} style={{cursor:'pointer'}}/>}
+      {isButton && <IconSMore onClick={handleFunc} style={{ cursor: 'pointer' }} />}
     </BasicHeaderStyle>
   );
 }
@@ -41,24 +49,9 @@ const BasicHeaderStyle = styled.div`
   @media (min-width: 768px) {
     display: none;
   }
-
-  /* button {
-    width: 22px;
-    height: 22px;
-    background-repeat: no-repeat;
-    background-position: center;
-  } */
-  
-  .backUrlBtn {
-    background-image : url(${IconArrowLeft});
-  }
-  
-  .moreBtn {
-    background-image : url(${IconSMore});
-  }
 `;
 
-const DarkModeBtnPosition = styled.div`
+const DarkModeBtnPosition = styled.div<{ isButton: boolean }>`
   position: absolute;
   right: ${({ isButton }) => (isButton) ? '56px' : '12px'};
 `;

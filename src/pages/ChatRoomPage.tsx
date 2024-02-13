@@ -1,9 +1,9 @@
-import styled, { keyframes } from 'styled-components';
 import { useState, useEffect, useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useModalStack } from '../hooks/useModalStack';
-
 import useImageUploader from '../hooks/useImageUploader';
+
+import styled from 'styled-components';
 
 import Modal from './../components/common/Modal';
 import ChatHeader from '../components/header/ChatHeader';
@@ -12,25 +12,36 @@ import { FileUploadSm } from '../components/common/FileUpload';
 
 import dummyData from '../dummyData/chatDummyData.json';
 
-export default function ChatRoom() {
+interface MessagesType {
+  Img?: string,
+  Msg?: string,
+  createdAt: string,
+  receive?: boolean,
+  confirm?: boolean
+}
+
+const ChatRoomPage = () => {
+
   const location = useLocation();
-  const navigate = useNavigate();
   const userId = location.pathname.split("/")[2]
   const userInfo = location.state;
   const selectedData = dummyData[dummyData.findIndex(item => item.accountname === userId)] || ""
-  const [chatHistory, setChatHistory] = useState(selectedData.messages || []);
-  const [chatMessage, setChatMessage] = useState('');
-  const chatContainerRef = useRef(null);
+
+  const [chatHistory, setChatHistory] = useState<MessagesType[]>(selectedData.messages || []);
+  const [chatMessage, setChatMessage] = useState<string>('');
+
   const { handleImageChange, imagePath } = useImageUploader();
-
   const { push, pop } = useModalStack();
+  const chatContainerRef = useRef<HTMLDivElement>(null);
+  const navigate = useNavigate();
 
-  const handleChatRoomOut = () => {
+
+  const handleChatRoomOut = (): void => {
     navigate(-1)
     pop()
   }
 
-  const handleSendButtonClick = () => {
+  const handleSendButtonClick = (): void => {
     const newChat = {
       Msg: chatMessage,
       createdAt: new Date().toLocaleDateString([], {
@@ -50,7 +61,7 @@ export default function ChatRoom() {
   useEffect(() => {
     if (imagePath) {
       const newChat = {
-        Img: imagePath,
+        Img: imagePath as string,
         createdAt: new Date().toLocaleDateString([], {
           year: '2-digit',
           month: '2-digit',
@@ -105,6 +116,8 @@ export default function ChatRoom() {
     </>
   );
 }
+
+export default ChatRoomPage
 
 const ChatRoomPageStyle = styled.div`
   position: relative;
