@@ -4,12 +4,14 @@ import { useNavigate } from 'react-router-dom';
 import UserId from './UserId';
 import { ProfileMd } from './Profile'
 
-export default function SearchProfile({info}) {
+const SearchProfile = ({ info }: { info: Author }) => {
+
   const navigate = useNavigate();
 
-  const followerClickHandler = (event) => {
+  const followerClickHandler = (): void => {
     navigate(`/profile/${info.accountname}`);
   };
+
 
   return (
     <SearchProfileStyle>
@@ -25,8 +27,10 @@ export default function SearchProfile({info}) {
         </>
       )}
     </SearchProfileStyle>
-  );    
+  );
 }
+
+export default SearchProfile
 
 const SearchProfileStyle = styled.section`
   height: 50px;

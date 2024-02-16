@@ -3,8 +3,10 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../recoil/AtomUserState';
 import { useModalStack } from '../../hooks/useModalStack';
+
 import { postLike, deleteLike } from '../../api/heartAPI';
 import { deletePost, reportPost } from '../../api/postAPI';
+
 import styled, { keyframes } from 'styled-components';
 
 import Modal from './Modal';
@@ -14,32 +16,36 @@ import useLazyLoading from '../../hooks/useLazyLoading';
 
 import { ReactComponent as IconLike } from './../../assets/img/s-icon-fire.svg';
 import { ReactComponent as IconComment } from './../../assets/img/s-icon-message.svg';
+
 import moreButtonIcon from './../../assets/img/s-icon-more.svg';
 import downArrow from '../../assets/img/down-arrow.png';
 import errorImg from '../../assets/img/UploadImage404.svg';
 
-export default function Post({ post }) {
+const Post = ({ post }: { post: Posts }) => {
+
+  const [contentMore, setContentMore] = useState<boolean>(true);
+  const [like, setLike] = useState<boolean | undefined>(post.hearted);
+
+  const { push, clear } = useModalStack();
+  const myInfo = useRecoilValue(UserAtom);
+  const observeImage = useRef<HTMLImageElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
-  const myInfo = useRecoilValue(UserAtom);
-  const [like, setLike] = useState(post.hearted);
-  const [contentMore, setContentMore] = useState(true);
-  const isLike = post.hearted;
-  const { push, clear } = useModalStack();
-  const id = post.id || post._id;
 
-  const observeImage = useRef(null);
+  const isLike = post.hearted;
+  const id = post.id || post._id || '';
   useLazyLoading(observeImage, post.image);
 
-  const postLikeReq = () => {
+
+  const postLikeReq = (): void => {
     postLike(id);
   }
 
-  const deleteLikeReq = () => {
+  const deleteLikeReq = (): void => {
     deleteLike(id);
   }
 
-  const reportPostReq = async () => {
+  const reportPostReq = async (): Promise<void> => {
     const response = await reportPost(id);
     if (response) {
       push(Alert,
@@ -51,7 +57,7 @@ export default function Post({ post }) {
     }
   }
 
-  const updatePostDirection = async () => {
+  const updatePostDirection = async (): Promise<void> => {
     navigate('/editpost', {
       state: {
         id: id,
@@ -61,7 +67,7 @@ export default function Post({ post }) {
     })
   }
 
-  const deletePostReq = async () => {
+  const deletePostReq = async (): Promise<void> => {
     if (location.pathname.includes('/postdetail')) {
       await deletePost(id)
       navigate(-1);
@@ -72,7 +78,7 @@ export default function Post({ post }) {
     clear();
   }
 
-  const deletePostConfirm = async () => {
+  const deletePostConfirm = async (): Promise<void> => {
     push(Alert,
       '게시글을 삭제할까요?',
       ['취소', '확인'],
@@ -82,7 +88,7 @@ export default function Post({ post }) {
   }
 
 
-  const timeFormat = (time) => {
+  const timeFormat = (time: string): string => {
     const originalDate = new Date(time);
     const formattedDate = `
       ${originalDate.getFullYear()}년 
@@ -127,7 +133,7 @@ export default function Post({ post }) {
                 // src={post.image}
                 alt={`${post.author.accountname}의 포스팅 이미지`}
                 onError={(event) => {
-                  event.target.src = errorImg;
+                  (event.target as HTMLImageElement).src = errorImg;
                 }}
               />
             )}
@@ -163,6 +169,8 @@ export default function Post({ post }) {
     </>
   );
 }
+
+export default Post
 
 const fadeIn = keyframes`
 from {
@@ -200,7 +208,7 @@ const PostStyle = styled.article`
   }
 `;
 
-const PostContainerStyle = styled.div`
+const PostContainerStyle = styled.div<{ locationPathname: string, contentMore: boolean }>`
   padding-left: 54px;
   position: relative;
   
