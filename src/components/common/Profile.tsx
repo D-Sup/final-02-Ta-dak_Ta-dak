@@ -1,8 +1,12 @@
+import { useRef } from 'react';
+import useLazyLoading from '../../hooks/useLazyLoading';
+
 import styled, { css } from 'styled-components';
 
 import BasicProfile from '../../assets/img/basic-profile.svg';
-import { useRef } from 'react';
-import useLazyLoading from '../../hooks/useLazyLoading';
+
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 const getProfileSrc = (url: string): string => {
   if (url !== '' && url.includes("https://") && url !== "http://146.56.183.55:5050/Ellipse.png") {
@@ -30,8 +34,10 @@ export const ProfileLg = ({ url = '' }: ProfileProps): JSX.Element => {
 }
 
 export const ProfileMd = ({ url = '' }: ProfileProps): JSX.Element => {
+
   const observeImage = useRef<HTMLImageElement>(null);
   useLazyLoading(observeImage, getProfileSrc(url));
+
   return (
     <ProfileMdStyle
       ref={observeImage}
@@ -44,27 +50,25 @@ export const ProfileMd = ({ url = '' }: ProfileProps): JSX.Element => {
 }
 
 export const ProfileSm = ({ url = '', confirm = false }: ProfileProps): JSX.Element => {
-  const observeImage = useRef<HTMLImageElement>(null);
-  useLazyLoading(observeImage, getProfileSrc(url));
+
+  const observeParent = useRef<HTMLDivElement>(null);
+  const { isLoading, isError } = useLazyLoading(observeParent, url);
+
   return (
-    <ProfileContainer confirm={confirm}>
-      <ProfileSmStyle
-        ref={observeImage}
-        alt="Small Profile"
-        onError={(event) => {
-          (event.target as HTMLImageElement).src = BasicProfile;
-        }}
-      />
+    <ProfileContainer confirm={confirm} ref={observeParent}>
+      {isLoading && <Skeleton width={40} height={40} circle={true} />}
+      <ProfileSmStyle src={isError ? BasicProfile : url} style={{ display: isLoading ? 'none' : 'block' }} alt="Small Profile" />
     </ProfileContainer>
   );
-}
+};
+
 
 const ProfileContainer = styled.div<{ confirm: boolean }>`
   position: relative;
   &:after{
     position: absolute;
     top: 0;
-    left: 15px;
+    left: 0;
     content: '';
     width:  12px;
     height: 12px;

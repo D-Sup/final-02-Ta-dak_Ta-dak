@@ -1,24 +1,25 @@
-// import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { useModalStack } from '../../hooks/useModalStack';
 import ProductDetailModal from './ProductDetailModal';
 
-export default function SaleItem({ saleItem }) {
+const SaleItem = ({ saleItem }: { saleItem: Product }) => {
+
   const { push } = useModalStack();
+
   return (
     <SaleItemStyle onClick={() => {
-
-      push(ProductDetailModal, { saleItem: saleItem })
+      push(ProductDetailModal, { saleItem })
     }}>
       <h3 className='a11y-hidden'>{saleItem.itemName}</h3>
-      {/* <Link to={`/sale/${saleItem.id}`}> */}
       <img src={saleItem.itemImage} alt={saleItem.itemName} />
       <span className='itemName'>{saleItem.itemName}</span>
       <span className='itemPrice'>{saleItem.price.toLocaleString()}원</span>
     </SaleItemStyle>
   );
 }
+
+export default SaleItem
 
 const SaleItemStyle = styled.button`
   width: calc((var(--basic-width) - 90) / 2) px;

@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import useUserInfo from 'hooks/useUserInfo';
 
 import { doFollowing, doUnfollowing } from '../../api/followAPI';
 
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { GreenSmBtn, WhiteSmBtn } from './Button';
 import { ProfileSm } from './Profile';
@@ -14,6 +17,8 @@ const FollowersProfile = ({ followingUser }: { followingUser: Author }) => {
   const [isFollow, setIsFollow] = useState<boolean>(followingUser.isfollow as boolean)
 
   const navigate = useNavigate();
+
+  const { accountname } = useUserInfo();
 
   const followBtnHandler = async (): Promise<void> => {
     await doFollowing(followingUser.accountname);
@@ -30,7 +35,6 @@ const FollowersProfile = ({ followingUser }: { followingUser: Author }) => {
   }
 
   useEffect(() => {
-    const accountname = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') || '{}').UserAtom.accountname : '';
     if (accountname === followingUser.accountname) {
       setIsMe(true)
     }
@@ -41,17 +45,20 @@ const FollowersProfile = ({ followingUser }: { followingUser: Author }) => {
     <FollowersProfileStyle>
       <ProfileSm url={`${followingUser.image}`} />
       <div className='userInfo' onClick={followerClickHandler}>
-        <p>{followingUser.username}</p>
-        <span>{followingUser.intro}</span>
+        <p>{followingUser.username || <Skeleton width={100} />}</p>
+        <span>{(followingUser.intro !== undefined || followingUser.intro === '') ? followingUser.intro : <Skeleton width={250} />}</span>
       </div>
       {
-        !isMe ?
-          isFollow ? (
+        followingUser.username ? (
+          !isMe && isFollow ? (
             <WhiteSmBtn contents={'취소'} handleFunc={unFollowBtnHandler} type='button' />
           ) : (
             <GreenSmBtn contents={'팔로우'} handleFunc={followBtnHandler} type='button' />
           )
-          : null
+        ) : (
+          <Skeleton width={56} height={28} borderRadius={30} />
+        )
+
       }
 
     </FollowersProfileStyle>
@@ -63,6 +70,7 @@ export default FollowersProfile
 const FollowersProfileStyle = styled.div`
   position: relative;
   /* width: 358px; */
+  height: 52px;
   width: 100%;
   display: flex;
   align-items: center;
@@ -87,6 +95,7 @@ const FollowersProfileStyle = styled.div`
       text-overflow: ellipsis;
     }
     p {
+      padding-top: 8px;
       padding-bottom: 6px;
       font-weight: var(--font--Medium);
       font-size: var(--font--size-md);

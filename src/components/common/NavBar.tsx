@@ -1,6 +1,8 @@
 import { useEffect, useState, SVGProps } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 
+import useUserInfo from 'hooks/useUserInfo';
+
 import styled from 'styled-components';
 
 import { ReactComponent as IconHome } from '../../assets/img/icon-home.svg';
@@ -13,7 +15,16 @@ const NavBar = () => {
 
   const location = useLocation();
 
-  const accountname = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') || '{}').UserAtom.accountname : '';
+  // const { accountname } = getUserInfo();
+  const { accountname } = useUserInfo()
+
+  // const [asdas, setAsdas] = useState(accountname)
+  // useEffect(() => {
+  //   setAsdas(accountname)
+  // }, [accountname])
+  // console.log(accountname);
+
+
 
   const hideNavBarPaths = [
     '/login',
@@ -45,7 +56,7 @@ const NavBar = () => {
     if (item) {
       setSelectedIcon(item.component);
     }
-  }, [location.pathname, selectedIcon]);
+  }, [location.pathname]);
 
 
   return (

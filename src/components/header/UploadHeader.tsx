@@ -1,28 +1,38 @@
 import { useNavigate } from 'react-router-dom'
+
 import styled from 'styled-components';
 
 import { GreyMsBtn, BoldMsBtn } from '../common/Button';
 
-import {ReactComponent as IconArrowLeft} from '../../assets/img/icon-arrow-left.svg'
+import { ReactComponent as IconArrowLeft } from '../../assets/img/icon-arrow-left.svg'
 
-export default function UploadHeader({valid, contents, handleUploadBtnClick}) {
+interface UploadHeaderProps {
+  valid: boolean,
+  contents: string,
+  handleUploadBtnClick: () => void
+}
+
+const UploadHeader = ({ valid, contents, handleUploadBtnClick }: UploadHeaderProps) => {
+
   const navigate = useNavigate();
 
-  function handleGoBack() {
+  const handleGoBack = (): void => {
     navigate(-1)
   }
 
   return (
     <BasicHeaderStyle>
-      <IconArrowLeft className='arrowLeft' onClick={handleGoBack} style={{cursor:'pointer'}}/>
+      <IconArrowLeft className='arrowLeft' onClick={handleGoBack} style={{ cursor: 'pointer' }} />
       {
         valid
-        ?<BoldMsBtn contents={contents} handleFunc={handleUploadBtnClick}/>
-        :<GreyMsBtn contents={contents} />
+          ? <BoldMsBtn contents={contents} handleFunc={handleUploadBtnClick} type='button' />
+          : <GreyMsBtn contents={contents} type='button' />
       }
     </BasicHeaderStyle>
   )
 }
+
+export default UploadHeader
 
 const BasicHeaderStyle = styled.div`
   display: flex;

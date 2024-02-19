@@ -27,7 +27,9 @@ export default function ChatList() {
                   navigate(`/chatroom/${item.accountname}`);
                 }}
               >
-                <ProfileSm url={''} confirm={!item.messages.slice().reverse().find(message => message.receive === true)?.confirm} />
+                <div className="imgcontainer">
+                  <ProfileSm url={''} confirm={!item.messages.slice().reverse().find(message => message.receive === true)?.confirm} />
+                </div>
                 <div className="text">
                   <span>{item.name}</span>
                   <div className="chatroomlink">
@@ -63,7 +65,7 @@ const ChatContainerStyle = styled.div`
   background-color: var(--background-color);
   cursor: pointer;
 
-  img {
+  .imgcontainer {
     width: 42px;
     height: 42px;
     margin: 0 16px;

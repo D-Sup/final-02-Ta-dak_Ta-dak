@@ -10,7 +10,7 @@ export const useModalStack = () => {
 
   const push = (
     Component: React.ComponentType<any> | null,
-    props: { [key: string]: string } | string = {},
+    props: { [key: string]: any } | string = {},
     selectOptions: string[] = [],
     actions: (((...args: any[]) => void) | null)[] = [],
     modalType: 'AlertModal' | 'SlideUpModal' | '' = ''

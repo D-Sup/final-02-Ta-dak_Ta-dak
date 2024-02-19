@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { useModalStack } from "../hooks/useModalStack";
+import useUserInfo from "hooks/useUserInfo";
 
 import { IsLogin, UserAtom } from '../recoil/AtomUserState';
 import { getProfile } from "../api/profileAPI";
@@ -32,8 +33,9 @@ const ProfilePage = () => {
 
   const { push, clear } = useModalStack();
 
-
   const { accountname } = useParams() as { accountname: string };
+
+  const { accountname: accountnameFromUserAtom } = useUserInfo();
 
   const navigate = useNavigate();
 
@@ -84,16 +86,13 @@ const ProfilePage = () => {
   }
 
   useEffect(() => {
-    async function fetchData() {
+    const fetchData = async () => {
       const data = await isValidAccountName(accountname);
-      if (data !== '이미 가입된 계정ID 입니다.') {
-        navigate('/404page');
-      }
-      else {
+
+      if (data === '이미 가입된 계정ID 입니다.') {
         setProfileLoading(false);
         setPostLoading(false);
-        const myAccountName = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') || '{}').UserAtom.accountname : '';
-        accountname === myAccountName ? setIsMyAccount(true) : setIsMyAccount(false)
+        accountname === accountnameFromUserAtom ? setIsMyAccount(true) : setIsMyAccount(false)
         loadProfilePage(accountname)
         loadPosts()
       }

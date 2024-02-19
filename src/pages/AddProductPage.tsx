@@ -3,30 +3,33 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { postProduct, editProduct } from "../api/productAPI";
 import useImageUploader from "../hooks/useImageUploader";
 import { useModalStack } from "../hooks/useModalStack";
+
 import styled from "styled-components"
 
-import UploadHeader from '../components/header/UploadHeader';
-import { Input } from '../components/common/Input';
-import { FileUploadSm } from '../components/common/FileUpload';
 import Alert from "../components/common/Alert";
+import Input from '../components/common/Input';
+import UploadHeader from '../components/header/UploadHeader';
+import { FileUploadSm } from '../components/common/FileUpload';
 
 import emptyImg from '../assets/img/empty.svg'
 
-export default function AddProductPage() {
+const AddProductPage = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
   const getItem = location.state?.saleItem || null;
-  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
-  const { push } = useModalStack();
-  const [productName, setProductName] = useState(getItem?.itemName || '');
-  const [productPrice, setProductPrice] = useState(getItem?.price.toLocaleString() || '');
-  const [productNameMsg, setProductNameMsg] = useState('');
-  const [productExplain, setProductExplain] = useState(getItem?.link || null);
-  const [productNameValid, setProductNameValid] = useState(true);
-  const [productPriceValid, setProductPriceValid] = useState(true);
 
-  const handleProductName = (event) => {
+  const [productName, setProductName] = useState<string>(getItem?.itemName || '');
+  const [productPrice, setProductPrice] = useState<string>(getItem?.price.toLocaleString() || '');
+  const [productNameMsg, setProductNameMsg] = useState<string>('');
+  const [productExplain, setProductExplain] = useState<string>(getItem?.link);
+  const [productNameValid, setProductNameValid] = useState<boolean>(true);
+  const [productPriceValid, setProductPriceValid] = useState<boolean>(true);
+
+  const { push } = useModalStack();
+  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
+
+  const handleProductName = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setProductName(event.target.value.toLocaleString())
     if (productName.length >= 2 && productName.length <= 15) {
       setProductNameValid(true)
@@ -37,7 +40,7 @@ export default function AddProductPage() {
     }
   }
 
-  const handleProductPrice = (event) => {
+  const handleProductPrice = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const pricePattern = /^[1-9][0-9]*$/
     const formatValue = event.target.value.replace(/,/g, '');
     setProductPrice(Number(formatValue).toLocaleString());
@@ -49,7 +52,7 @@ export default function AddProductPage() {
     }
   }
 
-  const handleUploadBtnClick = async () => {
+  const handleUploadBtnClick = async (): Promise<void> => {
     if (productName && productPrice) {
       if (location.pathname === '/addproduct' && imagePath === false) {
         push(Alert,
@@ -59,7 +62,7 @@ export default function AddProductPage() {
           'AlertModal'
         )
       } else if (location.pathname === '/addproduct') {
-        await postProduct(productName, Number(productPrice.replace(/,/g, '')), productExplain, imagePath)
+        await postProduct(productName, Number(productPrice.replace(/,/g, '')), productExplain, imagePath as string)
         navigate(-1);
       } else if (location.pathname === '/editproduct') {
         await editProduct(getItem.id, productName, Number(productPrice.replace(/,/g, '')), productExplain, imagePath || getItem?.itemImage)
@@ -69,7 +72,6 @@ export default function AddProductPage() {
   }
 
   useEffect(() => {
-    console.log(uploadValidity);
     if (uploadValidity === '유효하지 않은 파일') {
       push(Alert,
         '잘못된 업로드입니다.',
@@ -82,10 +84,9 @@ export default function AddProductPage() {
 
   return (
     <>
-      <UploadHeader contents={'저장'} valid={productName && productPrice} handleUploadBtnClick={handleUploadBtnClick}></UploadHeader>
+      <UploadHeader contents={'저장'} valid={!!imagePath && !!productName && !!productPrice} handleUploadBtnClick={handleUploadBtnClick} />
       <AddProductPageStyle>
         <p>이미지 등록</p>
-
         <div className='addImg'>
           <FileInputStyle>
             <img src={imageURL || getItem?.itemImage || emptyImg} alt='' className='showImg' />
@@ -119,8 +120,8 @@ export default function AddProductPage() {
         <textarea
           name='productInfo'
           id='product-detail'
-          cols='30'
-          rows='10'
+          cols={30}
+          rows={10}
           value={productExplain}
           onChange={(event) => setProductExplain(event.target.value)}
           aria-label="상품 설명 편집기"
@@ -129,6 +130,8 @@ export default function AddProductPage() {
     </>
   )
 }
+
+export default AddProductPage
 
 const AddProductPageStyle = styled.div`
   height: var(--screen-height);

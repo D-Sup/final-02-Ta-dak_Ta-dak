@@ -1,35 +1,40 @@
 import { useState, useEffect } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import useImageUploader from '../hooks/useImageUploader'
+import { useRecoilState } from 'recoil';
 import { useModalStack } from '../hooks/useModalStack';
+import useImageUploader from '../hooks/useImageUploader'
+import { useLocation, useNavigate } from 'react-router-dom';
+import UploadHeader from '../components/header/UploadHeader';
+
+import { postAccountValid } from '../api/signupAPI';
+import { profilemodificationReq } from '../api/profilemodificationAPI';
+
 import styled from 'styled-components';
 
-import UploadHeader from '../components/header/UploadHeader';
-import { Input } from '../components/common/Input';
-import { FileUploadLg } from '../components/common/FileUpload'
-import { profilemodificationReq } from '../api/profilemodificationAPI';
-import { postAccountValid } from '../api/signupAPI';
-import { UserAtom } from '../recoil/AtomUserState';
-import { useRecoilState } from 'recoil';
 import Alert from '../components/common/Alert';
+import Input from '../components/common/Input';
+import { FileUploadLg } from '../components/common/FileUpload'
+import { UserAtom } from '../recoil/AtomUserState';
 
-export default function ProfileModificationPage() {
+const ProfileModificationPage = () => {
 
-  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
-  const { push } = useModalStack();
-  const navigate = useNavigate();
   const location = useLocation();
   const userInfo = location.state;
-  const [name, setName] = useState(userInfo.username || '')
-  const [nameValid, setNameValid] = useState(true);
-  const [nameAlertMsg, setNameAlertMsg] = useState('')
-  const [id, setId] = useState(userInfo.accountname || '')
-  const [idValid, setIdValid] = useState(true);
-  const [idAlertMsg, setIdAlertMsg] = useState('');
-  const [intro, setIntro] = useState(userInfo.intro || '')
-  const [userValue, setUserValue] = useRecoilState(UserAtom);
 
-  const handleNameInput = (event) => {
+  const [userValue, setUserValue] = useRecoilState(UserAtom);
+  const [idValid, setIdValid] = useState<boolean>(true);
+  const [nameValid, setNameValid] = useState<boolean>(true);
+  const [idAlertMsg, setIdAlertMsg] = useState<string>('');
+  const [nameAlertMsg, setNameAlertMsg] = useState<string>('')
+  const [id, setId] = useState<string>(userInfo.accountname || '')
+  const [name, setName] = useState<string>(userInfo.username || '')
+  const [intro, setIntro] = useState<string>(userInfo.intro || '')
+
+  const { push } = useModalStack();
+  const { handleImageChange, imageURL, imagePath, uploadValidity } = useImageUploader();
+  const navigate = useNavigate();
+
+
+  const handleNameInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const value = event.target.value;
     if (value.length >= 2 && value.length <= 10) {
       setNameAlertMsg('')
@@ -41,7 +46,7 @@ export default function ProfileModificationPage() {
     setName(value)
   };
 
-  const handleIdProfile = async () => {
+  const handleIdProfile = async (): Promise<void> => {
     const pattern = /^[A-Za-z0-9_.]+$/;
     if (pattern.test(id)) {
       const Msg = await postAccountValid(id)
@@ -53,19 +58,18 @@ export default function ProfileModificationPage() {
     }
   }
 
-  const handleIdInput = (event) => {
+  const handleIdInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setId(event.target.value);
   };
 
-  const handleIntroInput = (event) => {
+  const handleIntroInput = (event: React.ChangeEvent<HTMLInputElement>): void => {
     setIntro(event.target.value);
   };
 
-  const submitModification = async () => {
-    const data = await profilemodificationReq(name || userInfo.username, id || userInfo.accountname, intro || userInfo.intro, imagePath || userInfo.image);
+  const submitModification = async (): Promise<void> => {
+    await profilemodificationReq(name || userInfo.username, id || userInfo.accountname, intro || userInfo.intro, imagePath || userInfo.image);
     setUserValue({ ...userValue, accountname: id, image: imagePath || userInfo.image });
     navigate(`/profile/${id || userInfo.accountname}`);
-    console.log(data.user);
   }
 
   useEffect(() => {
@@ -79,6 +83,7 @@ export default function ProfileModificationPage() {
     }
   }, [uploadValidity])
 
+
   return (
     <>
       <UploadHeader valid={true} contents={'저장'} handleUploadBtnClick={submitModification} />
@@ -89,12 +94,14 @@ export default function ProfileModificationPage() {
         <div className='profileInfo'>
           <Input id={'user-name'} type={'text'} label={'사용자 이름'} placeholder={'2~10자 이내여야 합니다.'} value={name} onChange={handleNameInput} valid={nameValid} alertMsg={nameAlertMsg} />
           <Input id={'user-id'} type={'text'} label={'계정 ID'} placeholder={'영문, 숫자, 특수문자(.),(_)만 사용 가능합니다.'} value={id} onChange={handleIdInput} valid={idValid} onBlur={handleIdProfile} alertMsg={idAlertMsg} />
-          <Input id={'user-intro'} type={'text'} label={'소개'} placeholder={'자신과 판매할 상품에 대해 소개해 주세요!'} value={intro} onChange={handleIntroInput} valid={'true'} />
+          <Input id={'user-intro'} type={'text'} label={'소개'} placeholder={'자신과 판매할 상품에 대해 소개해 주세요!'} value={intro} onChange={handleIntroInput} valid={true} />
         </div>
       </ProfileModificationStyle>
     </>
   )
 }
+
+export default ProfileModificationPage
 
 const ProfileModificationStyle = styled.div`
   height: var(--screen-height);

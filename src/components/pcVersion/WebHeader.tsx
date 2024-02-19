@@ -1,11 +1,12 @@
 import { useNavigate, useLocation } from 'react-router-dom';
-import styled from 'styled-components';
 
+import styled from 'styled-components'
+
+import DarkModeBtn from '../DarkModeBtn';
 
 import { ReactComponent as Tadak } from '../../assets/img/tadak.svg';
 import { ReactComponent as WebLogo } from '../../assets/img/weblogo.svg';
 import { ReactComponent as IconLogout } from '../../assets/img/icon-logout.svg';
-import DarkModeBtn from '../DarkModeBtn';
 
 import { useSetRecoilState } from 'recoil'
 import { IsLogin, UserAtom } from '../../recoil/AtomUserState';
@@ -13,15 +14,15 @@ import { IsLogin, UserAtom } from '../../recoil/AtomUserState';
 import Alert from '../common/Alert';
 import { useModalStack } from '../../hooks/useModalStack';
 
-export default function WebHeader() {
-  const navigate = useNavigate()
-
-  const { push } = useModalStack();
+const WebHeader = () => {
 
   const setUserValue = useSetRecoilState(UserAtom);
   const setIsLogin = useSetRecoilState(IsLogin);
 
+  const { push } = useModalStack();
+  const navigate = useNavigate()
   const location = useLocation();
+
   const hideHeaderPaths = [
     '/splash',
     '/login',
@@ -31,16 +32,26 @@ export default function WebHeader() {
 
   const hideHeader = hideHeaderPaths.includes(location.pathname);
 
-  const handleGoFeed = () => {
+  const handleGoFeed = (): void => {
     navigate('/feed');
   }
 
-  const handleLogout = (event) => {
-    setUserValue({})
+  const handleLogout = (): void => {
+    setUserValue({
+      id: '',
+      username: '',
+      accountname: '',
+      token: '',
+      refreshToken: '',
+      image: '',
+      following: [],
+      follower: [],
+    })
     setIsLogin(false)
     sessionStorage.removeItem('user')
     navigate('/splash');
   }
+
 
   return (
     <>
@@ -68,6 +79,8 @@ export default function WebHeader() {
     </>
   )
 }
+
+export default WebHeader
 
 const WebHeaderStyle = styled.div`
   width: 100vw;

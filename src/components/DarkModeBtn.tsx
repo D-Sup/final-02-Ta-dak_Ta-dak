@@ -4,12 +4,12 @@ import { DarkModeAtom } from "../recoil/AtomDarkModeState";
 import sun from "../assets/img/sun.svg"
 import styled from "styled-components";
 
-export default function DarkModeBtn() {
+const DarkModeBtn = () => {
 
   const [darkMode, setDarkMode] = useRecoilState(DarkModeAtom)
   const location = useLocation();
 
-  const handleMode = () => {
+  const handleMode = (): void => {
     setDarkMode(PrevValue => !PrevValue)
   }
 
@@ -24,17 +24,19 @@ export default function DarkModeBtn() {
   return (
     <>
       {!hideBtn &&
-      <DarkModeBtnStyle>
-        <label className="switch" htmlFor="darkModeSwitch">
-          {darkMode ? <input type="checkbox" id="darkModeSwitch" aria-label="DarkModeSwitch" onChange={handleMode} checked={false}/> :
-          <input type="checkbox" id="darkModeSwitch" aria-label="DarkModeSwitch" onChange={handleMode} checked={true}/>}
-          <span className="slider"></span>
-        </label>
-      </DarkModeBtnStyle>
+        <DarkModeBtnStyle>
+          <label className="switch" htmlFor="darkModeSwitch">
+            {darkMode ? <input type="checkbox" id="darkModeSwitch" aria-label="DarkModeSwitch" onChange={handleMode} checked={false} /> :
+              <input type="checkbox" id="darkModeSwitch" aria-label="DarkModeSwitch" onChange={handleMode} checked={true} />}
+            <span className="slider"></span>
+          </label>
+        </DarkModeBtnStyle>
       }
     </>
   )
 }
+
+export default DarkModeBtn
 
 const DarkModeBtnStyle = styled.button`
 

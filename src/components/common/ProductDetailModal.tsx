@@ -1,22 +1,30 @@
-import { useRef } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useModalStack } from '../../hooks/useModalStack';
+import useUserInfo from 'hooks/useUserInfo';
+
 import { deleteProduct } from '../../api/productAPI';
-import styled, { keyframes } from 'styled-components';
+
+import styled from 'styled-components';
 
 import Alert from './Alert';
-import { ReactComponent as Xbutton } from '../../assets/img/x.svg';
 import { ReactComponent as Garland } from '../../assets/img/garland.svg';
 
-const ProductDetailModal = ({ saleItem, closeModal }) => {
+interface ProductDetailModalProps {
+  saleItem: Product,
+  closeModal: () => void
+}
+
+const ProductDetailModal = ({ saleItem, closeModal }: ProductDetailModalProps) => {
+
   const { push } = useModalStack();
 
   const navigate = useNavigate();
   const location = useLocation();
+
+  const { accountname } = useUserInfo();
   const selectedId = (location.pathname.split('/'))[2];
 
-
-  const handleGoAddproduct = () => {
+  const handleGoAddproduct = (): void => {
     closeModal();
     navigate('/editproduct', {
       state: {
@@ -25,12 +33,12 @@ const ProductDetailModal = ({ saleItem, closeModal }) => {
     });
   };
 
-  const handleDeleteReq = async (event) => {
+  const handleDeleteReq = async (): Promise<void> => {
     await deleteProduct(saleItem.id);
     window.location.reload();
   };
 
-  const deleteProductConfirm = () => {
+  const deleteProductConfirm = (): void => {
     push(Alert, '삭제하시겠습니까?', ['취소', '확인'], [null, handleDeleteReq], 'AlertModal')
   }
 
@@ -38,16 +46,13 @@ const ProductDetailModal = ({ saleItem, closeModal }) => {
     <>
       <BackgroundStyle>
         <ProductDetailModalStyle >
-          <XbuttonStyle>
-            {/* <Xbutton onClick={() => setIsModalOpen(false)} /> */}
-          </XbuttonStyle>
           <GarlandStyle></GarlandStyle>
           <img src={saleItem.itemImage} alt={saleItem.itemName} />
           <h2>{saleItem.itemName}</h2>
           <h3>{saleItem.price.toLocaleString()}원</h3>
           <p>상품 설명 혹은 링크</p>
           <pre>{saleItem.link}</pre>
-          {selectedId === JSON.parse(sessionStorage.getItem('user')).UserAtom.accountname && (
+          {selectedId === accountname && (
             <>
               <button className="modifyBtn" onClick={handleGoAddproduct}>
                 수정
@@ -153,14 +158,6 @@ const ProductDetailModalStyle = styled.div`
     right: 32px;
     bottom: 0;
   }
-`;
-
-const XbuttonStyle = styled.button`
-  display: block;
-  padding: 10px;
-  position: absolute;
-  top: 10px;
-  right: 10px;
 `;
 
 const GarlandStyle = styled(Garland)`

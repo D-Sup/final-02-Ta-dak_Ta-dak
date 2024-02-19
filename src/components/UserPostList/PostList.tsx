@@ -11,8 +11,8 @@ const PostList = ({ visiblePost }: { visiblePost: Posts[] }): JSX.Element => {
       <h2 className="a11y-hidden">포스트</h2>
       {visiblePost.length !== 0 ? (
         <PostListStyle>
-          {visiblePost.map((item) => (
-            <Post post={item} key={item.id} />
+          {visiblePost.map((item, index) => (
+            <Post post={item} key={index} />
           ))}
         </PostListStyle>
       ) : (

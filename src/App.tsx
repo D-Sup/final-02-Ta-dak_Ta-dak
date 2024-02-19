@@ -25,12 +25,12 @@ import ChatRoomPage from './pages/ChatRoomPage'
 import SearchPage from './pages/SearchPage';
 import ProfilePage from './pages/ProfilePage';
 import FollowListPage from './pages/FollowListPage';
-// import AddProductPage from './pages/AddProductPage';
-// import ProfileModificationPage from './pages/ProfileModificationPage'
-// import WebHeader from './components/pcVersion/WebHeader';
-// import WebNavBar from './components/pcVersion/WebNavBar';
-// import WebFollowersRecommend from './components/pcVersion/WebFollowersRecommend';
-// import WebBillboard from './components/pcVersion/WebBillboard';
+import ProfileModificationPage from './pages/ProfileModificationPage'
+import AddProductPage from './pages/AddProductPage';
+import WebHeader from './components/pcVersion/WebHeader';
+import WebNavBar from './components/pcVersion/WebNavBar';
+import WebFollowersRecommend from './components/pcVersion/WebFollowersRecommend';
+import WebBillboard from './components/pcVersion/WebBillboard';
 
 const App = () => {
 
@@ -55,11 +55,11 @@ const App = () => {
   return (
     <PcStyle>
       <WebHeaderStyle>
-        {/* <WebHeader /> */}
+        <WebHeader />
       </WebHeaderStyle>
       <MainStyle>
         <WebNavBarStyle>
-          {/* <WebNavBar /> */}
+          <WebNavBar />
         </WebNavBarStyle>
 
         <WrapperStyle basedMargin={basedMargin}>
@@ -88,16 +88,16 @@ const App = () => {
                 <Route path='/postdetail/*' element={<PostDetail />} />
                 <Route path='/chat' element={<ChatListPage />} />
                 <Route path='/chatroom/*' element={<ChatRoomPage />} />
-                <Route path='/profile/:accountname/*' element={<ProfilePage />} />
                 <Route path='/search' element={<SearchPage />} />
-                {/* <Route path='/profilemodification' element={<ProfileModificationPage />} /> */}
-                {/* <Route path='/profilemodification' element={<ProfileModificationPage />} /> */}
+                <Route path='/profile/:accountname/*' element={<ProfilePage />} />
                 <Route path='/profile/:accountname/follower' element={<FollowListPage />} />
                 <Route path='/profile/:accountname/follower' element={<FollowListPage />} />
                 <Route path='/profile/:accountname/following' element={<FollowListPage />} />
-                {/* <Route path='/addproduct' element={<AddProductPage />} /> */}
-                {/* <Route path='/addproduct' element={<AddProductPage />} /> */}
-                {/* <Route path='/editproduct' element={<AddProductPage />} /> */}
+                <Route path='/profilemodification' element={<ProfileModificationPage />} />
+                <Route path='/profilemodification' element={<ProfileModificationPage />} />
+                <Route path='/addproduct' element={<AddProductPage />} />
+                <Route path='/addproduct' element={<AddProductPage />} />
+                <Route path='/editproduct' element={<AddProductPage />} />
               </Route>
             </Routes>
             <NavBar />
@@ -106,11 +106,11 @@ const App = () => {
 
         <WebFollowersRecommendStyle>
           <Routes>
-            {/* <Route path='/feed' element={<WebFollowersRecommend />} /> */}
-            {/* <Route path='/recommendfeed' element={<WebFollowersRecommend />} /> */}
-            {/* <Route path='/profile/*' element={<WebFollowersRecommend />} /> */}
+            <Route path='/feed' element={<WebFollowersRecommend />} />
+            <Route path='/recommendfeed' element={<WebFollowersRecommend />} />
+            <Route path='/profile/*' element={<WebFollowersRecommend />} />
           </Routes>
-          {/* <WebBillboard /> */}
+          <WebBillboard />
         </WebFollowersRecommendStyle>
       </MainStyle>
       {darkMode ? <DarkTheme /> : <DefaultTheme />}

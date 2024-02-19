@@ -12,7 +12,7 @@ const AlbumList = ({ visiblePost }: { visiblePost: Posts[] }) => {
       {visiblePost.length !== 0 ? (
         <AlbumListStyle>
           {visiblePost.map((item) => (
-            <Album post={item} key={item.id} />
+            <Album post={item} key={item.id || item._id} />
           ))}
         </AlbumListStyle>
       ) : (

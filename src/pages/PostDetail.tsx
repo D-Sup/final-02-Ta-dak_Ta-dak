@@ -28,8 +28,8 @@ const PostDetail = () => {
 
   const getReq = async (): Promise<void> => {
     const [prePost, preComment] = await Promise.all([getPostDetail(postId), getComment(postId)]);
-    setPost('post' in prePost && prePost.post !== undefined ? prePost.post : null);
-    setComment('comments' in preComment && preComment.comments !== undefined ? preComment.comments : []);
+    setPost(prePost.post !== undefined ? prePost.post : null);
+    setComment(preComment.comments);
     setLoading(true);
   };
 

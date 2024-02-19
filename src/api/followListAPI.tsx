@@ -21,12 +21,14 @@ export const getFollowerList = async (accountname: string, loadFollowSeq: number
   }
 };
 
-export const getRecFollowingList = async (accountname: string): Promise<Author> => {
-  const reqUrl = `/profile/${accountname}/following?limit=100`;
+export const getRecFollowingList = async (accountname: string): Promise<Author[]> => {
+  const reqUrl = `/profile/${accountname}/following?limit=50`;
   try {
     const { data } = await axiosAuth.get(reqUrl);
     return data
   } catch (error) {
-    throw error;
+    // throw error;
+    console.error('error', error)
+    return []
   }
 };

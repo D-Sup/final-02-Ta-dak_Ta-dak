@@ -1,6 +1,5 @@
 interface GetCommentResponse {
-  comment: Comment[]
-  comments?: Comment[]
+  comments: Comment[]
 }
 
 interface Comment {

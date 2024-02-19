@@ -1,5 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SVGProps } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import useUserInfo from 'hooks/useUserInfo';
+
 import styled from 'styled-components';
 
 import { ReactComponent as IconHome } from '../../assets/img/icon-web-home.svg';
@@ -11,9 +13,9 @@ import { ReactComponent as IconSearch } from '../../assets/img/icon-web-search.s
 
 export default function WebNavBar() {
 
-
   const location = useLocation();
-  const accountname = sessionStorage.getItem('user') === null ? '' : JSON.parse(sessionStorage.getItem('user')).UserAtom.accountname
+
+  const { accountname } = useUserInfo()
   const hideNavbarPaths = [
     '/splash',
     '/login',
@@ -30,10 +32,9 @@ export default function WebNavBar() {
     { to: `/search`, component: IconSearch, label: '검색' },
   ];
 
-  const [selectedIcon, setSelectedIcon] = useState(IconHome);
-  const [settingIcon, setSettingIcon] = useState(true);
+  const [selectedIcon, setSelectedIcon] = useState<((props: SVGProps<SVGSVGElement>) => JSX.Element)>(IconHome);
 
-  const handleIconClick = (iconName) => {
+  const handleIconClick = (iconName: ((props: SVGProps<SVGSVGElement>) => JSX.Element)): void => {
     setSelectedIcon(iconName);
   };
 
@@ -46,30 +47,30 @@ export default function WebNavBar() {
 
   return (
     <>
-    {
-    !hideNavbar &&
-    <WebNavBarStyle>
-      <NavBarStyle>
-        {navItems.map((item) => (
-          <NavBarItemStyle
-            to={item.to}
-            key={item.to}
-            onClick={() => handleIconClick(item.component)}
-            selected={selectedIcon === item.component}
-            style={{ background: selectedIcon === item.component ? 'var(--basic-color-1)' : 'var(--background-color)' }}
-          >
-            <item.component
-              width={30}
-              height={30}
-              stroke={selectedIcon === item.component ? '#fff' : 'var(--text-color-2)'}
-            />
-            <span style={{ color: selectedIcon === item.component ? '#fff' : 'var(--text-color-2)' }}>
-              {item.label}</span>
-          </NavBarItemStyle>
-        ))}
-      </NavBarStyle>
-    </WebNavBarStyle>
-    }    
+      {
+        !hideNavbar &&
+        <WebNavBarStyle>
+          <NavBarStyle>
+            {navItems.map((item) => (
+              <NavBarItemStyle
+                to={item.to}
+                key={item.to}
+                onClick={() => handleIconClick(item.component)}
+                selected={selectedIcon === item.component}
+                style={{ background: selectedIcon === item.component ? 'var(--basic-color-1)' : 'var(--background-color)' }}
+              >
+                <item.component
+                  width={30}
+                  height={30}
+                  stroke={selectedIcon === item.component ? '#fff' : 'var(--text-color-2)'}
+                />
+                <span style={{ color: selectedIcon === item.component ? '#fff' : 'var(--text-color-2)' }}>
+                  {item.label}</span>
+              </NavBarItemStyle>
+            ))}
+          </NavBarStyle>
+        </WebNavBarStyle>
+      }
     </>
   )
 }
@@ -102,7 +103,7 @@ const NavBarStyle = styled.div`
   border-radius: 30px;
 `
 
-const NavBarItemStyle = styled(Link)`
+const NavBarItemStyle = styled(Link) <{ selected: boolean }>`
   padding: 15px;
   width: 174px;
   height: 60px;
