@@ -1,5 +1,5 @@
 interface GetSaleItemResponse {
-  product: Product
+  product: Product[]
 }
 
 interface Product {

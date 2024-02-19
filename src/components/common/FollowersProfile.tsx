@@ -1,39 +1,42 @@
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+import { doFollowing, doUnfollowing } from '../../api/followAPI';
+
 import styled from 'styled-components';
-import { useState } from 'react';
 
 import { GreenSmBtn, WhiteSmBtn } from './Button';
 import { ProfileSm } from './Profile';
 
-import { doFollowing, doUnfollowing } from '../../api/followAPI';
-import { useNavigate } from 'react-router-dom';
+const FollowersProfile = ({ followingUser }: { followingUser: Author }) => {
 
+  const [isMe, setIsMe] = useState<boolean>(false);
+  const [isFollow, setIsFollow] = useState<boolean>(followingUser.isfollow as boolean)
 
-export default function FollowersProfile({ followingUser }) {
-  const [isMe, setIsMe] = useState(false);
-  
-  const [isFollow, setIsFollow] = useState(followingUser.isfollow)
-  const navigate = useNavigate();  
+  const navigate = useNavigate();
 
-  useState(()=>{
-    if(JSON.parse(sessionStorage.getItem('user')).UserAtom.accountname === followingUser.accountname){
-      setIsMe(true)
-    }
-  },[])
-
-  const followBtnHandler = async () => {
+  const followBtnHandler = async (): Promise<void> => {
     await doFollowing(followingUser.accountname);
     setIsFollow(true);
   };
 
-  const unFollowBtnHandler = async () => {
+  const unFollowBtnHandler = async (): Promise<void> => {
     await doUnfollowing(followingUser.accountname);
     setIsFollow(false);
   };
 
-  const followerClickHandler = (event) =>{
+  const followerClickHandler = (): void => {
     navigate(`/profile/${followingUser.accountname}`)
   }
-  
+
+  useEffect(() => {
+    const accountname = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') || '{}').UserAtom.accountname : '';
+    if (accountname === followingUser.accountname) {
+      setIsMe(true)
+    }
+  }, [])
+
+
   return (
     <FollowersProfileStyle>
       <ProfileSm url={`${followingUser.image}`} />
@@ -42,18 +45,20 @@ export default function FollowersProfile({ followingUser }) {
         <span>{followingUser.intro}</span>
       </div>
       {
-        !isMe?
+        !isMe ?
           isFollow ? (
-            <WhiteSmBtn contents={'취소'} handleFunc={unFollowBtnHandler} />
-            ) : (
-            <GreenSmBtn contents={'팔로우'} handleFunc={followBtnHandler} />
+            <WhiteSmBtn contents={'취소'} handleFunc={unFollowBtnHandler} type='button' />
+          ) : (
+            <GreenSmBtn contents={'팔로우'} handleFunc={followBtnHandler} type='button' />
           )
-        :null
+          : null
       }
-      
+
     </FollowersProfileStyle>
   );
 }
+
+export default FollowersProfile
 
 const FollowersProfileStyle = styled.div`
   position: relative;

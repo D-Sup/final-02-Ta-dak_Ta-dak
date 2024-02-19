@@ -1,30 +1,40 @@
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../recoil/AtomUserState';
+
 import { writeComment } from '../../api/commentAPI';
+
 import styled from 'styled-components';
 
 import { ProfileSm } from './Profile';
 import { useState } from 'react';
 
-export default function CommentInput({ postId, setReset }) {
+interface CommentInputProps {
+  postId: string | undefined,
+  setReset: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+const CommentInput = ({ postId, setReset }: CommentInputProps) => {
 
   const userInfo = useRecoilValue(UserAtom)
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<string>('');
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (): Promise<void> => {
     setContent('')
-    await writeComment(postId, content);
+    await writeComment(postId as string, content);
     setReset(true)
   }
+
 
   return (
     <InputContainerStyle>
       <ProfileSm url={userInfo.image} />
-      <InputStyle type={'text'} placeholder='댓글 입력하기...' value={content} onChange={ (event) => setContent(event.target.value) }></InputStyle>
+      <InputStyle type={'text'} placeholder='댓글 입력하기...' value={content} onChange={(event) => setContent(event.target.value)}></InputStyle>
       <button id="comment-post" onClick={handleSubmit}>게시</button>
     </InputContainerStyle>
   )
 }
+
+export default CommentInput
 
 const InputContainerStyle = styled.div`
   width: var(--basic-width);

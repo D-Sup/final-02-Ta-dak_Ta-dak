@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
+import { useModalStack } from "../hooks/useModalStack";
+
 import { IsLogin, UserAtom } from '../recoil/AtomUserState';
 import { getProfile } from "../api/profileAPI";
 import { getProfilePost } from "../api/profileAPI";
 import { getSaleItem } from "../api/profileAPI";
 import { postAccountValid } from "../api/signupAPI";
-import { useModalStack } from "../hooks/useModalStack";
+
 import styled from "styled-components";
 
 import BasicHeader from '../components/header/BasicHeader';
@@ -17,50 +19,62 @@ import Modal from './../components/common/Modal';
 import Alert from './../components/common/Alert';
 
 
-export default function ProfilePage() {
-
-  const { push, clear } = useModalStack();
-
-  const { accountname } = useParams();
-  const navigate = useNavigate();
-
-  const [profileProps, setProfileProps] = useState({});
-  const [saleItemProps, setSaleItemProps] = useState([]);
-  const [profilePostProps, setProfilePostProps] = useState([]);
-  const [isMyAccount, setIsMyAccount] = useState(false);
-  const [profileLoading, setProfileLoading] = useState(false);
-  const [postLoading, setPostLoading] = useState(false);
+const ProfilePage = () => {
 
   const setUserValue = useSetRecoilState(UserAtom);
   const setIsLogin = useSetRecoilState(IsLogin);
+  const [profileProps, setProfileProps] = useState<Author | null>(null);
+  const [saleItemProps, setSaleItemProps] = useState<Product[]>([]);
+  const [profilePostProps, setProfilePostProps] = useState<Posts[]>([]);
+  const [isMyAccount, setIsMyAccount] = useState<boolean>(false);
+  const [profileLoading, setProfileLoading] = useState<boolean>(false);
+  const [postLoading, setPostLoading] = useState<boolean>(false);
 
-  async function isValidAccountName(value) {
+  const { push, clear } = useModalStack();
+
+
+  const { accountname } = useParams() as { accountname: string };
+
+  const navigate = useNavigate();
+
+  const isValidAccountName = async (value: string) => {
     return await postAccountValid(value)
   }
 
-  const loadProfilePage = async () => {
-    const user = await getProfile(accountname);
-    setProfileProps({ ...user.profile });
+  const loadProfilePage = async (value: string): Promise<void> => {
+    const user = await getProfile(value);
+    setProfileProps(user);
     setProfileLoading(true);
   };
 
-  const loadPosts = async () => {
+  const loadPosts = async (): Promise<void> => {
     const saleItems = await getSaleItem(accountname);
     const profilePosts = await getProfilePost(accountname);
     setSaleItemProps([...saleItems.product]);
-    setProfilePostProps([...profilePosts.post]);
+    Array.isArray(profilePosts.post) && setProfilePostProps([...(profilePosts.post as Posts[])]);
     setPostLoading(true);
   }
 
-  const handleLogout = (event) => {
-    setUserValue({})
+  const handleLogout = (): void => {
+    setUserValue(
+      {
+        id: '',
+        username: '',
+        accountname: '',
+        token: '',
+        refreshToken: '',
+        image: '',
+        following: [],
+        follower: [],
+      },
+    )
     setIsLogin(false)
     sessionStorage.removeItem('user')
     navigate('/splash');
     clear();
   }
 
-  const openAlert = () => {
+  const openAlert = (): void => {
     push(Alert,
       '로그아웃 하시겠습니까?',
       ['취소', '로그아웃'],
@@ -78,15 +92,16 @@ export default function ProfilePage() {
       else {
         setProfileLoading(false);
         setPostLoading(false);
-        const myAccountName = JSON.parse(sessionStorage.getItem('user')).UserAtom.accountname;
+        const myAccountName = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') || '{}').UserAtom.accountname : '';
         accountname === myAccountName ? setIsMyAccount(true) : setIsMyAccount(false)
-        loadProfilePage()
+        loadProfilePage(accountname)
         loadPosts()
       }
     }
 
     fetchData();
   }, [accountname])
+
 
   return (
     <>
@@ -115,6 +130,8 @@ export default function ProfilePage() {
     </>
   );
 }
+
+export default ProfilePage
 
 const ProfilePageStyle = styled.section`
   height: calc(100vh - 60px);

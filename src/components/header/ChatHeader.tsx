@@ -10,7 +10,7 @@ import { ReactComponent as IconSMore } from '../../assets/img/icon-more.svg'
 interface ChatHeaderProps {
   name: string,
   isButton: boolean,
-  handleFunc: () => void
+  handleFunc?: () => void
 }
 
 const ChatHeader = ({ name, isButton, handleFunc }: ChatHeaderProps) => {

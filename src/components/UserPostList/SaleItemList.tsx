@@ -1,10 +1,11 @@
 import styled from 'styled-components';
 
 import SaleItem from '../common/SaleItem';
+
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
 
-export default function SaleItemList({ saleItem }) {
+const SaleItemList = ({ saleItem }: { saleItem: Product[] }) => {
 
   return (
     <>
@@ -29,6 +30,8 @@ export default function SaleItemList({ saleItem }) {
     </>
   );
 }
+
+export default SaleItemList
 
 const SaleItemListStyle = styled.div`
   display: grid;

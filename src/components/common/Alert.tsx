@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-
 import { ModalStackAtomType } from 'recoil/AtomModalStackState';
+
+import styled from 'styled-components';
 
 interface AlertProps extends ModalStackAtomType {
   closeModal: () => void

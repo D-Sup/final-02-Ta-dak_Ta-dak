@@ -1,18 +1,17 @@
-import { useState } from 'react';
 import styled from 'styled-components';
 
 import Album from '../common/Album';
 
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
-export default function AlbumList({ visiblePost }) {
+const AlbumList = ({ visiblePost }: { visiblePost: Posts[] }) => {
 
   return (
     <>
       <h2 className="a11y-hidden">앨범형 포스트</h2>
       {visiblePost.length !== 0 ? (
         <AlbumListStyle>
-          {visiblePost.map((item, index) => (
+          {visiblePost.map((item) => (
             <Album post={item} key={item.id} />
           ))}
         </AlbumListStyle>
@@ -29,6 +28,8 @@ export default function AlbumList({ visiblePost }) {
     </>
   );
 }
+
+export default AlbumList
 
 const AlbumListStyle = styled.ul`
   display: grid;

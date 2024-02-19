@@ -1,26 +1,34 @@
 import { useNavigate } from 'react-router-dom'
+
 import styled from 'styled-components';
 
-import {ReactComponent as IconArrowLeft} from '../../assets/img/icon-arrow-left.svg'
+import { ReactComponent as IconArrowLeft } from '../../assets/img/icon-arrow-left.svg'
 
-export default function SearchHeader({value, setValue}) {
+interface SearchHeaderProps {
+  value: string,
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+}
+
+const SearchHeader = ({ value, setValue }: SearchHeaderProps) => {
 
   const navigate = useNavigate();
 
-  function handleGoBack() {
+  const handleGoBack = (): void => {
     navigate(-1)
   }
 
   return (
     <SearchHeaderStyle>
       <BackBtnStyle>
-      <IconArrowLeft onClick={handleGoBack} />
+        <IconArrowLeft onClick={handleGoBack} />
       </BackBtnStyle>
       <label className='a11y-hidden' htmlFor='searchId'>계정 검색</label>
-      <input id='searchId' type='text' placeholder='계정 검색' value={value} onChange={(e) => setValue(e.target.value)}/>
+      <input id='searchId' type='text' placeholder='계정 검색' value={value} onChange={(e) => setValue(e.target.value)} />
     </SearchHeaderStyle>
   )
 }
+
+export default SearchHeader
 
 const SearchHeaderStyle = styled.div`
   display: flex;

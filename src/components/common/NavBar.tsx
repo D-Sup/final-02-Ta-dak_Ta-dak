@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, SVGProps } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import { ReactComponent as IconHome } from '../../assets/img/icon-home.svg';
@@ -8,10 +9,12 @@ import { ReactComponent as IconMessage } from '../../assets/img/icon-message.svg
 import { ReactComponent as IconEdit } from '../../assets/img/icon-edit.svg';
 import { ReactComponent as IconUser } from '../../assets/img/icon-user.svg';
 
-export function NavBar() {
+const NavBar = () => {
+
   const location = useLocation();
-  const accountname = sessionStorage.getItem('user') === null?'':JSON.parse(sessionStorage.getItem('user')).UserAtom.accountname
-  
+
+  const accountname = sessionStorage.getItem('user') ? JSON.parse(sessionStorage.getItem('user') || '{}').UserAtom.accountname : '';
+
   const hideNavBarPaths = [
     '/login',
     '/signup',
@@ -31,9 +34,9 @@ export function NavBar() {
     { to: `/profile/${accountname}`, component: IconUser, label: '프로필' },
   ];
 
-  const [selectedIcon, setSelectedIcon] = useState(IconHome);
+  const [selectedIcon, setSelectedIcon] = useState<((props: SVGProps<SVGSVGElement>) => JSX.Element)>(IconHome);
 
-  const handleIconClick = (iconName) => {
+  const handleIconClick = (iconName: ((props: SVGProps<SVGSVGElement>) => JSX.Element)): void => {
     setSelectedIcon(iconName);
   };
 
@@ -43,6 +46,7 @@ export function NavBar() {
       setSelectedIcon(item.component);
     }
   }, [location.pathname, selectedIcon]);
+
 
   return (
     <>
@@ -72,6 +76,8 @@ export function NavBar() {
   );
 }
 
+export default NavBar;
+
 const NavBarStyle = styled.nav`
   position: relative;
   width: var(--basic-width);
@@ -87,7 +93,7 @@ const NavBarStyle = styled.nav`
   }
 `;
 
-const StyledLink = styled(Link)`
+const StyledLink = styled(Link) <{ selected: boolean }>`
   padding: 10px;
   text-align: center;
   width: calc(100% / 5);

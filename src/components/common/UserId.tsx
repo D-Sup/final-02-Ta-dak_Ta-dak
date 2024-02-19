@@ -1,12 +1,14 @@
 import styled from 'styled-components'
 
-export default function UserId({ id }) {
+const UserId = ({ id }: { id: string }) => {
   return (
     <UserIdStyled>
       @ {id}
     </ UserIdStyled>
   )
 }
+
+export default UserId
 
 const UserIdStyled = styled.div`
     color: var(--text-color-2);

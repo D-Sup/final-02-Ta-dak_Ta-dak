@@ -1,32 +1,31 @@
-import { useState , useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 import styled from 'styled-components';
 
 import { getSearch } from '../api/searchAPI';
-import  SearchHeader  from '../components/header/SearchHeader'
+import SearchHeader from '../components/header/SearchHeader'
 import SearchProfile from '../components/common/SearchProfile';
 import useDebounce from '../hooks/useDebounce';
 
 
-export default function SearchPage() {
-  // 검색창에 입력
-  const [search, setSearch] = useState('')
-  // API 요청으로 받아온 검색결과 목록
-  const [searchList, setSearchList] = useState([]) 
+const SearchPage = () => {
+
+  const [search, setSearch] = useState<string>('')
+  const [searchList, setSearchList] = useState<Author[]>([])
+
   const searchDebounced = useDebounce(search)
 
   useEffect(() => {
     const setResult = async () => {
       if (searchDebounced) {
-        // 입력창에 한 글자라도 입력한 것이 있을 때        
         setSearchList(await getSearch(searchDebounced));
       } else {
-        // 입력창에 입력한 것이 없을 때
         setSearchList([]);
       }
     };
     setResult();
   }, [searchDebounced]);
+
 
   return (
     <>
@@ -36,18 +35,20 @@ export default function SearchPage() {
         <SearchResultWrapper>
           {searchList.length
             ? searchList.map((item, index) => {
-                return (
-                  <li key={index}>
-                    <SearchProfile info={item} />
-                  </li>
-                );
-              })
+              return (
+                <li key={index}>
+                  <SearchProfile info={item} />
+                </li>
+              );
+            })
             : null}
         </SearchResultWrapper>
       </SearchPageStyle>
     </>
   );
 }
+
+export default SearchPage
 
 const SearchPageStyle = styled.div`
   padding: 20px 16px 0;
@@ -72,9 +73,10 @@ const SearchPageStyle = styled.div`
   }
 `;
 
-const SearchResultWrapper = styled.ul `
+const SearchResultWrapper = styled.ul`
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   gap: 15px;
+  padding-bottom: 15px;
 `

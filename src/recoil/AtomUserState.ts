@@ -8,7 +8,7 @@ const {persistAtom} = recoilPersist({
   storage: sessionStorage,
 })
 
-interface UserAtomType {
+export interface UserAtomType {
   id: string,
   username: string,
   accountname: string,

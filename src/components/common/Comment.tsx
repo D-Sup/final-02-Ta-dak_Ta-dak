@@ -1,19 +1,31 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from "react-router-dom"
 import { useModalStack } from '../../hooks/useModalStack';
+
 import { deleteComment, reportComment } from '../../api/commentAPI'
+
+import { UserAtomType } from 'recoil/AtomUserState';
+
+import styled from 'styled-components';
 
 import Alert from './Alert';
 import Modal from './Modal';
+
 import { ProfileSm } from './Profile';
 import { ReactComponent as IconMore } from '../../assets/img/s-icon-more.svg'
 
-export default function Comment({ item, myInfo, setReset }) {
+interface CommentProps {
+  item: Comment,
+  myInfo: UserAtomType,
+  setReset: React.Dispatch<React.SetStateAction<boolean>>;
+};
+
+const Comment = ({ item, myInfo, setReset }: CommentProps) => {
 
   const { push, clear } = useModalStack();
-
   const location = useLocation();
+  const navigate = useNavigate();
+
   const postId = location.pathname.replace('/postdetail/', '');
   const history = new Date(item.createdAt).getTime();
   const today = new Date().getTime();
@@ -31,18 +43,17 @@ export default function Comment({ item, myInfo, setReset }) {
     timeAgo = `${Math.floor(t / 1440)}일 전`;
   }
 
-  const navigate = useNavigate();
-  const clickHandler = () => {
+  const clickHandler = (): void => {
     navigate(`/profile/${item.author.accountname}`);
   };
 
-  const deleteReq = async () => {
+  const deleteReq = async (): Promise<void> => {
     await deleteComment(postId, item.id)
     setReset(true)
     clear();
   }
 
-  const reportReq = async () => {
+  const reportReq = async (): Promise<void> => {
     const response = await reportComment(postId, item.id)
     setReset(true)
     if (response) {
@@ -95,6 +106,8 @@ export default function Comment({ item, myInfo, setReset }) {
   );
 }
 
+export default Comment
+
 const CommentContainerStyle = styled.div`
   width: 390px;
   min-height: 58px;
@@ -123,7 +136,6 @@ const CommentContainerStyle = styled.div`
       position: absolute;
       top: 5px;
       right: 20px;
-      background-image: url(${IconMore});
       background-position: center;
       width: 20px;
       height: 20px;

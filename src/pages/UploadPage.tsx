@@ -1,40 +1,52 @@
-import useImageUploader from '../hooks/useImageUploader';
 import { useEffect, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { useModalStack } from '../hooks/useModalStack';
 import { UserAtom } from '../recoil/AtomUserState';
+import useImageUploader from '../hooks/useImageUploader';
+
 import { editPost } from '../api/postAPI';
 import { upload } from '../api/uploadAPI';
+
 import styled from 'styled-components';
 
 import UploadHeader from '../components/header/UploadHeader';
+import Alert from '../components/common/Alert';
 import { ProfileMd } from '../components/common/Profile';
 import { FileUploadMd } from '../components/common/FileUpload';
-import Alert from '../components/common/Alert';
 
-export default function UploadPage() {
+const UploadPage = () => {
+
+  const userInfo = useRecoilValue(UserAtom);
+
+  const location = useLocation();
+  const locationValue = location.state;
+  const [text, setText] = useState<string>(locationValue?.content || '');
+  const [valid, setValid] = useState<boolean>(false);
+
+  const { push } = useModalStack();
   const { handleImageChange, imageURL, imagePath, uploadValidity } =
     useImageUploader();
 
-  const { push } = useModalStack();
   const navigate = useNavigate();
-  const location = useLocation();
-  const userInfo = useRecoilValue(UserAtom);
-  const locationValue = location.state;
-  const [text, setText] = useState(locationValue?.content || '');
-  const [valid, setValid] = useState(false);
 
-  const handleChange = (event) => {
+
+  const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
     const newText = event.target.value;
     setText(newText);
     setValid(!!newText);
   };
 
-  const handleUploadBtnClick = async () => {
+  const autoResize = (event: React.ChangeEvent<HTMLTextAreaElement>): void => {
+    const textarea = event.target;
+    textarea.style.height = 'auto';
+    textarea.style.height = textarea.scrollHeight + 'px';
+  };
+
+  const handleUploadBtnClick = async (): Promise<void> => {
     if (location.pathname === '/upload') {
-      const uploadPost = await upload(text, imagePath || '');
-      // navigate(`/profile/${uploadPost.post.author.accountname}`);
+      const uploadPost = await upload(text, imagePath as string);
+      navigate(`/profile/${uploadPost.post?.author.accountname}`);
     } else if (location.pathname === '/editpost') {
       await editPost(locationValue.id, text, imagePath || locationValue?.image);
       navigate(-1);
@@ -55,11 +67,6 @@ export default function UploadPage() {
     }
   }, [uploadValidity, location.pathname]);
 
-  const autoResize = (event) => {
-    const textarea = event.target;
-    textarea.style.height = 'auto';
-    textarea.style.height = textarea.scrollHeight + 'px';
-  };
 
   return (
     <>
@@ -99,6 +106,8 @@ export default function UploadPage() {
     </>
   );
 }
+
+export default UploadPage
 
 const UploadPageStyle = styled.section`
   position: relative;

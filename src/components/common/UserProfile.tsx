@@ -1,38 +1,51 @@
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+
 import { doFollowing, doUnfollowing } from '../../api/followAPI';
+
 import styled, { css } from 'styled-components';
 
+import UserId from './UserId';
 import { ProfileLg } from './Profile';
 import { GreenMdBtn, WhiteMdBtn } from './Button';
-import UserId from './UserId';
 
 import IconSmMessage from '../../assets/img/s-icon-message.svg';
 import IconShare from '../../assets/img/icon-share.svg';
 
-export default function UserProfile({ profile, isMyAccount, loadProfilePage,}) {
-  const { accountname } = useParams();
-  const navigate = useNavigate();
+interface UserProfileProps {
+  profile: Author | null,
+  isMyAccount: boolean,
+  loadProfilePage: (props: string) => void
+}
 
-  const followBtnHandler = async () => {
+const UserProfile = ({ profile, isMyAccount, loadProfilePage }: UserProfileProps) => {
+
+  const navigate = useNavigate();
+  const { accountname } = useParams() as { accountname: string };
+
+  const followBtnHandler = async (): Promise<void> => {
     await doFollowing(accountname);
     loadProfilePage(accountname);
   };
 
-  const unFollowBtnHandler = async () => {
+  const unFollowBtnHandler = async (): Promise<void> => {
     await doUnfollowing(accountname);
     loadProfilePage(accountname);
   };
 
+  if (profile === null) {
+    return
+  }
+
   const handleProfileEdit = () => {
-    navigate('/profilemodification', 
-    {
-      state: {
-        username: profile.username,
-        accountname: profile.accountname,
-        intro: profile.intro,
-        image: profile.image
-      }
-    })
+    navigate('/profilemodification',
+      {
+        state: {
+          username: profile.username,
+          accountname: profile.accountname,
+          intro: profile.intro,
+          image: profile.image
+        }
+      })
   }
 
   const handleChat = () => {
@@ -42,7 +55,7 @@ export default function UserProfile({ profile, isMyAccount, loadProfilePage,}) {
       }
     });
   };
-  
+
   return (
     <UserProfileStyle>
       <ProfileTopStyle>
@@ -77,10 +90,10 @@ export default function UserProfile({ profile, isMyAccount, loadProfilePage,}) {
         {isMyAccount ? (
           // 내 계정일 경우
           <>
-              <WhiteMdBtn contents={'프로필 수정'} handleFunc={handleProfileEdit}/>
-              <div className='blank'></div>
+            <WhiteMdBtn contents={'프로필 수정'} handleFunc={handleProfileEdit} type='button' />
+            <div className='blank'></div>
             <Link to='/addproduct'>
-              <WhiteMdBtn contents={'상품 등록'} />
+              <WhiteMdBtn contents={'상품 등록'} type='button' />
             </Link>
           </>
         ) : (
@@ -94,10 +107,11 @@ export default function UserProfile({ profile, isMyAccount, loadProfilePage,}) {
               <WhiteMdBtn
                 contents={'언팔로우'}
                 handleFunc={unFollowBtnHandler}
+                type='button'
               />
             ) : (
               // 팔로잉 안한 사람일경우 - 팔로우
-              <GreenMdBtn contents={'팔로우'} handleFunc={followBtnHandler} />
+              <GreenMdBtn contents={'팔로우'} handleFunc={followBtnHandler} type='button' />
             )}
             <ShareBtnStyle href={undefined}>
               <img src={IconShare} alt="공유하기" />
@@ -108,6 +122,8 @@ export default function UserProfile({ profile, isMyAccount, loadProfilePage,}) {
     </UserProfileStyle>
   );
 }
+
+export default UserProfile
 
 const UserProfileStyle = styled.div`
   /* background-color: var(--background-color); */

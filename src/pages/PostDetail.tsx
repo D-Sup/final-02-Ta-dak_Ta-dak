@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
 import { useLocation } from "react-router-dom"
+import { useRecoilValue } from 'recoil'
+
+import { UserAtom } from '../recoil/AtomUserState'
 import { getPostDetail } from '../api/postAPI'
 import { getComment } from '../api/commentAPI'
-import { useRecoilValue } from 'recoil'
-import { UserAtom } from '../recoil/AtomUserState'
+
 import styled from "styled-components"
 
 import BasicHeader from "../components/header/BasicHeader"
@@ -12,21 +14,22 @@ import Comment from "../components/common/Comment"
 import CommentInput from "../components/common/CommentInput"
 import Loader from '../Loader/Loader';
 
-export default function PostDetail() {
+const PostDetail = () => {
 
   const myInfo = useRecoilValue(UserAtom)
-  const [post, setPost] = useState(false);
-  const [comment, setComment] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [reset, setReset] = useState(false);
+  const [post, setPost] = useState<Posts | null>(null);
+  const [comment, setComment] = useState<Comment[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reset, setReset] = useState<boolean>(false);
 
   const location = useLocation();
+
   const postId = location.pathname.replace('/postdetail/', '');
 
-  const getReq = async () => {
+  const getReq = async (): Promise<void> => {
     const [prePost, preComment] = await Promise.all([getPostDetail(postId), getComment(postId)]);
-    setPost(prePost);
-    setComment(preComment);
+    setPost('post' in prePost && prePost.post !== undefined ? prePost.post : null);
+    setComment('comments' in preComment && preComment.comments !== undefined ? preComment.comments : []);
     setLoading(true);
   };
 
@@ -35,38 +38,31 @@ export default function PostDetail() {
     setReset(false)
   }, [reset])
 
+
   return (
     <>
       <BasicHeader isButton={false} />
       <PostContainer>
-        {loading ?
+        {loading && post !== null ?
           <PostStyle>
-            <Post post={post.post}></Post>
+            <Post post={post}></Post>
           </PostStyle> :
           <Loader />}
         <CommentStyle>
-          {loading ? comment.comments.map((item) => (
+          {loading ? comment.map((item) => (
             item.content && (
               <li key={item.id}>
                 <Comment item={item} myInfo={myInfo} setReset={setReset} />
               </li>
             ))) : undefined}
         </CommentStyle>
-        {loading ? <CommentInput postId={post.post.id} setReset={setReset} /> : null}
+        {loading && post !== null ? <CommentInput postId={post.id} setReset={setReset} /> : null}
       </PostContainer>
-      {/* <ModalComponent>
-        {
-          selectComment.author?.accountname === myInfo.accountname ?
-            <Modal contents={['삭제']} handleFunc={deleteReq} /> :
-            <Modal contents={['신고']} handleFunc={reportReq} />
-        }
-      </ModalComponent> */}
-      {/* <AlertComponent>
-        <Alert alertMsg={'신고가 접수되었습니다'} choice={['확인']} />
-      </AlertComponent> */}
     </>
   )
 }
+
+export default PostDetail
 
 const PostContainer = styled.div`
   height: var(--screen-nav-height);

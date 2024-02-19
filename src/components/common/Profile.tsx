@@ -18,14 +18,29 @@ interface ProfileProps {
 }
 
 export const ProfileLg = ({ url = '' }: ProfileProps): JSX.Element => {
-  console.log('url', getProfileSrc(url));
-  return <ProfileLgStyle src={url || BasicProfile} alt="Large Profile" />
+  return (
+    <ProfileLgStyle
+      src={url || BasicProfile}
+      alt="Large Profile"
+      onError={(event) => {
+        (event.target as HTMLImageElement).src = BasicProfile;
+      }}
+    />
+  )
 }
 
 export const ProfileMd = ({ url = '' }: ProfileProps): JSX.Element => {
   const observeImage = useRef<HTMLImageElement>(null);
   useLazyLoading(observeImage, getProfileSrc(url));
-  return <ProfileMdStyle ref={observeImage} alt="Medium Profile" />
+  return (
+    <ProfileMdStyle
+      ref={observeImage}
+      alt="Medium Profile"
+      onError={(event) => {
+        (event.target as HTMLImageElement).src = BasicProfile;
+      }}
+    />
+  )
 }
 
 export const ProfileSm = ({ url = '', confirm = false }: ProfileProps): JSX.Element => {
@@ -33,7 +48,13 @@ export const ProfileSm = ({ url = '', confirm = false }: ProfileProps): JSX.Elem
   useLazyLoading(observeImage, getProfileSrc(url));
   return (
     <ProfileContainer confirm={confirm}>
-      <ProfileSmStyle ref={observeImage} alt="Small Profile" />
+      <ProfileSmStyle
+        ref={observeImage}
+        alt="Small Profile"
+        onError={(event) => {
+          (event.target as HTMLImageElement).src = BasicProfile;
+        }}
+      />
     </ProfileContainer>
   );
 }
@@ -63,16 +84,23 @@ const ProfileLgStyle = styled.img`
   ${ProfileCommonStyle}
   width: 110px;
   height: 110px;
+  max-width: 110px;
+  max-height: 110px;
 `;
 
 const ProfileMdStyle = styled.img`
   ${ProfileCommonStyle}
   width: 50px;
   height: 50px;
+  max-width: 50px;
+  max-height: 50px;
+
 `;
 
 const ProfileSmStyle = styled.img`
   ${ProfileCommonStyle}
   width: 40px;
   height: 40px;
+  max-width: 40px;
+  max-height: 40px;
 `;

@@ -1,6 +1,6 @@
 import { axiosAuth } from "./settingAxios";
 
-export const upload = async (content: string, image: string): Promise<Posts> => {
+export const upload = async (content: string, image: string): Promise<GetPostResponse> => {
   const reqUrl = '/post';
   const body = {
     post: {

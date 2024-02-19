@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-
 import { ModalStackAtomType } from 'recoil/AtomModalStackState';
+
+import styled from 'styled-components'
 
 export default function Modal({ selectOptions = [], actions = [] }: ModalStackAtomType) {
 

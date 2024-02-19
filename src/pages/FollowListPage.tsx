@@ -1,37 +1,30 @@
-import styled from 'styled-components';
 import { useEffect, useRef, useState } from 'react';
 import { useLocation, useParams } from 'react-router-dom';
-import { getFollowerList, getFollowingList } from '../api/followListAPI';
 import useScrollBottom from '../hooks/useScrollBottom';
+
+import { getFollowerList, getFollowingList } from '../api/followListAPI';
+
+import styled from 'styled-components';
 
 import FollowersProfile from '../components/common/FollowersProfile';
 import ChatHeader from '../components/header/ChatHeader';
 import Loader from '../Loader/Loader';
 
 export default function FollowListPage() {
-  const elementRef = useRef(null);
+
+  const [loadFollowSeq, setLoadFollowSeq] = useState<number>(0);
+  const [followList, setFollowList] = useState<Author[]>([]);
+  const [title, setTitle] = useState<string>('');
+  const [loading, setLoading] = useState<boolean>(false);
+  const [firstMount, setFirstMount] = useState(true);
+
+  const elementRef = useRef<HTMLDivElement>(null);
+  const { accountname } = useParams() as { accountname: string };
   const isBottom = useScrollBottom(elementRef);
-
-  const { accountname } = useParams();
   const location = useLocation();
-  const [loadFollowSeq, setLoadFollowSeq] = useState(0);
-  const [followList, setFollowList] = useState([]);
-  const [title, setTitle] = useState('');
-  const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (isBottom) {
-      loadFollowList(loadFollowSeq + 20);
-      setLoadFollowSeq((PrevValue) => PrevValue + 20);
-    }
-  }, [isBottom]);
-
-  useEffect(() => {
-    loadFollowList(loadFollowSeq);
-  }, []);
-
-  const loadFollowList = async (value) => {
-    let list;
+  const loadFollowList = async (value: number): Promise<void> => {
+    let list: Author[];
     if (location.pathname === `/profile/${accountname}/following`) {
       list = await getFollowingList(accountname, value);
       setTitle('Followings');
@@ -44,13 +37,26 @@ export default function FollowListPage() {
     setFollowList((prevValue) => [...prevValue, ...list]);
   };
 
+  if (firstMount) {
+    loadFollowList(loadFollowSeq);
+    setFirstMount(false);
+  }
+
+  useEffect(() => {
+    if (isBottom) {
+      loadFollowList(loadFollowSeq + 20);
+      setLoadFollowSeq((PrevValue) => PrevValue + 20);
+    }
+  }, [isBottom]);
+
+
   return (
     <>
       <ChatHeader name={`${title}`} isButton={false} />
       <FollowListStyle ref={elementRef}>
         {loading ? (
           followList.length !== 0 ? (
-            followList.map((item, index) => (
+            followList.map((item) => (
               <FollowersProfile followingUser={item} key={item._id} />
             ))
           ) : (
@@ -70,7 +76,7 @@ export default function FollowListPage() {
   );
 }
 
-const FollowListStyle = styled.section`
+const FollowListStyle = styled.div`
   height: var(--screen-nav-height);
   padding: 16px;
   overflow-y: scroll;

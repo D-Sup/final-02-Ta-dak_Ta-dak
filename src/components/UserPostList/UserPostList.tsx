@@ -1,4 +1,5 @@
 import { Link, useLocation, useParams } from 'react-router-dom';
+
 import styled from 'styled-components';
 
 import SaleItemList from './SaleItemList';
@@ -12,9 +13,16 @@ import { ReactComponent as IconPostListOn } from '../../assets/img/icon-post-lis
 import { ReactComponent as IconSaleOff } from './../../assets/img/icon-saleItem-off.svg';
 import { ReactComponent as IconSaleOn } from './../../assets/img/icon-saleItem-on.svg';
 
-export default function UserPostList({ saleItem, post }) {
-  const { accountname } = useParams();
+interface UserPostListProps {
+  saleItem: Product[],
+  post: Posts[]
+}
+
+const UserPostList = ({ saleItem, post }: UserPostListProps) => {
+
+  const { accountname } = useParams() as { accountname: string };
   const location = useLocation();
+
   const path = location.pathname;
   const selectedPath = (path.split('/'))[3];
 
@@ -25,27 +33,29 @@ export default function UserPostList({ saleItem, post }) {
           <TypeTabsStyle>
             <TabStyle to={`/profile/${accountname}`}>
               <span className='a11y-hidden'>포스트 버튼</span>
-              {selectedPath===undefined ? <IconPostListOn /> : <IconPostListOff />}
+              {selectedPath === undefined ? <IconPostListOn /> : <IconPostListOff />}
             </TabStyle>
             <TabStyle to={`/profile/${accountname}/album`}>
               <span className='a11y-hidden'>앨범형 포스트 버튼</span>
-              {selectedPath==='album' ? <IconPostAlbumOn /> : <IconPostAlbumOff />}
+              {selectedPath === 'album' ? <IconPostAlbumOn /> : <IconPostAlbumOff />}
             </TabStyle>
             <TabStyle to={`/profile/${accountname}/saleitem`}>
               <span className='a11y-hidden'>판매상품 버튼</span>
-              {selectedPath==='saleitem' ? <IconSaleOn /> : <IconSaleOff />}
+              {selectedPath === 'saleitem' ? <IconSaleOn /> : <IconSaleOff />}
             </TabStyle>
           </TypeTabsStyle>
           <PostWrapperStyle>
-            {selectedPath===undefined && <PostList visiblePost={post} />}
-            {selectedPath==='album' && <AlbumList visiblePost={post} />}
-            {selectedPath==='saleitem' && <SaleItemList saleItem={saleItem} />}
+            {selectedPath === undefined && <PostList visiblePost={post} />}
+            {selectedPath === 'album' && <AlbumList visiblePost={post} />}
+            {selectedPath === 'saleitem' && <SaleItemList saleItem={saleItem} />}
           </PostWrapperStyle>
         </TypeTabsWrapperStyle>
       </section>
     </>
   );
 }
+
+export default UserPostList
 
 const TypeTabsWrapperStyle = styled.div`
   border-top: 0.5px solid var(--basic-color-6);
