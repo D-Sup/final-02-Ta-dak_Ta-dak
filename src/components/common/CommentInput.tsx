@@ -27,7 +27,9 @@ const CommentInput = ({ postId, setReset }: CommentInputProps) => {
 
   return (
     <InputContainerStyle>
-      <ProfileSm url={userInfo.image} />
+      <div className="imgcontainer">
+        <ProfileSm url={userInfo.image} />
+      </div>
       <InputStyle type={'text'} placeholder='댓글 입력하기...' value={content} onChange={(event) => setContent(event.target.value)}></InputStyle>
       <button id="comment-post" onClick={handleSubmit}>게시</button>
     </InputContainerStyle>
@@ -43,15 +45,14 @@ const InputContainerStyle = styled.div`
   align-items: center;
   background-color: var(--background-color);
 
-  img {
+  .imgcontainer {
     width: 40px;
     height: 40px;
     margin: 0 16px;
-    top: 13px;
   }
 
   input {
-    width: 260px;
+    width: 100%;
     font-size: var(--font--size-md);
     background-color: var(--background-color);
     color: var(--text-color-1);
@@ -65,6 +66,7 @@ const InputContainerStyle = styled.div`
     width: 55px;
     height: 19px;
     margin: 0 auto;
+    padding-right: 10px;
     font-size: var(--font--size-md);
     color: #c4c4c4;
     display: inline-block;

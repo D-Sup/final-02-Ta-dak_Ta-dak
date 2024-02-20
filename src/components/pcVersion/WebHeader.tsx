@@ -85,7 +85,7 @@ export default WebHeader
 const WebHeaderStyle = styled.div`
   width: 100vw;
   height: 80px;
-  background-color: var(--basic-color-1);
+  background-color: var(--basic-color-2);
   display: flex;
   justify-content: space-between;
 `;

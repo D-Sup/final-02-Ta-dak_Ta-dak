@@ -1,9 +1,16 @@
 import styled from 'styled-components'
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
-const UserId = ({ id }: { id: string }) => {
+const UserId = ({ id, loading }: { id: string, loading?: boolean }) => {
   return (
     <UserIdStyled>
-      @ {id}
+      {
+        loading ?
+          <Skeleton width={100} style={{ marginTop: '5px' }} />
+          :
+          '@' + id
+      }
     </ UserIdStyled>
   )
 }

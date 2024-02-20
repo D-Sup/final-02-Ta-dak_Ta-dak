@@ -11,7 +11,7 @@ import { ReactComponent as IconEdit } from '../../assets/img/icon-edit.svg';
 import { ReactComponent as IconUser } from '../../assets/img/icon-user.svg';
 import { ReactComponent as IconSearch } from '../../assets/img/icon-web-search.svg';
 
-export default function WebNavBar() {
+const WebNavBar = () => {
 
   const location = useLocation();
 
@@ -57,7 +57,7 @@ export default function WebNavBar() {
                 key={item.to}
                 onClick={() => handleIconClick(item.component)}
                 selected={selectedIcon === item.component}
-                style={{ background: selectedIcon === item.component ? 'var(--basic-color-1)' : 'var(--background-color)' }}
+                style={{ background: selectedIcon === item.component ? 'var(--basic-color-2)' : 'var(--background-color)' }}
               >
                 <item.component
                   width={30}
@@ -75,13 +75,15 @@ export default function WebNavBar() {
   )
 }
 
+export default WebNavBar;
+
 const SettingStyle = styled.div`
   margin-top: 29px;
   padding: 23px;
   width: 220px;
   height: 180px;
   background-color: var(--background-color);
-  border: 2px solid var(--basic-color-1);
+  border: 2px solid var(--basic-color-2);
   border-radius: 30px;
 `;
 
@@ -99,7 +101,7 @@ const NavBarStyle = styled.div`
   height: 555px;
   padding: 25px 23px;
   background-color: var(--background-color);
-  border: 2px solid var(--basic-color-1);
+  border: 2px solid var(--basic-color-2);
   border-radius: 30px;
 `
 

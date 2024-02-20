@@ -109,6 +109,10 @@ const App = () => {
             <Route path='/feed' element={<WebFollowersRecommend />} />
             <Route path='/recommendfeed' element={<WebFollowersRecommend />} />
             <Route path='/profile/*' element={<WebFollowersRecommend />} />
+            <Route path='/postdetail/*' element={<WebFollowersRecommend />} />
+            <Route path='/chat' element={<WebFollowersRecommend />} />
+            <Route path='/chatroom/*' element={<WebFollowersRecommend />} />
+            <Route path='/search' element={<WebFollowersRecommend />} />
           </Routes>
           <WebBillboard />
         </WebFollowersRecommendStyle>

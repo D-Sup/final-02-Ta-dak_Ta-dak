@@ -1,16 +1,26 @@
 import { useNavigate } from 'react-router-dom';
 
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import BasicHeader from '../components/header/BasicHeader';
 import { ProfileSm } from '../components/common/Profile';
 
 import dummyData from '../dummyData/chatDummyData.json';
+import { useEffect, useState } from 'react';
 
-export default function ChatList() {
+const ChatList = () => {
+
+  const [loading, setLoading] = useState<boolean>(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 600)
+  }, [])
 
   const navigate = useNavigate();
-
 
   return (
     <>
@@ -28,13 +38,27 @@ export default function ChatList() {
                 }}
               >
                 <div className="imgcontainer">
-                  <ProfileSm url={''} confirm={!item.messages.slice().reverse().find(message => message.receive === true)?.confirm} />
+                  <ProfileSm url={''} confirm={!loading && !item.messages.slice().reverse().find(message => message.receive === true)?.confirm} loading={loading} />
                 </div>
                 <div className="text">
-                  <span>{item.name}</span>
+                  <span>{loading ? <Skeleton width={150} height={20} /> : item.name}</span>
+
                   <div className="chatroomlink">
-                    <p>{item.messages.slice().reverse().find(message => message.Msg !== undefined)?.Msg}</p>
-                    <div className="date">{`${lastMessageCreatedAt[0]}${lastMessageCreatedAt[1]}${lastMessageCreatedAt[2]}`}</div>
+                    <p>
+                      {
+                        loading ?
+                          <Skeleton width={250} height={20} style={{ marginTop: '5px' }} /> :
+                          item.messages.slice().reverse().find(message => message.Msg !== undefined)?.Msg
+                      }
+                    </p>
+                    <div className="date">
+                      {
+                        loading ?
+                          <Skeleton width={50} height={16} />
+                          :
+                          `${lastMessageCreatedAt[0]}${lastMessageCreatedAt[1]}${lastMessageCreatedAt[2]}`
+                      }
+                    </div>
                   </div>
                 </div>
               </ChatContainerStyle>
@@ -45,6 +69,8 @@ export default function ChatList() {
     </>
   );
 }
+
+export default ChatList
 
 const ChatListPageStyle = styled.div`
   width: var(--basic-width);

@@ -4,18 +4,28 @@ import Post from '../common/Post';
 
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
-const PostList = ({ visiblePost }: { visiblePost: Posts[] }): JSX.Element => {
+const PostList = ({ visiblePost, loading }: { visiblePost: Posts[], loading?: boolean }): JSX.Element => {
 
   return (
     <>
       <h2 className="a11y-hidden">포스트</h2>
-      {visiblePost.length !== 0 ? (
-        <PostListStyle>
-          {visiblePost.map((item, index) => (
-            <Post post={item} key={index} />
-          ))}
-        </PostListStyle>
-      ) : (
+      {/* <PostListStyle>
+        {visiblePost.map((item, index) => (
+          <Post post={item} key={index} loading={loading} />
+        ))}
+      </PostListStyle> */}
+      <PostListStyle>
+        {visiblePost.length !== 0 ? (
+          visiblePost.map((item, index) => (
+            <Post post={item} key={index} loading={loading} />
+          ))
+        ) : (
+          Array(3).fill(1).map((item, index) => (
+            <Post post={item} key={index} loading={true} />
+          ))
+        )}
+      </PostListStyle>
+      {visiblePost.length === 0 && !loading &&
         <NoVisiblePost>
           <div className="noPostWrapper">
             <div>
@@ -24,7 +34,7 @@ const PostList = ({ visiblePost }: { visiblePost: Posts[] }): JSX.Element => {
             <span>포스트가 없습니다</span>
           </div>
         </NoVisiblePost>
-      )}
+      }
     </>
   );
 }
@@ -35,6 +45,9 @@ const PostListStyle = styled.div`
   width: 100%;
   max-width: var(--basic-width);
   padding: 16px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 
   @media (min-width: 768px) {
     padding: 0px;

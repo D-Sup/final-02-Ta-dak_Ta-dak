@@ -4,6 +4,8 @@ import { useModalStack } from '../hooks/useModalStack';
 import useImageUploader from '../hooks/useImageUploader';
 
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import Modal from './../components/common/Modal';
 import ChatHeader from '../components/header/ChatHeader';
@@ -22,6 +24,7 @@ interface MessagesType {
 
 const ChatRoomPage = () => {
 
+  const [loading, setLoading] = useState<boolean>(true);
   const location = useLocation();
   const userId = location.pathname.split("/")[2]
   const userInfo = location.state;
@@ -34,7 +37,6 @@ const ChatRoomPage = () => {
   const { push, pop } = useModalStack();
   const chatContainerRef = useRef<HTMLDivElement>(null);
   const navigate = useNavigate();
-
 
   const handleChatRoomOut = (): void => {
     navigate(-1)
@@ -57,6 +59,12 @@ const ChatRoomPage = () => {
       setChatMessage('');
     }
   };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLoading(false)
+    }, 600)
+  }, [])
 
   useEffect(() => {
     if (imagePath) {
@@ -89,15 +97,31 @@ const ChatRoomPage = () => {
           return (
             !!item.receive ? (
               <ChatContainerStyle key={index}>
-                <ProfileSm />
-                <p>{item.Msg}</p>
-                <span className="time">{`${item.createdAt.split(" ")[3]} ${item.createdAt.split(" ")[4]}`}</span>
+                <ProfileSm loading={loading} />
+                {
+                  loading ?
+                    <Skeleton width={300} height={50} style={{ marginLeft: '16px' }} />
+                    :
+                    <p>{item.Msg}</p>
+                }
+                {!loading && <span className="time">{`${item.createdAt.split(" ")[3]} ${item.createdAt.split(" ")[4]}`}</span>}
               </ChatContainerStyle>
             ) : (
               <MyChatContainerStyle key={index}>
-                <span className="time">{`${item.createdAt.split(" ")[3]} ${item.createdAt.split(" ")[4]}`}</span>
-                {!!item.Img || <p>{item.Msg}</p>}
-                {item.Img && <img src={item.Img} alt="" />}
+                {!loading && <span className="time">{`${item.createdAt.split(" ")[3]} ${item.createdAt.split(" ")[4]}`}</span>}
+                {
+                  loading && !item.Img ?
+                    <Skeleton width={300} height={50} />
+                    :
+                    !!item.Img || <p>{item.Msg}</p>
+                }
+                {
+                  loading && item.Img ?
+                    <Skeleton width={140} height={115} />
+                    :
+                    item.Img && <img src={item.Img} alt="" />
+                }
+
               </MyChatContainerStyle>
             )
           )
@@ -209,7 +233,7 @@ const SendStyle = styled.div`
   }
 
   input {
-    width: 260px;
+    width: 100%;
     margin: 0 18px;
     font-size: var(--font--size-md);
     background-color: var(--background-color);
@@ -222,6 +246,8 @@ const SendStyle = styled.div`
   button {
     width: 55px;
     height: 19px;
+    padding-right: 10px;
+    box-sizing: border-box;
     font-size: var(--font--size-md);
     color: #c4c4c4;
     display: inline-block;

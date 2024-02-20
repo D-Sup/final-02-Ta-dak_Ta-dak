@@ -7,6 +7,8 @@ import { deleteComment, reportComment } from '../../api/commentAPI'
 import { UserAtomType } from 'recoil/AtomUserState';
 
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import Alert from './Alert';
 import Modal from './Modal';
@@ -18,9 +20,10 @@ interface CommentProps {
   item: Comment,
   myInfo: UserAtomType,
   setReset: React.Dispatch<React.SetStateAction<boolean>>;
+  loading: boolean
 };
 
-const Comment = ({ item, myInfo, setReset }: CommentProps) => {
+const Comment = ({ item, myInfo, setReset, loading }: CommentProps) => {
 
   const { push, clear } = useModalStack();
   const location = useLocation();
@@ -74,10 +77,10 @@ const Comment = ({ item, myInfo, setReset }: CommentProps) => {
         </div>
         <div className="commentContents">
           <UserNameStyle onClick={clickHandler}>
-            {item.author.username}
+            {loading ? <Skeleton width={100} height={16} /> : item.author.username}
           </UserNameStyle>
-          <TimeStyle>{timeAgo}</TimeStyle>
-          <CommentStyle>{item.content}</CommentStyle>
+          {!loading && <TimeStyle>{timeAgo}</TimeStyle>}
+          <CommentStyle>{loading ? <Skeleton width={60} height={10} /> : item.content}</CommentStyle>
         </div>
         <div className="commentMoreButton">
           <IconMore

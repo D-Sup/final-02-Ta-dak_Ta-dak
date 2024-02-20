@@ -11,7 +11,7 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { GreenSmBtn, WhiteSmBtn } from './Button';
 import { ProfileSm } from './Profile';
 
-const FollowersProfile = ({ followingUser }: { followingUser: Author }) => {
+const FollowersProfile = ({ followingUser, loading }: { followingUser: Author, loading?: boolean }) => {
 
   const [isMe, setIsMe] = useState<boolean>(false);
   const [isFollow, setIsFollow] = useState<boolean>(followingUser.isfollow as boolean)
@@ -43,20 +43,20 @@ const FollowersProfile = ({ followingUser }: { followingUser: Author }) => {
 
   return (
     <FollowersProfileStyle>
-      <ProfileSm url={`${followingUser.image}`} />
+      <ProfileSm url={`${followingUser.image}`} loading={loading} />
       <div className='userInfo' onClick={followerClickHandler}>
-        <p>{followingUser.username || <Skeleton width={100} />}</p>
-        <span>{(followingUser.intro !== undefined || followingUser.intro === '') ? followingUser.intro : <Skeleton width={250} />}</span>
+        <p>{loading ? <Skeleton width={100} /> : followingUser.username}</p>
+        <span>{loading ? <Skeleton width={250} /> : followingUser.intro}</span>
       </div>
       {
-        followingUser.username ? (
+        loading ? (
+          <Skeleton width={56} height={28} borderRadius={30} />
+        ) : (
           !isMe && isFollow ? (
             <WhiteSmBtn contents={'취소'} handleFunc={unFollowBtnHandler} type='button' />
           ) : (
             <GreenSmBtn contents={'팔로우'} handleFunc={followBtnHandler} type='button' />
           )
-        ) : (
-          <Skeleton width={56} height={28} borderRadius={30} />
         )
 
       }

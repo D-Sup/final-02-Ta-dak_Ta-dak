@@ -104,6 +104,9 @@ const ProfileModificationPage = () => {
 export default ProfileModificationPage
 
 const ProfileModificationStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   height: var(--screen-height);
 
   .profileInfo {

@@ -1,10 +1,13 @@
-import styled from 'styled-components';
 import { useNavigate } from 'react-router-dom';
+
+import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import UserId from './UserId';
 import { ProfileMd } from './Profile'
 
-const SearchProfile = ({ info }: { info: Author }) => {
+const SearchProfile = ({ info, loading }: { info: Author, loading?: boolean }) => {
 
   const navigate = useNavigate();
 
@@ -15,17 +18,15 @@ const SearchProfile = ({ info }: { info: Author }) => {
 
   return (
     <SearchProfileStyle>
-      {info && (
-        <>
-          <div onClick={followerClickHandler}>
-            <ProfileMd url={info.image} />
-          </div>
-          <div onClick={followerClickHandler}>
-            <strong>{info.username}</strong>
-            <UserId id={info.accountname} />
-          </div>
-        </>
-      )}
+      <>
+        <div onClick={followerClickHandler} >
+          <ProfileMd url={info.image} loading={loading} />
+        </div>
+        <div onClick={followerClickHandler}>
+          <strong>{loading ? <Skeleton width={60} /> : info.username}</strong>
+          <UserId id={info.accountname} loading={loading} />
+        </div>
+      </>
     </SearchProfileStyle>
   );
 }

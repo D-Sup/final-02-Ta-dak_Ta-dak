@@ -10,7 +10,7 @@ import styled from "styled-components"
 import Input from "../components/common/Input"
 import { GreenLgBtn, GreyLgBtn } from "../components/common/Button";
 
-export default function SignUpPage() {
+const SignUpPage = () => {
 
   const setReqFrame = useSetRecoilState(SignUpAtom);
 
@@ -96,7 +96,12 @@ export default function SignUpPage() {
   )
 }
 
+export default SignUpPage
+
 const SignUpPageStyle = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 34px 0 0 0;
   @media (max-width: 768px) {
     padding: 34px;

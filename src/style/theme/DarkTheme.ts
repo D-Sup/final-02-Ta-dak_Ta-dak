@@ -8,7 +8,7 @@ const DarkTheme = createGlobalStyle`
     --modal-background-color: #E5D6AE;
     --modal-blur-color: rgba(255, 255, 255, 0.2);
 
-    --basic-color-1: #E5D6AE; 
+    --basic-color-1: #FFF; 
     --basic-color-2: #75665D;
     --basic-color-3: #FDF5B9; 
     --basic-color-4: #FCFBF3; 

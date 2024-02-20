@@ -3,6 +3,8 @@ import { Link } from 'react-router-dom';
 
 import styled, { keyframes } from 'styled-components'
 
+import Loader from 'Loader/Loader';
+
 import { ReactComponent as Tadak } from '../assets/img/tadak.svg';
 import { ReactComponent as Fire } from '../assets/img/fire.svg';
 import { ReactComponent as WoodFire } from '../assets/img/woodfire.svg';
@@ -26,7 +28,8 @@ const SplashPage = () => {
   return (
     <>
       <SplashPageStyle>
-        <SplashCharacterContainer>
+        <Loader />
+        {/* <SplashCharacterContainer>
           <TitleStyle1></TitleStyle1>
           <TitleStyle2></TitleStyle2>
           <CharacterStyle>
@@ -36,7 +39,7 @@ const SplashPage = () => {
             <WoodFireStyle></WoodFireStyle>
           </CharacterStyle>
           <SubTitleStyle></SubTitleStyle>
-        </SplashCharacterContainer>
+        </SplashCharacterContainer> */}
         <LoginModalStyle isLoginModal={isLoginModal}>
           <button className="toggleBtn" type="button" onClick={() => { setIsLoginModal(preV => !preV) }}>
             <span>

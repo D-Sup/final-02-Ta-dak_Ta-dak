@@ -17,7 +17,7 @@ const ChatHeader = ({ name, isButton, handleFunc }: ChatHeaderProps) => {
 
   const navigate = useNavigate();
 
-  function handleGoBack(): void {
+  const handleGoBack = (): void => {
     navigate(-1)
   }
 

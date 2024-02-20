@@ -4,18 +4,19 @@ import Album from '../common/Album';
 
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
-const AlbumList = ({ visiblePost }: { visiblePost: Posts[] }) => {
+const AlbumList = ({ visiblePost, loading }: { visiblePost: Posts[], loading: boolean }) => {
 
   return (
     <>
       <h2 className="a11y-hidden">앨범형 포스트</h2>
-      {visiblePost.length !== 0 ? (
-        <AlbumListStyle>
-          {visiblePost.map((item) => (
-            <Album post={item} key={item.id || item._id} />
-          ))}
-        </AlbumListStyle>
-      ) : (
+      <AlbumListStyle>
+        {
+          visiblePost.map((item) => (
+            <Album post={item} key={item.id || item._id} loading={loading} />
+          ))
+        }
+      </AlbumListStyle>
+      {visiblePost.length === 0 && !loading &&
         <NoVisiblePost>
           <div className='noPostWrapper'>
             <div>
@@ -24,7 +25,7 @@ const AlbumList = ({ visiblePost }: { visiblePost: Posts[] }) => {
             <span>포스트가 없습니다</span>
           </div>
         </NoVisiblePost>
-      )}
+      }
     </>
   );
 }

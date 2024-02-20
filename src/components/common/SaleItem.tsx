@@ -1,9 +1,11 @@
 import styled from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import { useModalStack } from '../../hooks/useModalStack';
 import ProductDetailModal from './ProductDetailModal';
 
-const SaleItem = ({ saleItem }: { saleItem: Product }) => {
+const SaleItem = ({ saleItem, loading }: { saleItem: Product, loading: boolean }) => {
 
   const { push } = useModalStack();
 
@@ -11,10 +13,20 @@ const SaleItem = ({ saleItem }: { saleItem: Product }) => {
     <SaleItemStyle onClick={() => {
       push(ProductDetailModal, { saleItem })
     }}>
-      <h3 className='a11y-hidden'>{saleItem.itemName}</h3>
-      <img src={saleItem.itemImage} alt={saleItem.itemName} />
-      <span className='itemName'>{saleItem.itemName}</span>
-      <span className='itemPrice'>{saleItem.price.toLocaleString()}원</span>
+      {loading ?
+        <>
+          <Skeleton style={{ width: '100%', aspectRatio: '150/115' }} />
+          <Skeleton width={100} height={16} />
+          <Skeleton width={100} height={19} />
+        </>
+        :
+        <>
+          <h3 className='a11y-hidden'>{saleItem.itemName}</h3>
+          <img src={saleItem.itemImage} alt={saleItem.itemName} />
+          <span className='itemName'>{saleItem.itemName}</span>
+          <span className='itemPrice'>{saleItem.price.toLocaleString()}원</span>
+        </>
+      }
     </SaleItemStyle>
   );
 }
@@ -22,8 +34,7 @@ const SaleItem = ({ saleItem }: { saleItem: Product }) => {
 export default SaleItem
 
 const SaleItemStyle = styled.button`
-  width: calc((var(--basic-width) - 90) / 2) px;
-  aspect-ratio: 140/162;
+  width: 100%;
   text-align: start;
   margin: auto;
 

@@ -10,12 +10,12 @@ import FollowersProfile from '../components/common/FollowersProfile';
 import ChatHeader from '../components/header/ChatHeader';
 import Loader from '../Loader/Loader';
 
-export default function FollowListPage() {
+const FollowListPage = () => {
 
   const [loadFollowSeq, setLoadFollowSeq] = useState<number>(0);
   const [followList, setFollowList] = useState<Author[]>([]);
   const [title, setTitle] = useState<string>('');
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(true);
   const [firstMount, setFirstMount] = useState(true);
 
   const elementRef = useRef<HTMLDivElement>(null);
@@ -28,11 +28,15 @@ export default function FollowListPage() {
     if (location.pathname === `/profile/${accountname}/following`) {
       list = await getFollowingList(accountname, value);
       setTitle('Followings');
-      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 300)
     } else if (location.pathname === `/profile/${accountname}/follower`) {
       list = await getFollowerList(accountname, value);
       setTitle('Followers');
-      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+      }, 300)
     }
     setFollowList((prevValue) => [...prevValue, ...list]);
   };
@@ -54,27 +58,28 @@ export default function FollowListPage() {
     <>
       <ChatHeader name={`${title}`} isButton={false} />
       <FollowListStyle ref={elementRef}>
-        {loading ? (
-          followList.length !== 0 ? (
-            followList.map((item) => (
-              <FollowersProfile followingUser={item} key={item._id} />
-            ))
-          ) : (
-            <NoFollowListStyle>
-              {title === 'Followings' ? (
-                <span>팔로잉한 사람이 없습니다</span>
-              ) : (
-                <span>팔로워가 없습니다</span>
-              )}
-            </NoFollowListStyle>
-          )
-        ) : (
-          <Loader />
-        )}
+        {
+          followList.map((item) => (
+            <FollowersProfile followingUser={item} key={item._id} loading={loading} />
+          ))
+        }
+        {
+          followList.length === 0 && !loading &&
+          <NoFollowListStyle>
+            {title === 'Followings' ? (
+              <span>팔로잉한 사람이 없습니다</span>
+            ) : (
+              <span>팔로워가 없습니다</span>
+            )}
+          </NoFollowListStyle>
+        }
+
       </FollowListStyle>
     </>
   );
 }
+
+export default FollowListPage
 
 const FollowListStyle = styled.div`
   height: var(--screen-nav-height);

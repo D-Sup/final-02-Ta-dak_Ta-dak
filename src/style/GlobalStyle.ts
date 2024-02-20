@@ -2,6 +2,7 @@ const { createGlobalStyle } = require('styled-components');
 
 const GlobalStyle = createGlobalStyle`
 
+
   * {
     transition: background-color .3s, color .3s;
   }
@@ -16,7 +17,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   :root {
-    --basic-width : 390px;
+    --basic-width : 100vw;
     --basic-height : 100vh;
     --screen-height : calc(var(--basic-height) - 48px);
     --screen-nav-height : calc(var(--basic-height) - (60px + 48px));

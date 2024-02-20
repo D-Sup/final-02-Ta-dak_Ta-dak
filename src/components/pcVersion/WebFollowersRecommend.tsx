@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react';
 import useUserInfo from 'hooks/useUserInfo';
 
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
-
 import { getRecFollowingList } from '../../api/followListAPI';
 
 import styled from 'styled-components';
@@ -15,6 +12,7 @@ const FollowersRecommend = () => {
   const [myFollowList, setMyFollowList] = useState<Author[]>([])
   const [recFollowList, setRecFollowList] = useState<Author[]>([])
   const [firstMount, setFirstMount] = useState<boolean>(true)
+  const [loading, setLoading] = useState<boolean>(true);
 
   const { accountname: myAccountname, id: myId } = useUserInfo()
 
@@ -27,7 +25,6 @@ const FollowersRecommend = () => {
 
     myFollowList.forEach(async (item) => {
       let list = await getRecFollowingList(item.accountname);
-      console.log(item.accountname);
 
       list.forEach((item) => {
         if (seen.has(item._id)) {
@@ -78,6 +75,7 @@ const FollowersRecommend = () => {
     if (firstMount && myFollowList.length !== 0) {
       fetchRecFollowList();
       setFirstMount(false);
+      setLoading(false)
     }
   }, [myFollowList]);
 
@@ -89,11 +87,11 @@ const FollowersRecommend = () => {
         <div className='followListWrapper'>
           {recFollowList.length !== 0 ? (
             recFollowList.map((item, index) => (
-              <FollowersProfile followingUser={item} key={index} />
+              <FollowersProfile followingUser={item} key={index} loading={loading} />
             ))
           ) : (
             Array(6).fill(1).map((item, index) => (
-              <FollowersProfile followingUser={item} key={index} />
+              <FollowersProfile followingUser={item} key={index} loading={true} />
             ))
           )}
         </div>

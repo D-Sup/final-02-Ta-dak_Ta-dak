@@ -8,7 +8,7 @@ const DefaultTheme = createGlobalStyle`
     --modal-background-color: #FCFBF3;
     --modal-blur-color: rgba(0, 0, 0, 0.2);
 
-    --basic-color-1: #B9D6A3; 
+    --basic-color-1: #FFF; 
     --basic-color-2: #4E683F; 
     --basic-color-3: #FDF5B9;
     --basic-color-4: #FFF;

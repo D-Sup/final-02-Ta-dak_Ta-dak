@@ -3,16 +3,19 @@ import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { UserAtom } from '../../recoil/AtomUserState';
 import { useModalStack } from '../../hooks/useModalStack';
+import useLazyLoading from 'hooks/useLazyLoading';
+import useWindowSize from 'hooks/useWindowSize';
 
 import { postLike, deleteLike } from '../../api/heartAPI';
 import { deletePost, reportPost } from '../../api/postAPI';
 
 import styled, { keyframes } from 'styled-components';
+import Skeleton from 'react-loading-skeleton'
+import 'react-loading-skeleton/dist/skeleton.css'
 
 import Modal from './Modal';
 import Alert from './Alert';
 import SearchProfile from './SearchProfile';
-import useLazyLoading from '../../hooks/useLazyLoading';
 
 import { ReactComponent as IconLike } from './../../assets/img/s-icon-fire.svg';
 import { ReactComponent as IconComment } from './../../assets/img/s-icon-message.svg';
@@ -21,20 +24,22 @@ import moreButtonIcon from './../../assets/img/s-icon-more.svg';
 import downArrow from '../../assets/img/down-arrow.png';
 import errorImg from '../../assets/img/UploadImage404.svg';
 
-const Post = ({ post }: { post: Posts }) => {
+const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
 
   const [contentMore, setContentMore] = useState<boolean>(true);
   const [like, setLike] = useState<boolean | undefined>(post.hearted);
 
+  const { currentWidth } = useWindowSize();
   const { push, clear } = useModalStack();
   const myInfo = useRecoilValue(UserAtom);
   const observeImage = useRef<HTMLImageElement>(null);
   const navigate = useNavigate();
   const location = useLocation();
 
+  useLazyLoading(observeImage, post.image);
+
   const isLike = post.hearted;
   const id = post.id || post._id || '';
-  useLazyLoading(observeImage, post.image);
 
 
   const postLikeReq = (): void => {
@@ -117,53 +122,74 @@ const Post = ({ post }: { post: Posts }) => {
             )
         }} />
         <div className='profileComponent'>
-          <SearchProfile info={post.author} />
+          <SearchProfile info={post.author || ''} loading={loading} />
         </div>
         <PostContainerStyle locationPathname={location.pathname} contentMore={contentMore}>
           <Link to={`/postdetail/${id}`}>
             <h3 className='a11y-hidden'>포스트 내용</h3>
             <div onClick={() => setContentMore((prevValue) => !prevValue)}>
-              <pre>{post.content}</pre>
+              {
+                loading ?
+                  <>
+                    <Skeleton width={150} height={20} />
+                    <Skeleton width={200} height={20} style={{ marginTop: '17px', marginBottom: '16px' }} />
+                  </>
+                  :
+                  <pre>{post.content}</pre>
+              }
               {post.content?.length >= 180 && <button className="moreContentBtn" ></button>}
             </div>
-            {contentMore && post.image && (
+            {loading && <Skeleton width={currentWidth > 768 ? 436 : 304} height={currentWidth > 768 ? 332 : 228} style={{ marginBottom: '16px' }} />}
+            {!loading &&
               <img
+                src={post.image}
                 ref={observeImage}
-                // data-src={post.image} // 이미지 URL을 설정하세요
-                // src={post.image}
-                alt={`${post.author.accountname}의 포스팅 이미지`}
+                style={{ display: loading ? 'none' : 'block' }}
                 onError={(event) => {
                   (event.target as HTMLImageElement).src = errorImg;
                 }}
-              />
-            )}
+                alt={`${!loading && post.author.accountname}의 포스팅 이미지`}
+              />}
           </Link>
-          <div className='likeCommentCount'>
-            <button
-              className='likeButton'
-              onClick={() => {
-                setLike((prev) => !prev);
-              }}
-            >
-              <span className='a11y-hidden'>좋아요 버튼</span>
-              <IconLike
-                className='iconImg'
-                fill={like ? '#E73C3C' : 'var(--background-color)'}
-                stroke={like ? '#E73C3C' : '#767676'}
-                onClick={like ? deleteLikeReq : postLikeReq}
-              />
-              {isLike ?
-                <span className='count'>{like ? post.heartCount : post.heartCount - 1}</span> :
-                <span className='count'>{like ? post.heartCount + 1 : post.heartCount}</span>
-              }
-            </button>
-            <Link to={`/postdetail/${id}`}>
-              <span className='a11y-hidden'>댓글 보기, 남기기</span>
-              <IconComment className='iconImg' />
-              <span className='count'>{post.comments?.length}</span>
-            </Link>
-          </div>
-          <span className='postDate'>{timeFormat(post.createdAt)}</span>
+          {
+            loading ?
+              <Skeleton width={100} height={21} style={{ marginBottom: '16px' }} />
+              :
+              <div className='likeCommentCount'>
+                <button
+                  className='likeButton'
+                  onClick={() => {
+                    setLike((prev) => !prev);
+                  }}
+                >
+                  <span className='a11y-hidden'>좋아요 버튼</span>
+                  <IconLike
+                    className='iconImg'
+                    fill={like ? '#E73C3C' : 'var(--background-color)'}
+                    stroke={like ? '#E73C3C' : '#767676'}
+                    onClick={like ? deleteLikeReq : postLikeReq}
+                  />
+                  {isLike ?
+                    <span className='count'>{like ? post.heartCount : post.heartCount - 1}</span> :
+                    <span className='count'>{like ? post.heartCount + 1 : post.heartCount}</span>
+                  }
+                </button>
+                <Link to={`/postdetail/${id}`}>
+                  <span className='a11y-hidden'>댓글 보기, 남기기</span>
+                  <IconComment className='iconImg' />
+                  <span className='count'>{post.comments?.length}</span>
+                </Link>
+              </div>
+          }
+
+          {
+            loading ?
+              <Skeleton width={130} height={17} />
+              :
+              <span className='postDate'>
+                {timeFormat(post.createdAt)}
+              </span>
+          }
         </PostContainerStyle>
       </PostStyle>
     </>

@@ -15,16 +15,7 @@ const NavBar = () => {
 
   const location = useLocation();
 
-  // const { accountname } = getUserInfo();
   const { accountname } = useUserInfo()
-
-  // const [asdas, setAsdas] = useState(accountname)
-  // useEffect(() => {
-  //   setAsdas(accountname)
-  // }, [accountname])
-  // console.log(accountname);
-
-
 
   const hideNavBarPaths = [
     '/login',
@@ -71,6 +62,7 @@ const NavBar = () => {
                 onClick={() => handleIconClick(item.component)}
                 selected={selectedIcon === item.component}
               >
+                <div></div>
                 <item.component
                   width={24}
                   height={24}
@@ -90,9 +82,14 @@ const NavBar = () => {
 export default NavBar;
 
 const NavBarStyle = styled.nav`
+  overflow: hidden;
   position: relative;
   width: var(--basic-width);
-  background-color: var(--basic-color-1);
+  background-color: #FFF;
+  box-shadow: 0 -1px 3px gray;
+  /* background-color: var(--basic-color-1); */
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
 
   article {
     display: flex;
@@ -105,10 +102,11 @@ const NavBarStyle = styled.nav`
 `;
 
 const StyledLink = styled(Link) <{ selected: boolean }>`
-  padding: 10px;
+  padding: 13px 10px;
   text-align: center;
   width: calc(100% / 5);
   height: 100%;
+  border-radius: 10px;
   transition: background-color 0.3s;
 
   span {

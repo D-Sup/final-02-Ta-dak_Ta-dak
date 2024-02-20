@@ -13,11 +13,11 @@ interface BasicHeaderProps {
   handleFunc?: () => void;
 }
 
-export default function BasicHeader({ isButton, handleFunc }: BasicHeaderProps) {
+const BasicHeader = ({ isButton, handleFunc }: BasicHeaderProps) => {
 
   const navigate = useNavigate();
 
-  function handleGoBack(): void {
+  const handleGoBack = (): void => {
     navigate(-1)
   }
 
@@ -32,6 +32,8 @@ export default function BasicHeader({ isButton, handleFunc }: BasicHeaderProps) 
     </BasicHeaderStyle>
   );
 }
+
+export default BasicHeader
 
 const BasicHeaderStyle = styled.div`
   position: relative;

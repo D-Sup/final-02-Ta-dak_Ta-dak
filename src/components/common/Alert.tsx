@@ -6,9 +6,9 @@ interface AlertProps extends ModalStackAtomType {
   closeModal: () => void
 }
 
-export default function Alert({ props, selectOptions = [], actions = [], closeModal }: AlertProps) {
+const Alert = ({ props, selectOptions = [], actions = [], closeModal }: AlertProps) => {
 
-  function handleSelectOption(action: ((...args: any[]) => void) | null): void {
+  const handleSelectOption = (action: ((...args: any[]) => void) | null): void => {
     closeModal();
     if (action !== null) {
       action();
@@ -30,6 +30,8 @@ export default function Alert({ props, selectOptions = [], actions = [], closeMo
     </>
   );
 }
+
+export default Alert
 
 const ButtonStyle = styled.div`
   width: 100%;

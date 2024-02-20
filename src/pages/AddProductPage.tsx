@@ -134,9 +134,9 @@ const AddProductPage = () => {
 export default AddProductPage
 
 const AddProductPageStyle = styled.div`
+  width: 322px;
   height: var(--screen-height);
   margin: 0 auto;
-  padding: 0 34px;
   overflow-y: scroll;
   ::-webkit-scrollbar {
     background-color: transparent;
@@ -194,6 +194,7 @@ const AddProductPageStyle = styled.div`
   @media (min-width: 768px) {
     height: calc(var(--screen-height) - 48px);
     padding: 0px 0px 26px 0px;
+    width: 500px;
     
     p {
       margin: 0;

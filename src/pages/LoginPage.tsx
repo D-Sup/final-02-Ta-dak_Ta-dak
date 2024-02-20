@@ -128,6 +128,9 @@ const LoginPage = () => {
 export default LoginPage;
 
 const LoginPageStyle = styled.section`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   padding: 34px;
   width: var(--basic-width);
   height: var(--basic-height);

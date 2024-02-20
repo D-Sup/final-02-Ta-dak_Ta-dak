@@ -16,9 +16,10 @@ import { ReactComponent as IconSaleOn } from './../../assets/img/icon-saleItem-o
 interface UserPostListProps {
   saleItem: Product[],
   post: Posts[]
+  loading: boolean
 }
 
-const UserPostList = ({ saleItem, post }: UserPostListProps) => {
+const UserPostList = ({ saleItem, post, loading }: UserPostListProps) => {
 
   const { accountname } = useParams() as { accountname: string };
   const location = useLocation();
@@ -28,9 +29,9 @@ const UserPostList = ({ saleItem, post }: UserPostListProps) => {
 
   return (
     <>
-      <section style={{ minWidth: '390px' }}>
-        <TypeTabsWrapperStyle>
-          <TypeTabsStyle>
+      <section>
+        <TypeTabsWrapperStyle style={{ border: loading ? 'none' : '' }}>
+          <TypeTabsStyle style={{ display: loading ? 'none' : 'block' }}>
             <TabStyle to={`/profile/${accountname}`}>
               <span className='a11y-hidden'>포스트 버튼</span>
               {selectedPath === undefined ? <IconPostListOn /> : <IconPostListOff />}
@@ -45,9 +46,9 @@ const UserPostList = ({ saleItem, post }: UserPostListProps) => {
             </TabStyle>
           </TypeTabsStyle>
           <PostWrapperStyle>
-            {selectedPath === undefined && <PostList visiblePost={post} />}
-            {selectedPath === 'album' && <AlbumList visiblePost={post} />}
-            {selectedPath === 'saleitem' && <SaleItemList saleItem={saleItem} />}
+            {selectedPath === undefined && <PostList visiblePost={post} loading={loading} />}
+            {selectedPath === 'album' && <AlbumList visiblePost={post} loading={loading} />}
+            {selectedPath === 'saleitem' && <SaleItemList saleItem={saleItem} loading={loading} />}
           </PostWrapperStyle>
         </TypeTabsWrapperStyle>
       </section>

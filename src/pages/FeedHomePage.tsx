@@ -9,7 +9,6 @@ import styled from 'styled-components';
 import TopButton from '../components/common/TopButton';
 import MainHeader from '../components/header/MainHeader';
 import PostList from '../components/UserPostList/PostList';
-import Loader from '../Loader/Loader';
 
 const FeedHomePage = () => {
 
@@ -27,14 +26,17 @@ const FeedHomePage = () => {
     if (location.pathname === '/feed') {
       const data = await getPost(value)
       setVisiblePost((PrevValue) => [...PrevValue, ...data.posts]);
-
-      setLoading(false)
+      setTimeout(() => {
+        setLoading(false)
+      }, 600)
       return data
     }
     else if (location.pathname === '/recommendfeed') {
       const data = await getPostAll(value)
       setVisiblePost((PrevValue) => [...PrevValue, ...data.posts]);
-      setLoading(false);
+      setTimeout(() => {
+        setLoading(false)
+      }, 600)
       return data;
     }
     return null
@@ -72,7 +74,7 @@ const FeedHomePage = () => {
     <>
       <MainHeader />
       <PostListStyle ref={elementRef}>
-        {loading ? <Loader /> : visiblePost.length !== 0 && <PostList visiblePost={visiblePost} />}
+        <PostList visiblePost={visiblePost} loading={loading} />
       </PostListStyle>
       <TopButton elementRef={elementRef} />
     </>

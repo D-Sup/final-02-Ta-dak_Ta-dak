@@ -15,7 +15,7 @@ import Input from '../components/common/Input'
 import { FileUploadLg } from '../components/common/FileUpload'
 import { GreenLgBtn, GreyLgBtn } from '../components/common/Button'
 
-export default function ProfileSettingPage() {
+const ProfileSettingPage = () => {
 
   const [reqFrame, setReqFrame] = useRecoilState(SignUpAtom)
 
@@ -112,6 +112,7 @@ export default function ProfileSettingPage() {
     }
   }, [uploadValidity])
 
+
   return (
     <>
       <ProfileSignUpPageStyle onSubmit={handleSubmit}>
@@ -157,6 +158,8 @@ export default function ProfileSettingPage() {
     </>
   )
 }
+
+export default ProfileSettingPage
 
 const ProfileSignUpPageStyle = styled.form`
   display: flex;

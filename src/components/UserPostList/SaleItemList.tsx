@@ -5,19 +5,18 @@ import SaleItem from '../common/SaleItem';
 import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
 
-const SaleItemList = ({ saleItem }: { saleItem: Product[] }) => {
+const SaleItemList = ({ saleItem, loading }: { saleItem: Product[], loading: boolean }) => {
 
   return (
     <>
       <h2 className="a11y-hidden">판매상폼</h2>
-      {saleItem.length !== 0 ? (
-        <SaleItemListStyle>
-          {saleItem.map((item) => (
-            <SaleItem saleItem={item} key={item.id} />
-          ))}
+      <SaleItemListStyle>
+        {saleItem.map((item) => (
+          <SaleItem saleItem={item} key={item.id} loading={loading} />
+        ))}
+      </SaleItemListStyle>
 
-        </SaleItemListStyle>
-      ) : (
+      {saleItem.length === 0 && !loading &&
         <NoVisiblePost>
           <div className="noPostWrapper">
             <div>
@@ -26,7 +25,8 @@ const SaleItemList = ({ saleItem }: { saleItem: Product[] }) => {
             <span>판매상품이 없습니다</span>
           </div>
         </NoVisiblePost>
-      )}
+      }
+
     </>
   );
 }

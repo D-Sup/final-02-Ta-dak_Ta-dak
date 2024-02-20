@@ -10,8 +10,6 @@ export const upload = async (content: string, image: string): Promise<GetPostRes
   };
   try {
     const { data } = await axiosAuth.post(reqUrl, body)
-    console.log(data);
-
     return data
   } catch (error) {
     throw error

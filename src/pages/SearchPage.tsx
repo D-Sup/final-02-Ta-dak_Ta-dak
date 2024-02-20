@@ -12,6 +12,7 @@ const SearchPage = () => {
 
   const [search, setSearch] = useState<string>('')
   const [searchList, setSearchList] = useState<Author[]>([])
+  const [loading, setLoading] = useState<boolean>(true);
 
   const searchDebounced = useDebounce(search)
 
@@ -19,12 +20,19 @@ const SearchPage = () => {
     const setResult = async () => {
       if (searchDebounced) {
         setSearchList(await getSearch(searchDebounced));
-      } else {
-        setSearchList([]);
+        setLoading(false)
       }
     };
     setResult();
   }, [searchDebounced]);
+
+  useEffect(() => {
+    if (search.length === 0) {
+      setSearchList([]);
+    } else {
+      setLoading(true)
+    }
+  }, [search])
 
 
   return (
@@ -33,17 +41,24 @@ const SearchPage = () => {
       <SearchHeader value={search} setValue={setSearch}></SearchHeader>
       <SearchPageStyle>
         <SearchResultWrapper>
-          {searchList.length
-            ? searchList.map((item, index) => {
-              return (
-                <li key={index}>
-                  <SearchProfile info={item} />
-                </li>
-              );
-            })
-            : null}
+          {
+            loading && search.length !== 0 ?
+              (
+                Array(9).fill(1).map((item, index) => (
+                  <li key={index} >
+                    <SearchProfile info={item} loading={true} />
+                  </li>
+                ))
+              ) : (
+                searchList.map((item, index) => (
+                  <li key={index} >
+                    <SearchProfile info={item} />
+                  </li>
+                ))
+              )
+          }
         </SearchResultWrapper>
-      </SearchPageStyle>
+      </SearchPageStyle >
     </>
   );
 }
