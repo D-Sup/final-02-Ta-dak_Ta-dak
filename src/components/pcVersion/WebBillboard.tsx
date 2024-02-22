@@ -11,6 +11,7 @@ const WebBillboard = () => {
     '/login',
     '/signup',
     '/signup/profile',
+    '/introduce',
     '/feed',
     '/recommendfeed',
     '/profile'

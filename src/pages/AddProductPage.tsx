@@ -134,7 +134,12 @@ const AddProductPage = () => {
 export default AddProductPage
 
 const AddProductPageStyle = styled.div`
+  position: relative;
   width: 322px;
+  /* padding: 0 2px; */
+  /* display: flex;
+  flex-direction: column;
+  align-items: center; */
   height: var(--screen-height);
   margin: 0 auto;
   overflow-y: scroll;
@@ -144,11 +149,9 @@ const AddProductPageStyle = styled.div`
   }
 
   .showImg {
-    width: 322px;
-    height: 204px;
-    margin-top: 15px;
+    width: 100%;
+    margin-top: 10px;
     border-radius: 10px;
-    border: 0.5px solid var(--basic-color-6);
     object-fit: cover;
   }
 
@@ -167,7 +170,8 @@ const AddProductPageStyle = styled.div`
   }
 
   .inputProductInfo {
-    margin-top: 20px;
+    margin-top: 40px;
+    margin-bottom: 40px;
   }
 
   .textAreaTitle {
@@ -176,25 +180,32 @@ const AddProductPageStyle = styled.div`
   }
 
   textarea {
-    background-color: var(--basic-color-4);
-    color: var(--common-text-color-2);
+    padding: 5px 10px;
+    border-radius: 10px;
+    background-color: var(--input-box-color);
+    color: var(--invert-color);
+    border: 2px solid var(--background-color);
+    transition: .2s ease-out;
+    &:focus {
+      border: 2px solid var(--basic-color-2);
+    }
   }
 
   #product-detail {
     font-family: 'Noto Sans KR', sans-serif;
     font-size: var(--font--size-sm);
-    width: 322px;
+    width: 100%;
     height: 245px;
-    border: none;
     outline: none;
     resize: none;
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   @media (min-width: 768px) {
     height: calc(var(--screen-height) - 48px);
     padding: 0px 0px 26px 0px;
-    width: 500px;
+    width: 504px;
+    padding: 0 2px;
     
     p {
       margin: 0;

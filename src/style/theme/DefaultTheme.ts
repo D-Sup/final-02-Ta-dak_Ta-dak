@@ -4,41 +4,45 @@ const DefaultTheme = createGlobalStyle`
 
   :root {
 
-    --background-color: #FCFBF3;
-    --modal-background-color: #FCFBF3;
+    --background-color: #FFF;
+    --modal-background-color: #FFF;
     --modal-blur-color: rgba(0, 0, 0, 0.2);
+    --modal-hover-color: rgb(238,241,244);
+    
+    --basic-color-1: #0085ff; 
+    --basic-color-2: #006fff;
+    
+    --input-box-color: rgb(249, 249, 250);
+    --box-shadow-color: #DBDBDB;
 
-    --basic-color-1: #FFF; 
-    --basic-color-2: #4E683F; 
-    --basic-color-3: #FDF5B9;
-    --basic-color-4: #FFF;
-    --basic-color-5: #1C8A00;
-    --basic-color-6: #DBDBDB;
+    --search-bar-color: #DBDBDB;
+    --skeleton-color: #DBDBDB;
 
-    --modal-color: #FCFBF3;
-    --alert-color: #FCFBF3;
-
-    --border-color: #8E6D5B;
-
-    --btn-text-color-1: #FCFBF3;
-    --btn-text-color-2: #A2A378;
-
+    --border-color: #FF6B6B;
+    
+    --basic-btn-color: #0085ff;
+    --bold-btn-color: #006fff;
     --disabled-btn-color: #E6E2E2;
-    --basic-btn-color: #B9D6A3;
-    --bold-btn-color: #4E683F;
+    
+    --disabled-btn-text-color: #FFF;
     
     --text-color-1: #000;
     --text-color-2: #767676;
     --text-color-3: #333;
-
+    --text-color-4: #767676;
+    --logo-color: #000;
+    
     --common-text-color-1: #FFF;
     --common-text-color-2: #000;
-
-    --icon-active-on:#767676;
+    --invert-color: #000;
+    
+    --icon-active-on: #767676;
     --icon-active-off: #DBDBDB;
     
-    --header-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-    --header-color: #FCFBF3;
+    /* --header-shadow: 0px 4px 4px rgba(0, 0, 0, 0.10); */
+    --navbar-shadow: 0 -4px 4px rgba(0, 0, 0, 0.10);
+    --header-color: #f5f5f5;
+    --navbar-color: #f5f5f5;
   }
 `;
 

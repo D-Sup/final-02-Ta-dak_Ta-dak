@@ -41,20 +41,19 @@ const ChatList = () => {
                   <ProfileSm url={''} confirm={!loading && !item.messages.slice().reverse().find(message => message.receive === true)?.confirm} loading={loading} />
                 </div>
                 <div className="text">
-                  <span>{loading ? <Skeleton width={150} height={20} /> : item.name}</span>
+                  <span>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={150} height={15} /> : item.name}</span>
 
                   <div className="chatroomlink">
-                    <p>
-                      {
-                        loading ?
-                          <Skeleton width={250} height={20} style={{ marginTop: '5px' }} /> :
-                          item.messages.slice().reverse().find(message => message.Msg !== undefined)?.Msg
-                      }
-                    </p>
+                    {
+                      loading ?
+                        <Skeleton baseColor={'var(--skeleton-color)'} width={200} height={10} style={{ marginTop: '5px' }} />
+                        :
+                        <p>{item.messages.slice().reverse().find(message => message.Msg !== undefined)?.Msg}</p>
+                    }
                     <div className="date">
                       {
                         loading ?
-                          <Skeleton width={50} height={16} />
+                          <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={16} />
                           :
                           `${lastMessageCreatedAt[0]}${lastMessageCreatedAt[1]}${lastMessageCreatedAt[2]}`
                       }
@@ -73,9 +72,10 @@ const ChatList = () => {
 export default ChatList
 
 const ChatListPageStyle = styled.div`
+  position: relative;
   width: var(--basic-width);
   height: var(--screen-nav-height);
-  background-color: var(--background-color);
+  padding-top: 15px;
   overflow-y: scroll;
   overflow-x: hidden;
   ::-webkit-scrollbar {
@@ -102,8 +102,6 @@ const ChatContainerStyle = styled.div`
   }
 
   span {
-    display: block;
-    height: 19px;
     font-weight: bold;
     font-size: var(--font--size-md);
     color: var(--text-color-1);
@@ -115,14 +113,14 @@ const ChatContainerStyle = styled.div`
   }
 
   p {
-    display: inline-block;
+    width: 220px;
     height: 16px;
+    display: inline-block;
     line-height: 16px;
     font-size: var(--font--size-sm);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    width: 220px;
     color: var(--text-color-3);
   }
 

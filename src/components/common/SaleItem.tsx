@@ -15,9 +15,9 @@ const SaleItem = ({ saleItem, loading }: { saleItem: Product, loading: boolean }
     }}>
       {loading ?
         <>
-          <Skeleton style={{ width: '100%', aspectRatio: '150/115' }} />
-          <Skeleton width={100} height={16} />
-          <Skeleton width={100} height={19} />
+          <Skeleton baseColor={'var(--skeleton-color)'} style={{ width: '100%', aspectRatio: '150/115', marginBottom: '10px' }} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={100} height={20} style={{ marginBottom: '5px' }} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={80} height={18} />
         </>
         :
         <>
@@ -34,7 +34,7 @@ const SaleItem = ({ saleItem, loading }: { saleItem: Product, loading: boolean }
 export default SaleItem
 
 const SaleItemStyle = styled.button`
-  width: 100%;
+  width: calc((var(--basic-width) / 2) - 45px);
   text-align: start;
   margin: auto;
 
@@ -43,10 +43,11 @@ const SaleItemStyle = styled.button`
     aspect-ratio: 150/115;
     border-radius: 8px;
     border: 0.8px solid #dad3d3;
+    margin-bottom: 10px;
+    object-fit: cover;
   }
 
   span {
-    display: block;
     /* 한줄 넘어가면 말줄임 되게 */
     overflow: hidden;
     text-overflow: ellipsis;
@@ -54,12 +55,13 @@ const SaleItemStyle = styled.button`
   }
 
   .itemName {
-    font-size: var(--font--size-l);
+    display: block;
+    font-size: var(--font--size-lg);
     color: var(--text-color-1);
   }
 
   .itemPrice {
-    color: var(--basic-color-5);
+    color: var(--basic-color-2);
     font-size: var(--font--size-md);
     font-weight: var(--font--Bold);
   }

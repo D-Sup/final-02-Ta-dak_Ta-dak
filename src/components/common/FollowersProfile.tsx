@@ -45,12 +45,12 @@ const FollowersProfile = ({ followingUser, loading }: { followingUser: Author, l
     <FollowersProfileStyle>
       <ProfileSm url={`${followingUser.image}`} loading={loading} />
       <div className='userInfo' onClick={followerClickHandler}>
-        <p>{loading ? <Skeleton width={100} /> : followingUser.username}</p>
-        <span>{loading ? <Skeleton width={250} /> : followingUser.intro}</span>
+        <p>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={100} /> : followingUser.username}</p>
+        <span>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={250} /> : followingUser.intro}</span>
       </div>
       {
         loading ? (
-          <Skeleton width={56} height={28} borderRadius={30} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={56} height={28} borderRadius={30} />
         ) : (
           !isMe && isFollow ? (
             <WhiteSmBtn contents={'취소'} handleFunc={unFollowBtnHandler} type='button' />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams, useLocation } from "react-router-dom";
 import { useSetRecoilState } from "recoil";
 import { useModalStack } from "../hooks/useModalStack";
 import useUserInfo from "hooks/useUserInfo";
@@ -29,6 +29,8 @@ const ProfilePage = () => {
   const [isMyAccount, setIsMyAccount] = useState<boolean>(false);
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [postLoading, setPostLoading] = useState<boolean>(true);
+  const [firstMountPost, setFirstMountPost] = useState<boolean>(true);
+  const [firstMountSaleItem, setFirstMountSaleItem] = useState<boolean>(true);
 
   const { push, clear } = useModalStack();
 
@@ -37,6 +39,7 @@ const ProfilePage = () => {
   const { accountname: accountnameFromUserAtom } = useUserInfo();
 
   const navigate = useNavigate();
+  const location = useLocation()
 
   const isValidAccountName = async (value: string) => {
     return await postAccountValid(value)
@@ -71,7 +74,7 @@ const ProfilePage = () => {
     )
     setIsLogin(false)
     sessionStorage.removeItem('user')
-    navigate('/splash');
+    navigate('/introduce');
     clear();
   }
 
@@ -85,19 +88,31 @@ const ProfilePage = () => {
   }
 
   useEffect(() => {
-    setProfileLoading(true);
-    setPostLoading(true);
     const fetchData = async () => {
+      setProfileLoading(true);
+      setPostLoading(true);
       accountname === accountnameFromUserAtom ? setIsMyAccount(true) : setIsMyAccount(false)
       const data = await isValidAccountName(accountname);
       if (data === '이미 가입된 계정ID 입니다.') {
         await loadProfilePage(accountname)
         await loadPosts()
+        setFirstMountPost(false);
       }
     }
 
     fetchData();
   }, [accountnameFromUserAtom, accountname])
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setPostLoading(true);
+      await loadPosts()
+    }
+    if (!firstMountPost && firstMountSaleItem && location.pathname.includes('/saleitem')) {
+      fetchData();
+      setFirstMountSaleItem(false)
+    }
+  }, [location.pathname])
 
 
   return (
@@ -127,5 +142,6 @@ const ProfilePage = () => {
 export default ProfilePage
 
 const ProfilePageStyle = styled.section`
+  position: relative;
   height: calc(100vh - 60px);
 `;

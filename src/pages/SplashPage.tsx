@@ -1,133 +1,31 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import styled, { keyframes } from 'styled-components'
 
-import Loader from 'Loader/Loader';
-
-import { ReactComponent as Tadak } from '../assets/img/tadak.svg';
-import { ReactComponent as Fire } from '../assets/img/fire.svg';
-import { ReactComponent as WoodFire } from '../assets/img/woodfire.svg';
 import { ReactComponent as SubTitle } from '../assets/img/subtitle.svg';
-import { ReactComponent as FireworkR } from '../assets/img/firework-r.svg';
-import { ReactComponent as FireworkL } from '../assets/img/firework-l.svg';
-import { ReactComponent as Kakao } from '../assets/img/icon-kakao.svg';
-import { ReactComponent as Google } from '../assets/img/icon-google.svg';
-import { ReactComponent as Facebook } from '../assets/img/icon-facebook.svg';
-import { ReactComponent as ArrowTop } from '../assets/img/icon-arrow-top.svg';
+import { ReactComponent as TadakTitle } from '../assets/img/tadaktitle.svg';
+
+import splash from '../assets/img/splash.gif';
 
 const SplashPage = () => {
 
-  const [isLoginModal, setIsLoginModal] = useState<boolean>(false);
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const timer = setTimeout(() => setIsLoginModal(true), 1500)
-    return () => clearTimeout(timer)
-  }, [])
+  setTimeout(() => {
+    navigate('/introduce')
+  }, 6500)
 
   return (
-    <>
-      <SplashPageStyle>
-        <Loader />
-        {/* <SplashCharacterContainer>
-          <TitleStyle1></TitleStyle1>
-          <TitleStyle2></TitleStyle2>
-          <CharacterStyle>
-            <FireworkRStyle></FireworkRStyle>
-            <FireworkLStyle></FireworkLStyle>
-            <FireStyle></FireStyle>
-            <WoodFireStyle></WoodFireStyle>
-          </CharacterStyle>
-          <SubTitleStyle></SubTitleStyle>
-        </SplashCharacterContainer> */}
-        <LoginModalStyle isLoginModal={isLoginModal}>
-          <button className="toggleBtn" type="button" onClick={() => { setIsLoginModal(preV => !preV) }}>
-            <span>
-              <ArrowTop width={40} />
-            </span>
-          </button>
-          <ul>
-            <li>
-              <BtnSocialStyle className='kakao' aria-label='카카오로 로그인'>
-                <Kakao></Kakao>
-                <p>카카오톡 계정으로 로그인</p>
-              </BtnSocialStyle>
-            </li>
-            <li>
-              <BtnSocialStyle className='google' aria-label='구글로 로그인'>
-                <Google></Google>
-                <p>구글 계정으로 로그인</p>
-              </BtnSocialStyle>
-            </li>
-            <li>
-              <BtnSocialStyle className='facebook' aria-label='페이스북으로 로그인'>
-                <Facebook></Facebook>
-                <p>페이스북 계정으로 로그인</p>
-              </BtnSocialStyle>
-            </li>
-          </ul>
-          <div>
-            <Link to="/login">
-              <button className='email-login'>이메일로 로그인</button>
-            </Link>
-            <span>|</span>
-            <Link to="/signup">
-              <button className='Signup'>회원가입</button>
-            </Link>
-          </div>
-        </LoginModalStyle>
-      </SplashPageStyle>
-    </>
+    <SplashPageStyle>
+      <SplashImg src={splash}></SplashImg>
+      <SubTitleStyle></SubTitleStyle>
+      <TitleStyle1  ></TitleStyle1>
+      <TitleStyle2  ></TitleStyle2>
+    </SplashPageStyle>
   )
 }
 
 export default SplashPage
-
-const SplashCharacterContainer = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`;
-
-const firework1 = keyframes`
-  0% {
-    transform: rotate(8deg);
-  }
-  20% {
-    transform: rotate(-8deg);
-  }
-  50% {
-    
-    transform: rotate(8deg)
-  }
-  70% {
-    transform: rotate(-8deg);
-  }
-  100% {
-    transform: rotate(8deg);
-  }
-  `;
-const firework2 = keyframes`
-  0% {
-  opacity: 1;
-  transform: translateY(0px);
-}
-100% {
-  opacity: 0;
-  transform: translateY(-80px);
-}
-`
-const firework3 = keyframes`
-  0% {
-  opacity: 1;
-  transform: translateY(0px);
-}
-100% {
-  opacity: 0;
-  transform: translateY(-60px);
-}
-`
 
 const fadeIn = keyframes`
 from {
@@ -138,153 +36,120 @@ to {
 }
 `;
 
+
+const fadeOut = keyframes`
+from {
+  opacity: 1;
+}
+to {
+  opacity: 0;
+}
+`;
+
+const displayPhrases1 = keyframes`
+0% {
+  top: 40%
+}
+80% {
+  opacity: 1;
+  top: 50%;
+}
+100% {
+  opacity: 0;
+  top: 50%;
+}
+`;
+
+const displayPhrases2 = keyframes`
+0% {
+  top: 40%
+}
+80% {
+  opacity: 1;
+  top: 45%;
+}
+100% {
+  opacity: 0;
+  top: 45%;
+}
+`;
+
+const displayPhrases3 = keyframes`
+0% {
+  top: 50%
+}
+80% {
+  opacity: 1;
+  top: 55%;
+}
+100% {
+  opacity: 0;
+  top: 55%;
+}
+`;
+
 const SplashPageStyle = styled.div`
+background-color: var(--background-color);
 position: relative;
-background-color: #FFFFEA;
 width: 100vw;
 height: 100vh;
+animation: ${fadeOut} 1s ease forwards;
+animation-delay: 5.5s;
 
-  @media (min-width: 390px) {
-    width: 100%;
-    height: var(--basic-height);
-    }  
+&::after {
+    position: absolute;
+    top: 0;
+    content: '';
+    display: block;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(10px);
+    animation: ${fadeIn} 1s ease forwards;
+  }
 `
 
-const TitleStyle1 = styled(Tadak)`
+const SplashImg = styled.img`
+  width: 100vw;
+  height: 100vh;
   position: absolute;
-  transform: translate(-80%, -50%);
-  margin-top: -250px;
-`
-
-const TitleStyle2 = styled(Tadak)`
-  position: absolute;
-  transform: translate(-20%, -50%);
-  margin-top: -150px;
-`
-
-const CharacterStyle = styled.div`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-`
-
-const FireStyle = styled(Fire)`
-  margin-left: 80px;
-  margin-top: 200px;
-  z-index: 100;
-  animation: ${firework1} 2s infinite;
-`
-
-const WoodFireStyle = styled(WoodFire)`
-  margin-top: -260px;
-`
-
-
-const FireworkRStyle = styled(FireworkR)`
-  position: absolute;
-  margin-left: 300px;
-  margin-top: 250px;
-  animation: ${firework2} 2s infinite;
-`
-
-const FireworkLStyle = styled(FireworkL)`
-  position: absolute;
-  margin-left: 40px;
-  margin-top: 250px;
-  animation: ${firework3} 2s infinite;
-`
-
+  object-fit: cover;
+  animation: ${fadeOut} 1s ease forwards;
+  animation-delay: 5.5s;
+`;
 
 const SubTitleStyle = styled(SubTitle)`
   position: absolute;
-  top: 50%;
+  z-index: 1;
+  width: 300px;
+  opacity: 0;
   left: 50%;
+  color: var(--logo-color);
   transform: translate(-50%, -50%);
-  margin-top: 300px;
+  animation: ${displayPhrases1} 1.5s ease forwards;
+  animation-delay: 1.5s;
 `;
 
-const LoginModalStyle = styled.article<{ isLoginModal: boolean }>`
-  width: var(--basic-width);
-  height: 500px;
-  border-radius: 20px;
-  background-color: #ffffff;
+const TitleStyle1 = styled(TadakTitle)`
   position: absolute;
-  bottom: 0;
-  transition: 1s;
-  transform: ${(props) => (props.isLoginModal ? 'translateY(30%)' : 'translateY(100%)')};
-  z-index: 101;
-
-  .toggleBtn {
-    width: 120px;
-    height: 40px;
-    position: absolute;
-    top: -40px;
-    right: 50%;
-    transform: translateX(50%);
-    border-top-right-radius: 30px;
-    border-top-left-radius: 30px;
-    animation: ${fadeIn} 2s ease-in;
-    background: #D9D9D9;
-    opacity: 0.9;
-    span {
-      display: block;
-      transform: ${({ isLoginModal }) => (isLoginModal ? 'rotate(180deg)' : 'rotate(0)')};
-      transition: .2s;
-    }
-  }
-
-  ul {
-    list-style: none;
-    position: relative;
-    top: 20px
-  }
-  div {
-    margin-top: 50px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-      button {
-        font-size: var(--font--size-lg);
-        color: var(--common-text-color-2);
-      }
-  }
-  @media (min-width: 390px) {
-    width: 100%;
-    }
-
+  z-index: 1;
+  width: 100px;
+  opacity: 0;
+  left: 40%;
+  color: var(--logo-color);
+  transform: translate(-50%, -50%);
+  animation: ${displayPhrases2} 2s ease forwards;
+  animation-delay: 3.5s;
 `
-const BtnSocialStyle = styled.button`
-  display: flex;
-  align-items: center;
-  gap: 50px;
-  width: 322px;
-  height: 44px;
-  margin: 20px auto;
-  position: relative;
-  border-radius: 44px;
-  p {
-    font-size: var(--font--size-md);
-  }
-  svg {
-    margin-left: 14px;
-  }
-  &.kakao {
-    border: solid 1px #F2C94C;
-  }
-  &.google {
-    border: solid 1px #767676;
-  }
-  &.facebook {
-    border: solid 1px #2D9CDB;
-  }
-  @media (min-width: 768px) {
-    width: calc(100% - 40px);
-    justify-content: center;
-    gap: 10px;
-    
-    svg {
-      margin-left: 0px;
-    }
-  }`
+
+const TitleStyle2 = styled(TadakTitle)`
+  position: absolute;
+  z-index: 1;
+  width: 100px;
+  opacity: 0;
+  left: 60%;
+  color: var(--logo-color);
+  transform: translate(-50%, -50%);
+  animation: ${displayPhrases3} 1.7s ease forwards;
+  animation-delay: 3.8s;
+`;

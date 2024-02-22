@@ -2,7 +2,7 @@ import styled, { css } from 'styled-components';
 import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 
-import BasicProfile from '../../assets/img/basic-profile.svg';
+import BasicProfile from '../../assets/img/basic-profile.webp';
 import { useRef } from 'react';
 import useLazyLoading from '../../hooks/useLazyLoading';
 
@@ -16,14 +16,15 @@ const getProfileSrc = (url: string): string => {
 
 interface ProfileProps {
   url?: string,
-  confirm?: boolean
-  loading?: boolean
+  confirm?: boolean,
+  loading?: boolean,
+  style?: React.CSSProperties;
 }
 
 export const ProfileLg = ({ url = '', loading = false }: ProfileProps): JSX.Element => {
   return (
     <>
-      {loading && <Skeleton width={110} height={110} circle={true} />}
+      {loading && <Skeleton baseColor={'var(--skeleton-color)'} width={110} height={110} circle={true} />}
       <ProfileLgStyle
         src={url || BasicProfile}
         alt="Large Profile"
@@ -36,19 +37,20 @@ export const ProfileLg = ({ url = '', loading = false }: ProfileProps): JSX.Elem
   )
 }
 
-export const ProfileMd = ({ url = '', loading = false }: ProfileProps): JSX.Element => {
+export const ProfileMd = ({ url = '', loading = false, ...rest }: ProfileProps): JSX.Element => {
   const observeImage = useRef<HTMLImageElement>(null);
   useLazyLoading(observeImage, getProfileSrc(url));
   return (
     <>
-      {loading && <Skeleton width={50} height={50} circle={true} style={{ marginRight: '12px' }} />}
+      {loading && <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={50} circle={true} style={{ marginRight: '12px' }} />}
       <ProfileMdStyle
         ref={observeImage}
         alt="Medium Profile"
-        style={{ display: loading ? 'none' : 'block' }}
         onError={(event) => {
           (event.target as HTMLImageElement).src = BasicProfile;
         }}
+        {...rest}
+        style={{ ...rest.style, display: loading ? 'none' : 'block' }}
       />
     </>
   )
@@ -59,7 +61,7 @@ export const ProfileSm = ({ url = '', confirm = false, loading = false }: Profil
   useLazyLoading(observeImage, getProfileSrc(url));
   return (
     <ProfileContainer confirm={confirm}>
-      {loading && <Skeleton width={40} height={40} circle={true} />}
+      {loading && <Skeleton baseColor={'var(--skeleton-color)'} width={40} height={40} circle={true} />}
       <ProfileSmStyle
         ref={observeImage}
         alt="Small Profile"
@@ -83,7 +85,7 @@ const ProfileContainer = styled.div<{ confirm: boolean }>`
     width:  12px;
     height: 12px;
     border-radius: 50%;
-    background-color: #FF8B13;
+    background-color: var(--basic-color-1);
     display: ${({ confirm }) => (confirm) ? 'block' : 'none'};
   }
 `;

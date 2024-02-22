@@ -6,12 +6,15 @@ import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
 const AlbumList = ({ visiblePost, loading }: { visiblePost: Posts[], loading: boolean }) => {
 
+
+
+
   return (
     <>
       <h2 className="a11y-hidden">앨범형 포스트</h2>
       <AlbumListStyle>
         {
-          visiblePost.map((item) => (
+          visiblePost.filter(item => item.image !== 'false').map((item) => (
             <Album post={item} key={item.id || item._id} loading={loading} />
           ))
         }

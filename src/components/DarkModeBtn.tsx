@@ -65,7 +65,7 @@ const DarkModeBtnStyle = styled.button`
   width: 1.4em;
   border-radius: 50%;
   left: 0;
-  box-shadow: inset 8px -4px 0px 0px #FCFBF3;
+  box-shadow: inset 8px -4px 0px 0px #FDE767;
   transition: .5s;
 }
 

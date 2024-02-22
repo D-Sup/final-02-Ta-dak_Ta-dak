@@ -40,10 +40,14 @@ const Input = (props: InputProps) => {
 export default Input;
 
 const InputContainerStyle = styled.div`
+  position: relative;
   width: 322px;
-  margin-bottom: 16px;
+  & + & {
+    margin-top: 40px;
+  }
   div {
-    background-color: var(--basic-color-4);
+    background-color: var(--input-box-color);
+    border-radius: 10px;
   }
   @media (min-width: 768px) {
     width: 500px;
@@ -51,22 +55,26 @@ const InputContainerStyle = styled.div`
 `;
 
 const LabelStyle = styled.label`
-  display: block;
+  position: absolute;
+  top: -20px;
   font-size: var(--font--size-sm);
-  line-height: 15px;
-  margin-bottom: 10px;
-  color: var(--common-text-color-2);
+  /* padding-left: 3px; */
+  color: var(--invert-color);
 `;
 
 const InputStyle = styled.input<{ valid: boolean }>`
   background-color: transparent;
   width: 100%;
+  height: 50px;
   font-size: var(--font--size-md);
   line-height: 14px;
-  padding-bottom: 8px;
+  /* padding-bottom: 8px; */
+  padding: 0 10px;
   border: none;
-  border-bottom: 1px solid ${(props) => (props.valid ? 'var(--basic-color-6)' : '#eb5757')};
-  color: var(--common-text-color-2);
+  border-radius: 10px;
+  border: 2px solid var(--background-color);
+  color: var(--invert-color);
+  transition: .2s ease-out;
 
   ::placeholder {
     color: var(--text-color-2);
@@ -74,8 +82,7 @@ const InputStyle = styled.input<{ valid: boolean }>`
   }
 
   &:focus {
-    outline: none;
-    border-bottom: 1px solid ${(props) => (props.valid ? 'var(--basic-color-5)' : '#eb5757')};
+    border: 2px solid ${(props) => (props.valid ? 'var(--basic-color-2)' : '#eb5757')};
   }
 `;
 
@@ -83,7 +90,7 @@ const ValidationSuccessStyle = styled.span`
   display: block;
   font-size: var(--font--size-sm);
   line-height: 14px;
-  color: var(--basic-color-5);
+  color: var(--basic-color-2);
   margin-top: 6px;
 `;
 

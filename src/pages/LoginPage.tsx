@@ -15,12 +15,12 @@ import CheckIcon from '../assets/img/icon-check.svg';
 const LoginPage = () => {
 
   const [userValue, setUserValue] = useRecoilState(UserAtom);
+  const [isLogin, setIsLogin] = useRecoilState<boolean>(IsLogin);
 
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [valid, setValid] = useState<boolean>(true);
   const [alertMsg, setAlertMsg] = useState<string>('');
-  const [isLogin, setIsLogin] = useRecoilState<boolean>(IsLogin);
   const [isChecked, setIsChecked] = useState<boolean>(false);
 
   const navigate = useNavigate();
@@ -87,9 +87,10 @@ const LoginPage = () => {
           <Input
             id={'user-email'}
             type={'email'}
-            label={'이메일'}
+            label={'아이디'}
             value={email}
             valid={valid}
+            placeholder='이메일을 입력해주세요.'
             onChange={handleEmailInput}
             onFocus={handleInputFocus}
           />
@@ -99,25 +100,28 @@ const LoginPage = () => {
             label={'비밀번호'}
             value={password}
             valid={valid}
+            placeholder='이메일을 입력해주세요.'
             alertMsg={alertMsg}
             onChange={handlePasswordInput}
             onFocus={handleInputFocus}
           />
-          {email && password ? (
-            <GreenLgBtn type="submit" contents={'로그인'} />
-          ) : (
-            <GreyLgBtn type="submit" contents={'로그인'} />
-          )}
+          <div className='btn-container'>
+            {email && password ? (
+              <GreenLgBtn type="submit" contents={'로그인'} />
+            ) : (
+              <GreyLgBtn type="submit" contents={'로그인'} />
+            )}
+          </div>
         </form>
         <OtherStyle>
-          <Styledlabel>
+          {/* <Styledlabel>
             <StyledInput type="checkbox"
               checked={isChecked}
               onChange={handleCheckboxChange}
               className="custom-checkbox" />
             체험용 계정 사용하기
           </Styledlabel>
-          <p>|</p>
+          <p>|</p> */}
           <SignUpLink href="#/signup">이메일로 회원가입</SignUpLink>
         </OtherStyle>
       </LoginPageStyle>
@@ -128,6 +132,7 @@ const LoginPage = () => {
 export default LoginPage;
 
 const LoginPageStyle = styled.section`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -138,6 +143,10 @@ const LoginPageStyle = styled.section`
 
   @media (min-width: 768px) {
     padding: 34px 0px;
+  }
+
+  .btn-container {
+    margin-top: 30px;
   }
   
   h1 {
@@ -195,7 +204,7 @@ const StyledInput = styled.input`
 `
 const SignUpLink = styled.a`
   margin-left: 10px;
-  color: #000000;
+  color: var(--basic-color-1);
   text-decoration: none;
   cursor: pointer;
 `;

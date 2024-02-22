@@ -62,49 +62,57 @@ const SignUpPage = () => {
 
 
   return (
-    <>
-      <SignUpPageStyle>
-        <h1>이메일로 회원가입</h1>
-        <form onSubmit={handleSubmit}>
-          <Input
-            id={'user-email'}
-            type={'email'}
-            label={'이메일'}
-            placeholder={'이메일 주소를 입력해 주세요.'}
-            value={email}
-            valid={emailValid}
-            alertMsg={emailAlertMsg}
-            onChange={handleEmailInput}
-            onBlur={handleEmailValid}
-          />
-          <Input
-            id={'user-password'}
-            type={'password'}
-            label={'비밀번호'}
-            placeholder={'비밀번호를 설정해 주세요.'}
-            value={password}
-            valid={passwordValid}
-            alertMsg={passwordAlertMsg}
-            onChange={handlePasswordInput}
-          />
+    <SignUpPageStyle>
+      <h1>이메일로 회원가입</h1>
+      <form onSubmit={handleSubmit}>
+        <Input
+          id={'user-email'}
+          type={'email'}
+          label={'이메일'}
+          placeholder={'이메일 주소를 입력해주세요.'}
+          value={email}
+          valid={emailValid}
+          alertMsg={emailAlertMsg}
+          onChange={handleEmailInput}
+          onBlur={handleEmailValid}
+        />
+        <Input
+          id={'user-password'}
+          type={'password'}
+          label={'비밀번호'}
+          placeholder={'비밀번호를 설정해주세요.'}
+          value={password}
+          valid={passwordValid}
+          alertMsg={passwordAlertMsg}
+          onChange={handlePasswordInput}
+        />
+        <div className='btn-container'>
           {email && password && emailValid && passwordValid ?
             <GreenLgBtn type='submit' contents={'다음'} /> :
             <GreyLgBtn type='submit' contents={'다음'} />}
-        </form>
-      </SignUpPageStyle>
-    </>
+        </div>
+      </form>
+    </SignUpPageStyle>
   )
 }
 
 export default SignUpPage
 
 const SignUpPageStyle = styled.div`
+  position: relative;
+  background-color: var(--background-color);
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 34px 0 0 0;
+  width: var(--basic-width);
+  height: var(--basic-height);
   @media (max-width: 768px) {
     padding: 34px;
+  }
+
+  .btn-container {
+    margin-top: 30px;
   }
 
   h1 {

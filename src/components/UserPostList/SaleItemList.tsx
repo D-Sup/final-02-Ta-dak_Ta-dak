@@ -35,8 +35,7 @@ export default SaleItemList
 
 const SaleItemListStyle = styled.div`
   display: grid;
-  width: 100%;
-  max-width: var(--basic-width);
+  width: var(--basic-width);
   padding: 30px;
   grid-template-columns: repeat(2, 1fr);
   gap: 30px;

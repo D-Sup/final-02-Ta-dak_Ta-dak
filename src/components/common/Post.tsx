@@ -131,16 +131,16 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
               {
                 loading ?
                   <>
-                    <Skeleton width={150} height={20} />
-                    <Skeleton width={200} height={20} style={{ marginTop: '17px', marginBottom: '16px' }} />
+                    <Skeleton baseColor={'var(--skeleton-color)'} width={150} height={20} />
+                    <Skeleton baseColor={'var(--skeleton-color)'} width={200} height={20} style={{ marginTop: '17px', marginBottom: '16px' }} />
                   </>
                   :
                   <pre>{post.content}</pre>
               }
               {post.content?.length >= 180 && <button className="moreContentBtn" ></button>}
             </div>
-            {loading && <Skeleton width={currentWidth > 768 ? 436 : 304} height={currentWidth > 768 ? 332 : 228} style={{ marginBottom: '16px' }} />}
-            {!loading &&
+            {loading && <Skeleton baseColor={'var(--skeleton-color)'} height={currentWidth > 768 ? 332 : 228} style={{ width: '100%', marginBottom: '16px' }} />}
+            {!loading && post.image !== 'false' &&
               <img
                 src={post.image}
                 ref={observeImage}
@@ -153,7 +153,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
           </Link>
           {
             loading ?
-              <Skeleton width={100} height={21} style={{ marginBottom: '16px' }} />
+              <Skeleton baseColor={'var(--skeleton-color)'} width={100} height={21} style={{ marginBottom: '16px' }} />
               :
               <div className='likeCommentCount'>
                 <button
@@ -166,7 +166,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
                   <IconLike
                     className='iconImg'
                     fill={like ? '#E73C3C' : 'var(--background-color)'}
-                    stroke={like ? '#E73C3C' : '#767676'}
+                    stroke={like ? '#E73C3C' : 'var(--text-color-2)'}
                     onClick={like ? deleteLikeReq : postLikeReq}
                   />
                   {isLike ?
@@ -176,7 +176,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
                 </button>
                 <Link to={`/postdetail/${id}`}>
                   <span className='a11y-hidden'>댓글 보기, 남기기</span>
-                  <IconComment className='iconImg' />
+                  <IconComment className='iconImg' stroke={'var(--text-color-2)'} />
                   <span className='count'>{post.comments?.length}</span>
                 </Link>
               </div>
@@ -184,7 +184,14 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
 
           {
             loading ?
-              <Skeleton width={130} height={17} />
+              <Skeleton baseColor={'var(--skeleton-color)'} width={130} height={17}
+                style={{
+                  position: 'absolute',
+                  right: '0',
+                  bottom: '0',
+                  marginBottom: '35px'
+                }}
+              />
               :
               <span className='postDate'>
                 {timeFormat(post.createdAt)}
@@ -209,17 +216,22 @@ to {
 
 const PostStyle = styled.article`
   position: relative;
-  margin-bottom: 20px;
-  width: 358px;
+  width: 100%;
+  /* margin-bottom: 20px; */
+  /* width: 358px; */
+  /* background-color: var(--background-color); */
+  border-radius: 10px;
+  padding: 15px 10px;
+  box-sizing: border-box;
 
   @media (min-width: 768px) {
-    width: 500px;
+    width: 100%;
   }
 
   .postMoreButton {
     position: absolute;
-    top: 0px;
-    right: 0px;
+    top: 20px;
+    right: 10px;
     width: 18px;
     height: 18px;
     background: url(${moreButtonIcon}) no-repeat center / auto 100%;
@@ -235,7 +247,7 @@ const PostStyle = styled.article`
 `;
 
 const PostContainerStyle = styled.div<{ locationPathname: string, contentMore: boolean }>`
-  padding-left: 54px;
+  /* padding-left: 54px; */
   position: relative;
   
   .moreContentBtn {
@@ -281,17 +293,16 @@ const PostContainerStyle = styled.div<{ locationPathname: string, contentMore: b
 
   img {
     animation: ${fadeIn} 1s ease-in;
-    width: 304px;
+    /* width: 304px; */
+    width: 100%;
     height: 228px;
-    border: 1px solid var(--border-color);
-    border-radius: 10px;
+    border-radius: 5px;
     margin-bottom: 16px;
     object-fit: cover;
   }
 
   @media (min-width: 768px) {
     img {
-      width: 436px;
       height: 332px;
     }
   }
@@ -316,6 +327,9 @@ const PostContainerStyle = styled.div<{ locationPathname: string, contentMore: b
   }
 
   .postDate {
+    position: absolute;
+    right: 0;
+    bottom: 0;
     font-weight: var(--font--Regular);
     font-size: var(--font--size-sm);
     line-height: 12px;

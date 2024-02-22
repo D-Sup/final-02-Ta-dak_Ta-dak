@@ -72,7 +72,7 @@ const InputContainerStyle = styled.div`
     display: inline-block;
     transition: 0.5s;
     &:hover {
-      color: var(--basic-color-5);
+      color: var(--basic-color-2);
     }
   }
 `;

@@ -1,23 +1,26 @@
+import { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
+import { useModalStack } from '../../hooks/useModalStack';
 
 import styled from 'styled-components'
-
 import DarkModeBtn from '../DarkModeBtn';
 
-import { ReactComponent as Tadak } from '../../assets/img/tadak.svg';
-import { ReactComponent as WebLogo } from '../../assets/img/weblogo.svg';
+import { ReactComponent as Tadak } from '../../assets/img/tadaktadaktitle.svg';
 import { ReactComponent as IconLogout } from '../../assets/img/icon-logout.svg';
 
 import { useSetRecoilState } from 'recoil'
 import { IsLogin, UserAtom } from '../../recoil/AtomUserState';
 
+import SearchHeader from 'components/header/SearchHeader';
 import Alert from '../common/Alert';
-import { useModalStack } from '../../hooks/useModalStack';
 
 const WebHeader = () => {
 
   const setUserValue = useSetRecoilState(UserAtom);
   const setIsLogin = useSetRecoilState(IsLogin);
+
+  const [search, setSearch] = useState<string>('')
+  const [firstMount, setFirstMount] = useState<boolean>(true);
 
   const { push } = useModalStack();
   const navigate = useNavigate()
@@ -25,6 +28,7 @@ const WebHeader = () => {
 
   const hideHeaderPaths = [
     '/splash',
+    '/introduce',
     '/login',
     '/signup',
     '/signup/profile'
@@ -49,8 +53,17 @@ const WebHeader = () => {
     })
     setIsLogin(false)
     sessionStorage.removeItem('user')
-    navigate('/splash');
+    navigate('/introduce');
   }
+
+  useEffect(() => {
+    if (!firstMount) {
+      navigate('/search', {
+        state: search
+      })
+    }
+    setFirstMount(false)
+  }, [search])
 
 
   return (
@@ -58,11 +71,13 @@ const WebHeader = () => {
       {!hideHeader &&
         <WebHeaderStyle>
           <WebLogoStyle>
-            <WebLogo onClick={handleGoFeed} style={{ cursor: 'pointer' }}></WebLogo>
             <TadakStyle>
-              <Tadak onClick={handleGoFeed} style={{ width: '104px', height: '25.58 px', cursor: 'pointer' }} />
+              <Tadak onClick={handleGoFeed} width={70} height={25} fill={'var(--logo-color)'} />
             </TadakStyle>
           </WebLogoStyle>
+          <div className='searchheader-container'>
+            <SearchHeader value={search} setValue={setSearch} />
+          </div>
           <BtnStyle>
             <DarkModeBtn />
             <IconLogout onClick={() => {
@@ -72,7 +87,7 @@ const WebHeader = () => {
                 [null, handleLogout],
                 'AlertModal'
               )
-            }} style={{ width: '24px', height: '24px', cursor: 'pointer' }} />
+            }} style={{ width: '22px', height: '22px', cursor: 'pointer' }} />
           </BtnStyle>
         </WebHeaderStyle>
       }
@@ -83,18 +98,34 @@ const WebHeader = () => {
 export default WebHeader
 
 const WebHeaderStyle = styled.div`
+  position: relative;
+  z-index: 1;
   width: 100vw;
-  height: 80px;
-  background-color: var(--basic-color-2);
+  height: 50px;
+  background-color: var(--background-color);
+  box-shadow: 0 1px 0 var(--invert-color);
   display: flex;
   justify-content: space-between;
+
+  .searchheader-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    display: none;
+    
+    @media (min-width: 768px) {
+      display: block;
+    }
+  }
 `;
 
 const WebLogoStyle = styled.div`
-  padding-top:12px;
-  margin-left: 10%;
-  display: flex;
+  padding-top: 22px;
   gap: 16px;
+  margin-left: 0%;
+  @media (min-width: 1023px) {
+    margin-left: 17%;
+  }
 `;
 
 const TadakStyle = styled.div`
@@ -106,5 +137,8 @@ const BtnStyle = styled.div`
   display: flex;
   align-items: center;
   gap: 28px;
-  margin-right: 10%;
+  margin-right: 0%;
+  @media (min-width: 1023px) {
+    margin-right: 13%;
+  }
 `;

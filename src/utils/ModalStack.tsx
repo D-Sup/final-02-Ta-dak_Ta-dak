@@ -144,7 +144,7 @@ const SlideUpModalWrapper = styled.div<{ isOpen: boolean }>`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   font-size: var(--font-size-md);
-  background-color: var(--modal-color);
+  background: var(--modal-background-color);
   display: flex;
   flex-direction: column;
   align-items: center;

@@ -21,6 +21,7 @@ const NavBar = () => {
     '/login',
     '/signup',
     '/signup/profile',
+    '/introduce',
     '/upload',
     '/addproduct',
     '/profilemodification',
@@ -30,20 +31,20 @@ const NavBar = () => {
 
   const navItems = [
     { to: '/feed', component: IconHome, label: '홈' },
-    { to: '/recommendfeed', component: IconHeart, label: '추천게시글' },
+    // { to: '/recommendfeed', component: IconHeart, label: '추천게시글' },
     { to: '/chat', component: IconMessage, label: '채팅' },
     { to: '/upload', component: IconEdit, label: '게시물 작성' },
     { to: `/profile/${accountname}`, component: IconUser, label: '프로필' },
   ];
 
-  const [selectedIcon, setSelectedIcon] = useState<((props: SVGProps<SVGSVGElement>) => JSX.Element)>(IconHome);
+  const [selectedIcon, setSelectedIcon] = useState<((props: SVGProps<SVGSVGElement>) => JSX.Element)>();
 
   const handleIconClick = (iconName: ((props: SVGProps<SVGSVGElement>) => JSX.Element)): void => {
     setSelectedIcon(iconName);
   };
 
   useEffect(() => {
-    const item = navItems.find((item) => item.to === location.pathname);
+    const item = navItems.find((item) => location.pathname.includes(item.to));
     if (item) {
       setSelectedIcon(item.component);
     }
@@ -66,8 +67,8 @@ const NavBar = () => {
                 <item.component
                   width={24}
                   height={24}
-                  stroke={selectedIcon === item.component ? 'var(--basic-color-2)' : 'var(--text-color-2)'}
-                  fill={selectedIcon === item.component ? 'var(--basic-color-2)' : 'var(--basic-color-1)'}
+                  stroke={selectedIcon === item.component ? 'var(--basic-color-1)' : 'var(--text-color-4)'}
+                  fill={selectedIcon === item.component ? 'var(--basic-color-1)' : 'var(--navbar-color)'}
                 />
                 <span>{item.label}</span>
               </StyledLink>
@@ -85,11 +86,10 @@ const NavBarStyle = styled.nav`
   overflow: hidden;
   position: relative;
   width: var(--basic-width);
-  background-color: #FFF;
-  box-shadow: 0 -1px 3px gray;
-  /* background-color: var(--basic-color-1); */
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+  box-shadow: var(--navbar-shadow);
+  background-color: var(--navbar-color);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
 
   article {
     display: flex;
@@ -104,9 +104,10 @@ const NavBarStyle = styled.nav`
 const StyledLink = styled(Link) <{ selected: boolean }>`
   padding: 13px 10px;
   text-align: center;
-  width: calc(100% / 5);
+  width: calc(100% / 4);
   height: 100%;
-  border-radius: 10px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
   transition: background-color 0.3s;
 
   span {
@@ -117,6 +118,6 @@ const StyledLink = styled(Link) <{ selected: boolean }>`
   }
 
   &:hover {
-    background-color: #fdf5b9;
+    background-color: var(--modal-hover-color);
   }
 `;

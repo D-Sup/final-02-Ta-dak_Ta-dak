@@ -87,6 +87,7 @@ const ProductDetailModalStyle = styled.div`
     display: block;
     width: 100%;
     margin: 0 auto;
+    border-radius: 10px;
     z-index: 1;
     object-fit: cover;
   }
@@ -95,22 +96,22 @@ const ProductDetailModalStyle = styled.div`
     font-size: var(--font--size-lg);
     font-weight: 500;
     margin-top: 12px;
-    color: var(--common-text-color-2);
+    color: var(--invert-color);
   }
 
   h3 {
     font-size: var(--font--size-md);
     font-weight: var(--font--Bold);
-    color: var(--basic-color-5);
+    color: var(--basic-color-2);
     margin-top: 6px;
     line-height: 19px;
   }
 
   p {
     font-size: var(--font--size-sm);
-    margin-top: 7px;
+    margin-top: 30px;
     line-height: 16px;
-    color: var(--common-text-color-2);
+    color: var(--invert-color);
   }
 
   pre {
@@ -125,9 +126,10 @@ const ProductDetailModalStyle = styled.div`
     word-break: break-all;
     white-space: pre-wrap;
     word-wrap: break-word;
-    background-color: var(--basic-color-4);
-    color: var(--common-text-color-2);
+    color: var(--invert-color);
     overflow: auto;
+    background-color: var(--input-box-color);
+    border-radius: 10px;
     ::-webkit-scrollbar {
       width: 5px;
     }
@@ -141,7 +143,9 @@ const ProductDetailModalStyle = styled.div`
     width: 75px;
     height: 35px;
     font-size: var(--font--size-md);
-    background-color: #b9d6a3;
+    /* background-color: var(--basic-color-1); */
+    background-color: var(--basic-color-1);
+    color: var(--common-text-color-1);
     border-radius: 25px;
     position: absolute;
     right: 112px;
@@ -151,8 +155,9 @@ const ProductDetailModalStyle = styled.div`
   .deleteBtn {
     width: 75px;
     height: 35px;
+    background-color: #FF6B6B;
     font-size: var(--font--size-md);
-    background-color: #f6cece;
+    color: var(--common-text-color-1);
     border-radius: 25px;
     position: absolute;
     right: 32px;

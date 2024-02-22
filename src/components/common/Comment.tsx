@@ -77,10 +77,10 @@ const Comment = ({ item, myInfo, setReset, loading }: CommentProps) => {
         </div>
         <div className="commentContents">
           <UserNameStyle onClick={clickHandler}>
-            {loading ? <Skeleton width={100} height={16} /> : item.author.username}
+            {loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={100} height={16} /> : item.author.username}
           </UserNameStyle>
           {!loading && <TimeStyle>{timeAgo}</TimeStyle>}
-          <CommentStyle>{loading ? <Skeleton width={60} height={10} /> : item.content}</CommentStyle>
+          <CommentStyle>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={60} height={10} /> : item.content}</CommentStyle>
         </div>
         <div className="commentMoreButton">
           <IconMore

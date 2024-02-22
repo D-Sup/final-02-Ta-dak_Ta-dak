@@ -10,8 +10,8 @@ import UserId from './UserId';
 import { ProfileLg } from './Profile';
 import { GreenMdBtn, WhiteMdBtn } from './Button';
 
-import IconSmMessage from '../../assets/img/s-icon-message.svg';
-import IconShare from '../../assets/img/icon-share.svg';
+import { ReactComponent as IconSmMessage } from '../../assets/img/s-icon-message.svg';
+import { ReactComponent as IconShare } from '../../assets/img/icon-share.svg';
 
 interface UserProfileProps {
   profile: Author | null,
@@ -68,7 +68,7 @@ const UserProfile = ({ profile, isMyAccount, loadProfilePage, loading }: UserPro
             navigate(`/profile/${profile.accountname}/follower`);
           }}
         >
-          <strong>{loading ? <Skeleton width={50} height={40} /> : profile.followerCount}</strong>
+          <strong>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={40} /> : profile.followerCount}</strong>
           <p>{!loading && 'followers'}</p>
         </div>
 
@@ -79,16 +79,16 @@ const UserProfile = ({ profile, isMyAccount, loadProfilePage, loading }: UserPro
             navigate(`/profile/${profile.accountname}/following`);
           }}
         >
-          <strong>{loading ? <Skeleton width={50} height={40} /> : profile.followingCount}</strong>
+          <strong>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={40} /> : profile.followingCount}</strong>
           <p>{!loading && 'followings'}</p>
         </div>
       </ProfileTopStyle>
 
       {loading ?
         <>
-          <Skeleton width={120} height={23} style={{ marginTop: '10px' }} />
-          <Skeleton width={100} style={{ marginTop: '5px' }} />
-          <Skeleton width={200} height={15} style={{ marginTop: '15px', marginBottom: '15px' }} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={120} height={23} style={{ marginTop: '10px' }} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={100} style={{ marginTop: '5px' }} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={200} height={15} style={{ marginTop: '15px', marginBottom: '15px' }} />
         </>
         :
         <ProfileMiddleStyle>
@@ -102,7 +102,7 @@ const UserProfile = ({ profile, isMyAccount, loadProfilePage, loading }: UserPro
         {
           loading ?
             (
-              <Skeleton width={300} height={38} borderRadius={30} style={{ marginTop: '20px' }} />
+              <Skeleton baseColor={'var(--skeleton-color)'} width={300} height={38} borderRadius={30} style={{ marginTop: '20px' }} />
             ) : (
               isMyAccount ? (
                 // 내 계정일 경우
@@ -117,7 +117,8 @@ const UserProfile = ({ profile, isMyAccount, loadProfilePage, loading }: UserPro
                 // 다른사람 계정일 경우
                 <>
                   <ChatStyle onClick={handleChat}>
-                    <img src={IconSmMessage} alt="채팅하기" />
+                    {/* <img src={IconSmMessage} alt="채팅하기" /> */}
+                    <IconSmMessage stroke={'var(--icon-active-on)'} />
                   </ChatStyle>
                   {profile.isfollow ? (
                     // 팔로잉 한사람일 경우 - 언팔로우
@@ -131,7 +132,8 @@ const UserProfile = ({ profile, isMyAccount, loadProfilePage, loading }: UserPro
                     <GreenMdBtn contents={'팔로우'} handleFunc={followBtnHandler} type='button' />
                   )}
                   <ShareBtnStyle href={undefined}>
-                    <img src={IconShare} alt="공유하기" />
+                    {/* <img src={IconShare} alt="공유하기" /> */}
+                    <IconShare stroke={'var(--icon-active-on)'} />
                   </ShareBtnStyle>
                 </>
               )
@@ -214,16 +216,16 @@ const ChatShareBtnCommonStyle = css`
   display: inline-block;
   padding: 6px;
   background: var(--background-color);
-  border: 1px solid var(--basic-color-6);
+  border: 1px solid var(--box-shadow-color);
   border-radius: 50%;
 `;
 
 const ShareBtnStyle = styled.a`
   ${ChatShareBtnCommonStyle}
-  right: 91px;
+  right: 81px;
 `;
 
 const ChatStyle = styled.div`
   ${ChatShareBtnCommonStyle}
-  left: 91px;
+  left: 81px;
 `;

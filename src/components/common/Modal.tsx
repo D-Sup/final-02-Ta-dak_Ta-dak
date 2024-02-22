@@ -35,14 +35,15 @@ const ModalStyle = styled.div`
   border-top-right-radius: 10px;
   border-top-left-radius: 10px;
   font-size: var(--font-size-md);
-  background-color: var(--modal-color);
+  background-color: var(--modal-background-color);
 
 button{
   text-align: left;
   transition: all .3s;
+  color: var(--invert-color);
   &:hover{
-    color: var(--basic-color-5);
-    background-color: var(--basic-color-3);
+    color: var(--basic-color-2);
+    background-color: var(--modal-hover-color);
   }
 }
 

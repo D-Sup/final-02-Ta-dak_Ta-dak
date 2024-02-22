@@ -39,7 +39,6 @@ const PostDetail = () => {
     setReset(false)
   }, [reset])
 
-
   return (
     <>
       <BasicHeader isButton={false} />
@@ -69,15 +68,17 @@ const PostDetail = () => {
 export default PostDetail
 
 const PostContainer = styled.div`
+  position: relative;
   height: var(--screen-nav-height);
   display: flex;
   flex-direction: column;
-  align-items: center;
 `;
 
 const PostStyle = styled.div`
-  margin: 20px;
-  min-height: 430px;
+  /* min-height: 430px; */
+  width: 100%;
+  display: flex;
+  justify-content: center;
 
   @media (min-width: 768px) {
     margin: 0px;
@@ -85,8 +86,8 @@ const PostStyle = styled.div`
 `;
 
 const CommentStyle = styled.ul`
-  box-shadow: 0px -1px var(--basic-color-6);
-  border-bottom: 1px solid var(--basic-color-6);
+  box-shadow: 0px -1px var(--box-shadow-color);
+  border-bottom: 1px solid var(--box-shadow-color);
   flex-grow: 1;
   flex-basis: 0;
   overflow: scroll;

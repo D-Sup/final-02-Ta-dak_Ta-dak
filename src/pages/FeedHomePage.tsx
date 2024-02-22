@@ -6,6 +6,7 @@ import { getPost, getPostAll } from '../api/postAPI';
 
 import styled from 'styled-components';
 
+import StoryBoard from './StoryBoard';
 import TopButton from '../components/common/TopButton';
 import MainHeader from '../components/header/MainHeader';
 import PostList from '../components/UserPostList/PostList';
@@ -73,6 +74,7 @@ const FeedHomePage = () => {
   return (
     <>
       <MainHeader />
+      <StoryBoard />
       <PostListStyle ref={elementRef}>
         <PostList visiblePost={visiblePost} loading={loading} />
       </PostListStyle>
@@ -84,7 +86,7 @@ const FeedHomePage = () => {
 export default FeedHomePage
 
 const PostListStyle = styled.div`
-  height: var(--screen-nav-height);
+  height: calc(var(--screen-nav-height) - 137px);
   overflow-y: scroll; 
   overflow-x: hidden;
   ::-webkit-scrollbar {

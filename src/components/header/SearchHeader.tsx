@@ -45,9 +45,11 @@ const SearchHeaderStyle = styled.div`
   }
 
   #searchId {
-    width: 316px;
+    width: 90%;
     height: 32px;
-    background: #F2F2F2;
+    background: var(--input-box-color);
+    color: var(--invert-color);
+    box-shadow: 0 0 10px var(--search-bar-color);
     border-radius: 32px;
     padding: 0 16px;
     font-size: var(--font--size-md);
@@ -62,9 +64,9 @@ const SearchHeaderStyle = styled.div`
     box-shadow: none;
     #searchId {
       width: var(--basic-width);
-      margin: auto;
+      /* margin: auto;
       margin-bottom: -5px;
-      border-radius: 10px;
+      border-radius: 10px; */
     }
   }
   `;

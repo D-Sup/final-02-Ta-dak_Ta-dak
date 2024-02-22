@@ -5,7 +5,7 @@ const YellowBtnStyle = styled.button`
   width: 120px;
   height: 41px;
   font-size: var(--font--size-md);
-  background-color: var(--basic-color-3);
+  background-color: var(--modal-hover-color);
   border-radius: 44px;
   color: #000;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
@@ -23,8 +23,8 @@ const GreenLgBtnStyle = styled.button`
   height: 44px;
   font-size: var(--font--size-md);
   background-color: var(--basic-btn-color);
-  color: var(--common-text-color-2);
-  border-radius: 44px;
+  color: var(--common-text-color-1);
+  border-radius: 10px;
   transition: 0.3s;
 
   @media (min-width: 768px) {
@@ -37,7 +37,7 @@ const GreenMdBtnStyle = styled.button`
   height: 34px;
   font-size: var(--font--size-md);
   background-color: var(--basic-btn-color);
-  color: var(--common-text-color-2);
+  color: var(--common-text-color-1);
   border-radius: 30px;
   transition: 0.3s;
 
@@ -52,7 +52,7 @@ const GreenMsBtnStyle = styled.button`
   height: 32px;
   font-size: var(--font--size-md);
   background-color: var(--basic-btn-color);
-  color: var(--common-text-color-2);
+  color: var(--common-text-color-1);
   border-radius: 30px;
   transition: .3s;
 `;
@@ -62,7 +62,7 @@ const GreenSmBtnStyle = styled.button`
   height: 28px;
   font-size: var(--font--size-sm);
   background-color: var(--basic-btn-color);
-  color: var(--common-text-color-2);
+  color: var(--common-text-color-1);
   border-radius: 30px;
   transition: .3s;
 `;
@@ -72,75 +72,75 @@ const GreenBackBtnStyle = styled.button`
   height: 44px;
   font-size: var(--font--size-md);
   background-color: var(--basic-btn-color);
-  color: var(--btn-text-color-1);
+  color: var(--common-text-color-1);
   border-radius: 30px;
 `;
 
 const BoldLgBtnStyle = styled(GreenLgBtnStyle)`
   background-color: var(--bold-btn-color);
-  color: var(--btn-text-color-1);
+  color: var(--common-text-color-1);
 `;
 
 const BoldMdBtnStyle = styled(GreenMdBtnStyle)`
   background-color: var(--bold-btn-color);
-  color: var(--btn-text-color-1);
+  color: var(--common-text-color-1);
 `;
 
 const BoldMsBtnStyle = styled(GreenMsBtnStyle)`
   background-color: var(--bold-btn-color);
-  color: var(--btn-text-color-1);
+  color: var(--common-text-color-1);
 `;
 
 const BoldSmBtnStyle = styled(GreenSmBtnStyle)`
   background-color: var(--bold-btn-color);
-  color: var(--btn-text-color-1);
+  color: var(--common-text-color-1);
 `;
 
 const WhiteLgBtnStyle = styled(GreenLgBtnStyle)`
-  background-color: #fff;
+  background-color: #FFF;
   color: var(--common-text-color-2);
-  box-shadow: inset 0px 0px 0px 0.7px var(--basic-color-6);
+  box-shadow: inset 0px 0px 0px 0.7px var(--box-shadow-color);
 `;
 
 const WhiteMdBtnStyle = styled(GreenMdBtnStyle)`
-  background-color: #ddd;
+  background-color: #FFF;
   color: var(--common-text-color-2);
-  box-shadow: inset 0px 0px 0px 0.7px var(--basic-color-6);
+  box-shadow: inset 0px 0px 0px 0.7px var(--box-shadow-color);
 `;
 
 const WhiteMsBtnStyle = styled(GreenMsBtnStyle)`
-  background-color: #fff;
+  background-color: #FFF;
   color: var(--common-text-color-2);
-  box-shadow: inset 0px 0px 0px 0.7px var(--basic-color-6);
+  box-shadow: inset 0px 0px 0px 0.7px var(--box-shadow-color);
 `;
 
 const WhiteSmBtnStyle = styled(GreenSmBtnStyle)`
-  background-color: #fff;
+  background-color: #FFF;
   color: var(--common-text-color-2);
-  box-shadow: inset 0px 0px 0px 0.7px var(--basic-color-6);
+  box-shadow: inset 0px 0px 0px 0.7px var(--box-shadow-color);
 `;
 
 const GreyLgBtnStyle = styled(GreenLgBtnStyle)`
   background-color: var(--disabled-btn-color);
-  color: var(--btn-text-color-2);
+  color: var(--disabled-btn-text-color);
   cursor: default;
 `;
 
 const GreyMdBtnStyle = styled(GreenMdBtnStyle)`
   background-color: var(--disabled-btn-color);
-  color: var(--btn-text-color-2);
+  color: var(--disabled-btn-text-color);
   cursor: default;
 `;
 
 const GreyMsBtnStyle = styled(GreenMsBtnStyle)`
   background-color: var(--disabled-btn-color);
-  color: var(--btn-text-color-2);
+  color: var(--disabled-btn-text-color);
   cursor: default;
 `;
 
 const GreySmBtnStyle = styled(GreenSmBtnStyle)`
   background-color: var(--disabled-btn-color);
-  color: var(--btn-text-color-2);
+  color: var(--disabled-btn-text-color);
   cursor: default;
 `;
 

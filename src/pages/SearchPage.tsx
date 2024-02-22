@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 import styled from 'styled-components';
 
@@ -10,7 +11,9 @@ import useDebounce from '../hooks/useDebounce';
 
 const SearchPage = () => {
 
-  const [search, setSearch] = useState<string>('')
+  const location = useLocation();
+
+  const [search, setSearch] = useState<string>(location.state || '')
   const [searchList, setSearchList] = useState<Author[]>([])
   const [loading, setLoading] = useState<boolean>(true);
 
@@ -34,11 +37,16 @@ const SearchPage = () => {
     }
   }, [search])
 
+  useEffect(() => {
+    setSearch(location.state || '');
+  }, [location])
 
   return (
-    <>
+    <SearchPageContainer>
       {/* 입력값이 변경되었을 때 값을 추출해서 search에 저장 */}
-      <SearchHeader value={search} setValue={setSearch}></SearchHeader>
+      <div className='searchheader-container'>
+        <SearchHeader value={search} setValue={setSearch}></SearchHeader>
+      </div>
       <SearchPageStyle>
         <SearchResultWrapper>
           {
@@ -59,17 +67,29 @@ const SearchPage = () => {
           }
         </SearchResultWrapper>
       </SearchPageStyle >
-    </>
+    </SearchPageContainer>
   );
 }
 
 export default SearchPage
 
+const SearchPageContainer = styled.div`
+  position: relative;
+
+  .searchheader-container {
+    display: block;
+    
+    @media (min-width: 768px) {
+      display: none;
+    }
+  }
+`;
+
 const SearchPageStyle = styled.div`
+  position: relative;
   padding: 20px 16px 0;
   width: 390px;
   height: var(--screen-nav-height);
-  margin: 0 auto;
   background-color: var(--backgroud-color);
   display: flex;
   flex-direction: column;
@@ -84,7 +104,7 @@ const SearchPageStyle = styled.div`
 
   @media (min-width: 768px) {
     width: 500px;
-    height: calc(var(--screen-height) - 48px);
+    height: calc(var(--screen-height));
   }
 `;
 

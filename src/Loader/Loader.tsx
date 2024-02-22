@@ -61,7 +61,7 @@ const Loader = (): JSX.Element => {
 
           <div className="face"></div>
         </div>
-        <span className="loader-text">Loading...</span>
+        {/* <span className="loader-text">Loading...</span> */}
       </div>}
     </LoaderStyle>
   )
@@ -74,21 +74,22 @@ const Circle = styled.div<{ darkMode: boolean }>`
   left: 70px;
   top: 60%;
   transform: translate(-50%, -50%) scale(0);
-  width: 150px;
-  height: 150px;
+  width: 120px;
+  height: 120px;
   border-radius: 50%;
-  /* background-color: ; */
-  background-color: ${({ darkMode }) => (darkMode) ? 'rgb(229, 214, 174)' : ''};
-  /* filter: blur(3px); */
+  background-color: ${({ darkMode }) => (darkMode) ? 'var(--common-text-color-1)' : 'var(--modal-hover-color)'};
   animation: circle .3s ease forwards;
 `;
 
 const LoaderStyle = styled.div`
-  width: 100%;
-  /* height: (var(--screen-nav-height) - 110px); */
-  height: var(--screen-nav-height);
+  position: absolute;
+  top: 50%;
+  right: 50%;
+  transform: translate(62%, -50%);
+  width: 150px;
+  height: 150px;
   padding: 0 130px;
-  position: relative;
+
 
 
 .loader {
@@ -112,7 +113,7 @@ const LoaderStyle = styled.div`
   bottom: -10px;
   color: #3F434D;
   animation: text 2s ease forwards;
-  font-size: 0.02rem;
+  font-size: 1rem;
   letter-spacing: 1px;
 }
 

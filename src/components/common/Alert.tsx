@@ -46,7 +46,8 @@ const AlertStyle = styled.div`
   height: 110px;
   border-radius: 10px;
   font-size: var(--font--size-lg);
-  background-color: var(--modal-color);
+  background-color: var(--modal-background-color);
+  color: var(--invert-color);
   overflow: hidden;
   
   p {
@@ -57,7 +58,7 @@ const AlertStyle = styled.div`
   button {
     transition: all .3s;
     &:hover{
-      background-color: var(--basic-color-3);
+      background-color: var(--modal-hover-color);
     }
   }
 
@@ -66,10 +67,11 @@ const AlertStyle = styled.div`
     flex-basis: 0;
     display: inline-block;
     height: 46px;
-    border-top: 1px solid var(--basic-color-6);
-    border-right: 1px solid var(--basic-color-6);
+    border-top: 1px solid var(--box-shadow-color);
+    border-right: 1px solid var(--box-shadow-color);
+    color: var(--invert-color);
     &:hover{
-      color: var(--basic-color-5);
+      color: var(--basic-color-2);
     }
   }
 
@@ -78,6 +80,6 @@ const AlertStyle = styled.div`
     width: 126px;
     height: 46px;
     color: #F22222;
-    border-top: 1px solid var(--basic-color-6);
+    border-top: 1px solid var(--box-shadow-color);
   }
 `

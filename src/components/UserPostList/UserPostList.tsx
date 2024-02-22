@@ -33,12 +33,12 @@ const UserPostList = ({ saleItem, post, loading }: UserPostListProps) => {
         <TypeTabsWrapperStyle style={{ border: loading ? 'none' : '' }}>
           <TypeTabsStyle style={{ display: loading ? 'none' : 'block' }}>
             <TabStyle to={`/profile/${accountname}`}>
-              <span className='a11y-hidden'>포스트 버튼</span>
-              {selectedPath === undefined ? <IconPostListOn /> : <IconPostListOff />}
-            </TabStyle>
-            <TabStyle to={`/profile/${accountname}/album`}>
               <span className='a11y-hidden'>앨범형 포스트 버튼</span>
-              {selectedPath === 'album' ? <IconPostAlbumOn /> : <IconPostAlbumOff />}
+              {selectedPath === undefined ? <IconPostAlbumOn /> : <IconPostAlbumOff />}
+              <TabStyle to={`/profile/${accountname}/posts`}>
+                <span className='a11y-hidden'>포스트 버튼</span>
+                {selectedPath === 'posts' ? <IconPostListOn /> : <IconPostListOff />}
+              </TabStyle>
             </TabStyle>
             <TabStyle to={`/profile/${accountname}/saleitem`}>
               <span className='a11y-hidden'>판매상품 버튼</span>
@@ -46,8 +46,8 @@ const UserPostList = ({ saleItem, post, loading }: UserPostListProps) => {
             </TabStyle>
           </TypeTabsStyle>
           <PostWrapperStyle>
-            {selectedPath === undefined && <PostList visiblePost={post} loading={loading} />}
-            {selectedPath === 'album' && <AlbumList visiblePost={post} loading={loading} />}
+            {selectedPath === 'posts' && <PostList visiblePost={post} loading={loading} />}
+            {selectedPath === undefined && <AlbumList visiblePost={post} loading={loading} />}
             {selectedPath === 'saleitem' && <SaleItemList saleItem={saleItem} loading={loading} />}
           </PostWrapperStyle>
         </TypeTabsWrapperStyle>
@@ -59,8 +59,7 @@ const UserPostList = ({ saleItem, post, loading }: UserPostListProps) => {
 export default UserPostList
 
 const TypeTabsWrapperStyle = styled.div`
-  border-top: 0.5px solid var(--basic-color-6);
-  border-bottom: 0.5px solid var(--basic-color-6);
+  border-top: 0.5px solid var(--box-shadow-color);
 `;
 
 const TypeTabsStyle = styled.div`

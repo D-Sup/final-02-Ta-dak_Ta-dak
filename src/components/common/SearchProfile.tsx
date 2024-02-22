@@ -23,7 +23,7 @@ const SearchProfile = ({ info, loading }: { info: Author, loading?: boolean }) =
           <ProfileMd url={info.image} loading={loading} />
         </div>
         <div onClick={followerClickHandler}>
-          <strong>{loading ? <Skeleton width={60} /> : info.username}</strong>
+          <strong>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={60} /> : info.username}</strong>
           <UserId id={info.accountname} loading={loading} />
         </div>
       </>
@@ -41,7 +41,7 @@ const SearchProfileStyle = styled.section`
   img {
     width: 50px;
     height: 1/1;
-    border: 1px solid var(--border-color);
+    border: 2px solid var(--border-color);
     border-radius: 50%;
     margin-right: 12px;
   }

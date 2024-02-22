@@ -1,6 +1,8 @@
 import { Routes, Route, useLocation, Navigate } from 'react-router-dom';
+import useWindowSize from 'hooks/useWindowSize';
 import { useRecoilValue } from 'recoil'
 import { DarkModeAtom } from './recoil/AtomDarkModeState'
+
 import styled from 'styled-components'
 
 import { ModalStack } from './utils/ModalStack';
@@ -31,12 +33,16 @@ import WebHeader from './components/pcVersion/WebHeader';
 import WebNavBar from './components/pcVersion/WebNavBar';
 import WebFollowersRecommend from './components/pcVersion/WebFollowersRecommend';
 import WebBillboard from './components/pcVersion/WebBillboard';
+import IntroducePage from 'pages/IntroducePage';
+
 
 const App = () => {
 
   const darkMode = useRecoilValue<boolean>(DarkModeAtom);
 
   const location = useLocation();
+
+  const { currentWidth } = useWindowSize();
 
   const basedMarginPaths = [
     '/splash',
@@ -63,7 +69,7 @@ const App = () => {
         </WebNavBarStyle>
 
         <WrapperStyle basedMargin={basedMargin}>
-          <BaseSizeStyle basedWidth={basedWidth}>
+          <BaseSizeStyle basedWidth={basedWidth} currentWidth={currentWidth}>
             <Routes>
               <Route path='/' element={<Navigate to='/splash' replace />} />
               <Route path='/404page' element={<Page404 />} />
@@ -72,7 +78,8 @@ const App = () => {
 
               <Route element={<LoginProtectedRoute />}>
                 <Route path='/splash' element={<SplashPage />} />
-                <Route path='/signup/' element={<SignUpPage />} />
+                <Route path='/signup' element={<SignUpPage />} />
+                <Route path='/introduce' element={<IntroducePage />} />
                 <Route path='/signup/profile' element={<ProfileSettingPage />} />
                 {/* 로그인 */}
                 <Route path='/login' element={<LoginPage />} />
@@ -141,7 +148,7 @@ const MainStyle = styled.div`
 `;
 
 const WebNavBarStyle = styled.div`
-  margin-top: 4%;
+  margin-top: 8%;
 
   @media (max-width: 768px) {
     display: none;
@@ -162,16 +169,30 @@ const WrapperStyle = styled.div<{ basedMargin: boolean }>`
   justify-content: center;
 
   @media (min-width: 768px) {
-    margin-top: ${(props) => (props.basedMargin ? '0px' : '26px')};
+    /* margin-top: ${(props) => (props.basedMargin ? '0px' : '26px')}; */
   }
 `;
 
-const BaseSizeStyle = styled.div<{ basedWidth: boolean }>`
+const BaseSizeStyle = styled.div<{ basedWidth: boolean, currentWidth: number }>`
+  position: relative;
   margin: 0;
-  overflow: hidden;
   width: ${(props) => (props.basedWidth ? '100vw' : 'var(--basic-width)')};
-  height: var(--basic-height);
-  background-color: var(--background-color);
+  background-color: ${(props) => (props.currentWidth > 768 ? 'none' : 'var(--header-color)')};
+  overflow: hidden;
+
+  &::before {
+    overflow: hidden;
+    content: '';
+    transition: .3s;
+    background-color: var(--background-color);
+    position: absolute;
+    top: 48px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border-top-right-radius: 20px;
+    border-top-left-radius: 20px;
+  }
 
   @media (min-width: 1500px) {
     margin: 0 110px;

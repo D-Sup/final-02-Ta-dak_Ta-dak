@@ -5,6 +5,7 @@ import styled from 'styled-components';
 import DarkModeBtn from '../DarkModeBtn';
 
 import { ReactComponent as IconSearch } from '../../assets/img/icon-search.svg';
+import { ReactComponent as Tadak } from '../../assets/img/tadaktadaktitle.svg';
 
 const MainHeader = (): JSX.Element => {
 
@@ -12,7 +13,7 @@ const MainHeader = (): JSX.Element => {
 
   return (
     <MainHeaderStyle>
-      <h2>타닥타닥 피드</h2>
+      <Tadak width={70} height={30} fill={'var(--logo-color)'} />
       <DarkModeBtnPosition>
         <DarkModeBtn />
       </DarkModeBtnPosition>

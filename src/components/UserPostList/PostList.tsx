@@ -9,11 +9,6 @@ const PostList = ({ visiblePost, loading }: { visiblePost: Posts[], loading?: bo
   return (
     <>
       <h2 className="a11y-hidden">포스트</h2>
-      {/* <PostListStyle>
-        {visiblePost.map((item, index) => (
-          <Post post={item} key={index} loading={loading} />
-        ))}
-      </PostListStyle> */}
       <PostListStyle>
         {visiblePost.length !== 0 ? (
           visiblePost.map((item, index) => (
@@ -44,7 +39,6 @@ export default PostList;
 const PostListStyle = styled.div`
   width: 100%;
   max-width: var(--basic-width);
-  padding: 16px;
   display: flex;
   align-items: center;
   flex-direction: column;

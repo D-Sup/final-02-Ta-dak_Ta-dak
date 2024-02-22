@@ -10,6 +10,6 @@ const {persistAtom} = recoilPersist({
 
 export const DarkModeAtom = atom<boolean>({
   key: 'DarkModeAtom',
-  default: false,
+  default: true,
   effects_UNSTABLE: [persistAtom],
 });

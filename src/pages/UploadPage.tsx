@@ -111,9 +111,7 @@ export default UploadPage
 
 const UploadPageStyle = styled.section`
   position: relative;
-  height: var(--screen-height);
-  overflow: hidden;
-
+  height: calc(var(--screen-height));
   @media (min-width: 768px) {
     height: calc(var(--screen-height) - 48px);
   }
@@ -127,7 +125,7 @@ const UploadPageStyle = styled.section`
 
 const PostWrapperStyle = styled.article`
   display: flex;
-  margin: 20px 10px;
+  padding: 20px 10px;
   max-height: 696px;
   overflow-y: auto;
   overflow-x: hidden;
@@ -167,7 +165,7 @@ const PostWrapperStyle = styled.article`
       aspect-ratio: 304/228;
       margin-top: 15px;
       border-radius: 10px;
-      border: 0.5px solid var(--basic-color-6);
+      border: 0.5px solid var(--box-shadow-color);
       @media (min-width: 768px) {
         width: 404px;
       }

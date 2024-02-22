@@ -7,7 +7,7 @@ const UserId = ({ id, loading }: { id: string, loading?: boolean }) => {
     <UserIdStyled>
       {
         loading ?
-          <Skeleton width={100} style={{ marginTop: '5px' }} />
+          <Skeleton baseColor={'var(--skeleton-color)'} width={100} style={{ marginTop: '5px' }} />
           :
           '@' + id
       }
