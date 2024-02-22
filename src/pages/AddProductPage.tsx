@@ -9,7 +9,7 @@ import styled from "styled-components"
 import Alert from "../components/common/Alert";
 import Input from '../components/common/Input';
 import UploadHeader from '../components/header/UploadHeader';
-import { FileUploadSm } from '../components/common/FileUpload';
+import { FileUploadMd } from '../components/common/FileUpload';
 
 import emptyImg from '../assets/img/empty.svg'
 
@@ -91,7 +91,7 @@ const AddProductPage = () => {
           <FileInputStyle>
             <img src={imageURL || getItem?.itemImage || emptyImg} alt='' className='showImg' />
             <div className='uploadImgBtn'>
-              <FileUploadSm id={'uploading-img'} onChange={handleImageChange} aria-label="FileInput" />
+              <FileUploadMd id={'uploading-img'} onChange={handleImageChange} aria-label="FileInput" />
             </div>
           </FileInputStyle>
         </div>

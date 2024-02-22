@@ -4,7 +4,6 @@ import styled from 'styled-components';
 
 import { GreenBackBtn } from '../components/common/Button';
 
-import { ReactComponent as SleepBonFire } from '../assets/img/sleepbonfire.svg';
 import { ReactComponent as CantFindPage } from '../assets/img/cant-find-page.svg';
 
 const Page404 = () => {
@@ -19,8 +18,8 @@ const Page404 = () => {
   return (
     <>
       <Page404Wrapper>
-        <SleepBonFire />
         <CantFindPage />
+        <p>페이지를 찾을 수 없습니다. :(</p>
         <GreenBackBtn handleFunc={handleGoHome} type='button' contents={'홈으로 돌아가기'} />
       </Page404Wrapper>
     </>
@@ -30,6 +29,7 @@ const Page404 = () => {
 export default Page404
 
 const Page404Wrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -38,11 +38,7 @@ const Page404Wrapper = styled.div`
   height: var(--basic-height);
   background-color: var(--background-color);
 
-  svg {
-    margin: 10px;
-  }
-
   button {
-    margin: 10px;
+    margin-top: 30px;
   }
 `;

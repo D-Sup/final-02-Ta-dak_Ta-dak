@@ -58,7 +58,7 @@ const ProfileSettingPage = () => {
   }
 
   const handleAlert = (): void => {
-    navigate('/splash')
+    navigate('/login')
   }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void => {
@@ -72,7 +72,7 @@ const ProfileSettingPage = () => {
           username: username,
           accountname: id,
           intro: introduce,
-          image: imagePath || 'https://api.mandarin.weniv.co.kr/1687452108456.png'
+          image: imagePath || 'https://api.mandarin.weniv.co.kr/1708642050605.png'
         }
       })
     }

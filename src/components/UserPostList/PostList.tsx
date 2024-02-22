@@ -6,19 +6,20 @@ import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
 const PostList = ({ visiblePost, loading }: { visiblePost: Posts[], loading?: boolean }): JSX.Element => {
 
+  console.log(visiblePost);
+
   return (
     <>
       <h2 className="a11y-hidden">포스트</h2>
       <PostListStyle>
-        {visiblePost.length !== 0 ? (
+        {visiblePost.length !== 0 && (
           visiblePost.map((item, index) => (
             <Post post={item} key={index} loading={loading} />
           ))
-        ) : (
-          Array(3).fill(1).map((item, index) => (
-            <Post post={item} key={index} loading={true} />
-          ))
         )}
+        {/* Array(3).fill(1).map((item, index) => (
+            <Post post={item} key={index} loading={true} />
+          )) */}
       </PostListStyle>
       {visiblePost.length === 0 && !loading &&
         <NoVisiblePost>

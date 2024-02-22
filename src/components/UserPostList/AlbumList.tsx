@@ -6,9 +6,6 @@ import { ReactComponent as NoPost } from '../../assets/img/sleepbonfire.svg';
 
 const AlbumList = ({ visiblePost, loading }: { visiblePost: Posts[], loading: boolean }) => {
 
-
-
-
   return (
     <>
       <h2 className="a11y-hidden">앨범형 포스트</h2>

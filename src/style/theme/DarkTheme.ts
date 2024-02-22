@@ -23,7 +23,6 @@ const DarkTheme = createGlobalStyle`
     --disabled-btn-color: #E6E2E2;
 
     --disabled-btn-text-color: #BFBFBF;
-
     
     --text-color-1: #DDD;
     --text-color-2: #9E9E9E;

@@ -128,6 +128,9 @@ const SubTitleStyle = styled(SubTitle)`
   transform: translate(-50%, -50%);
   animation: ${displayPhrases1} 1.5s ease forwards;
   animation-delay: 1.5s;
+  @media (min-width: 768px) {
+    width: 500px;
+  }
 `;
 
 const TitleStyle1 = styled(TadakTitle)`
@@ -140,6 +143,9 @@ const TitleStyle1 = styled(TadakTitle)`
   transform: translate(-50%, -50%);
   animation: ${displayPhrases2} 2s ease forwards;
   animation-delay: 3.5s;
+  @media (min-width: 768px) {
+    left: 47%;
+  }
 `
 
 const TitleStyle2 = styled(TadakTitle)`
@@ -152,4 +158,7 @@ const TitleStyle2 = styled(TadakTitle)`
   transform: translate(-50%, -50%);
   animation: ${displayPhrases3} 1.7s ease forwards;
   animation-delay: 3.8s;
+  @media (min-width: 768px) {
+    left: 53%;
+  }
 `;

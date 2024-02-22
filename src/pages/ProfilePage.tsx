@@ -143,5 +143,8 @@ export default ProfilePage
 
 const ProfilePageStyle = styled.section`
   position: relative;
-  height: calc(100vh - 60px);
+  height: calc(var(--screen-height) - 12px);
+  @media (min-width: 768px) {
+    height: calc(var(--screen-nav-height));
+  }
 `;

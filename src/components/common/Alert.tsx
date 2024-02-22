@@ -68,7 +68,6 @@ const AlertStyle = styled.div`
     display: inline-block;
     height: 46px;
     border-top: 1px solid var(--box-shadow-color);
-    border-right: 1px solid var(--box-shadow-color);
     color: var(--invert-color);
     &:hover{
       color: var(--basic-color-2);
@@ -81,5 +80,6 @@ const AlertStyle = styled.div`
     height: 46px;
     color: #F22222;
     border-top: 1px solid var(--box-shadow-color);
+    border-left: 1px solid var(--box-shadow-color);
   }
 `

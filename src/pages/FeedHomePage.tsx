@@ -86,7 +86,7 @@ const FeedHomePage = () => {
 export default FeedHomePage
 
 const PostListStyle = styled.div`
-  height: calc(var(--screen-nav-height) - 137px);
+  height: calc(var(--screen-nav-height) - 129px);
   overflow-y: scroll; 
   overflow-x: hidden;
   ::-webkit-scrollbar {

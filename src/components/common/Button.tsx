@@ -5,9 +5,9 @@ const YellowBtnStyle = styled.button`
   width: 120px;
   height: 41px;
   font-size: var(--font--size-md);
-  background-color: var(--modal-hover-color);
+  background-color: var(--basic-color-1);
   border-radius: 44px;
-  color: #000;
+  color: var(--common-text-color-1);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
   transition: .3s;
   &:hover {

@@ -5,6 +5,7 @@ import { modalStackAtom } from '../recoil/AtomModalStackState';
 
 import { ModalStackAtomType } from '../recoil/AtomModalStackState';
 
+
 import styled, { css } from 'styled-components';
 
 const ModalComponent = ({ modal }: { modal: ModalStackAtomType }) => {
@@ -47,6 +48,19 @@ const ModalComponent = ({ modal }: { modal: ModalStackAtomType }) => {
           </SlideUpModalWrapper>
           <SlideUpBackdrop onClick={close} isOpen={isOpen}>
           </SlideUpBackdrop>
+        </>
+      );
+    case 'CarouselModal':
+      return (
+        <>
+          <CarouselModalWrapper isOpen={isOpen}>
+            {
+              typeof props !== 'string' &&
+              <Component closeModal={close} {...props} />
+            }
+          </CarouselModalWrapper>
+          <CarouselBackdrop onClick={close} isOpen={isOpen}>
+          </CarouselBackdrop>
         </>
       );
     default:
@@ -126,7 +140,6 @@ const AlertModalWrapper = styled.div<{ isOpen: boolean }>`
   transition: opacity .4s 
   ${({ isOpen }) => isOpen ? 'ease' : 'ease-in'};
   opacity: ${({ isOpen }) => isOpen ? 1 : 0}; 
-
   `;
 
 const SlideUpBackdrop = styled.div`
@@ -159,5 +172,66 @@ const SlideUpModalWrapper = styled.div<{ isOpen: boolean }>`
     margin: 18px 0;   
     background: #DBDBDB;
     border-radius: 5px;
+  }
+`;
+
+const CarouselBackdrop = styled.div<{ isOpen: boolean }>`
+  opacity: 0;
+  opacity: ${({ isOpen }) => isOpen && .5};
+  background-color: #000;
+  pointer-events: ${({ isOpen }) => isOpen ? "auto" : "none"};
+  transition: opacity 0.3s;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 999;
+  width: 100vw;
+  height: 100vh;
+`
+
+const CarouselModalWrapper = styled.div<{ isOpen: boolean }>`
+  opacity: 0;
+  opacity: ${({ isOpen }) => isOpen ? 1 : 0};
+  pointer-events: ${({ isOpen }) => isOpen ? "auto" : "none"};
+  transform: translate(-50%, -50%) ${({ isOpen }) => isOpen ? "scale(1)" : "scale(1.2)"};
+  transition: all 0.3s;
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  z-index: 9999;
+  
+  button {
+    cursor: pointer;
+  }
+  .prev-btn, 
+  .next-btn {
+    width: 100px;
+    height: 70%;
+    position: absolute;
+    top: 50%;
+    opacity: 0.7;
+  }
+  .prev-btn {
+    left: 0;
+    transform: translateY(30%);
+    
+    @media (min-width: 768px) {
+      transform: translateY(-50%);
+      left: -100px;
+  } 
+  }
+  .next-btn {
+    right: 0;
+    transform: translateY(30%) rotate(180deg);
+    
+    @media (min-width: 768px) {
+      transform: translateY(-50%) rotate(180deg);
+      right: -100px;
+  } 
+  }
+  .cancel-btn {
+    position: absolute;
+    top: -35px;
+    right: 10px;
   }
 `;

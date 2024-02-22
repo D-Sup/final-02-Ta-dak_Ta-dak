@@ -80,12 +80,13 @@ const ProductDetailModalStyle = styled.div`
   background-color: var(--modal-background-color);
   border-radius: 20px;
   margin: auto;
-  padding: 50px 34px 50px 34px;
+  padding: 30px 0px 50px 0px;
   cursor: auto;
 
   img {
     display: block;
     width: 100%;
+    max-height: 300px;
     margin: 0 auto;
     border-radius: 10px;
     z-index: 1;
@@ -128,7 +129,7 @@ const ProductDetailModalStyle = styled.div`
     word-wrap: break-word;
     color: var(--invert-color);
     overflow: auto;
-    background-color: var(--input-box-color);
+    background-color: var(--modal-hover-color);
     border-radius: 10px;
     ::-webkit-scrollbar {
       width: 5px;
@@ -140,28 +141,30 @@ const ProductDetailModalStyle = styled.div`
   }
 
   .modifyBtn {
-    width: 75px;
+    width: 48%;
     height: 35px;
     font-size: var(--font--size-md);
     /* background-color: var(--basic-color-1); */
     background-color: var(--basic-color-1);
     color: var(--common-text-color-1);
-    border-radius: 25px;
+    border-radius: 10px;
     position: absolute;
     right: 112px;
     bottom: 0;
+    left: 0;
   }
 
   .deleteBtn {
-    width: 75px;
+    width: 48%;
     height: 35px;
     background-color: #FF6B6B;
     font-size: var(--font--size-md);
     color: var(--common-text-color-1);
-    border-radius: 25px;
+    border-radius: 10px;
     position: absolute;
     right: 32px;
     bottom: 0;
+    right: 0;
   }
 `;
 

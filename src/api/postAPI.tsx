@@ -11,7 +11,7 @@ export const getPost = async (loadPostSeq: number): Promise<GetPostResponse> => 
 }
 
 export const getPostAll = async (loadPostSeq: number): Promise<GetPostResponse> => {
-  const reqUrl = `/post/?limit=5&skip=${loadPostSeq}`;
+  const reqUrl = `/post/?limit=${loadPostSeq}`;
   try {
     const { data } = await axiosAuth.get(reqUrl)
     return data
