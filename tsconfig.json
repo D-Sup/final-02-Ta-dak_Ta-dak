@@ -7,7 +7,7 @@
     "moduleResolution": "node",
     "outDir": "./dist",
     "baseUrl": "./src",
-    "strict": true,
+    "strict": false,
     "paths": {
       "react-router-dom": ["../node_modules/react-router-dom"],
       "*": ["*", "src/*"]
