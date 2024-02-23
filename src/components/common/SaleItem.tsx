@@ -5,6 +5,8 @@ import 'react-loading-skeleton/dist/skeleton.css'
 import { useModalStack } from '../../hooks/useModalStack';
 import ProductDetailModal from './ProductDetailModal';
 
+import errorImg from '../../assets/img/UploadImage404.svg';
+
 const SaleItem = ({ saleItem, loading }: { saleItem: Product, loading: boolean }) => {
 
   const { push } = useModalStack();
@@ -22,7 +24,13 @@ const SaleItem = ({ saleItem, loading }: { saleItem: Product, loading: boolean }
         :
         <>
           <h3 className='a11y-hidden'>{saleItem.itemName}</h3>
-          <img src={saleItem.itemImage} alt={saleItem.itemName} />
+          <img
+            src={saleItem.itemImage}
+            alt={saleItem.itemName}
+            onError={(event) => {
+              (event.target as HTMLImageElement).src = errorImg;
+            }}
+          />
           <span className='itemName'>{saleItem.itemName}</span>
           <span className='itemPrice'>{saleItem.price.toLocaleString()}원</span>
         </>
@@ -39,6 +47,8 @@ const SaleItemStyle = styled.button`
   margin: auto;
 
   img {
+    display: block;
+    background-color: var(--skeleton-color);
     width: 100%;
     aspect-ratio: 150/115;
     border-radius: 8px;

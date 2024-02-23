@@ -22,11 +22,13 @@ interface ProfileProps {
 }
 
 export const ProfileLg = ({ url = '', loading = false }: ProfileProps): JSX.Element => {
+  const observeImage = useRef<HTMLImageElement>(null);
+  useLazyLoading(observeImage, getProfileSrc(url));
   return (
     <>
       {loading && <Skeleton baseColor={'var(--skeleton-color)'} width={110} height={110} circle={true} />}
       <ProfileLgStyle
-        src={url || BasicProfile}
+        ref={observeImage}
         alt="Large Profile"
         style={{ display: loading ? 'none' : 'block' }}
         onError={(event) => {
@@ -91,7 +93,8 @@ const ProfileContainer = styled.div<{ confirm: boolean }>`
 `;
 
 const ProfileCommonStyle = css`
-  vertical-align: top;
+  display: block;
+  background-color: var(--skeleton-color);
   border-radius: 50%;
   object-fit: cover;
 `;

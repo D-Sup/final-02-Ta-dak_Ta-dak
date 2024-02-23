@@ -7,7 +7,10 @@ import { deleteProduct } from '../../api/productAPI';
 import styled from 'styled-components';
 
 import Alert from './Alert';
+
 import { ReactComponent as Garland } from '../../assets/img/garland.svg';
+import errorImg from '../../assets/img/UploadImage404.svg';
+
 
 interface ProductDetailModalProps {
   saleItem: Product,
@@ -47,7 +50,13 @@ const ProductDetailModal = ({ saleItem, closeModal }: ProductDetailModalProps) =
       <BackgroundStyle>
         <ProductDetailModalStyle >
           <GarlandStyle></GarlandStyle>
-          <img src={saleItem.itemImage} alt={saleItem.itemName} />
+          <img
+            src={saleItem.itemImage}
+            alt={saleItem.itemName}
+            onError={(event) => {
+              (event.target as HTMLImageElement).src = errorImg;
+            }}
+          />
           <h2>{saleItem.itemName}</h2>
           <h3>{saleItem.price.toLocaleString()}원</h3>
           <p>상품 설명 혹은 링크</p>
@@ -70,6 +79,7 @@ const ProductDetailModal = ({ saleItem, closeModal }: ProductDetailModalProps) =
 export default ProductDetailModal
 
 const BackgroundStyle = styled.div`
+  width: 100%;
   padding: 10px 20px 50px;
   cursor: pointer;
   z-index: 2;

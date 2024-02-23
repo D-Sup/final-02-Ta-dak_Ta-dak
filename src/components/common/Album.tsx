@@ -11,7 +11,7 @@ import errorImg from '../../assets/img/UploadImage404.svg';
 const Album = ({ post, loading }: { post: Posts, loading: boolean }) => {
 
   const observeImage = useRef<HTMLImageElement>(null);
-  useLazyLoading(observeImage, post.image);
+  useLazyLoading(observeImage, post.image, loading);
 
   return (
     post.image &&
@@ -22,7 +22,6 @@ const Album = ({ post, loading }: { post: Posts, loading: boolean }) => {
           :
           <img
             ref={observeImage}
-            src={post.image}
             alt={`${post.author.username}의 포스팅 이미지`}
             onError={(event) => {
               (event.target as HTMLImageElement).src = errorImg;
@@ -42,9 +41,10 @@ const AlbumStyle = styled.li`
   aspect-ratio: 1/1;
 
   img {
+    display: block;
+    background-color: var(--skeleton-color);
     width: 100%;
     aspect-ratio: 1/1;
-    vertical-align: top;
     object-fit: cover;
   }
 `;

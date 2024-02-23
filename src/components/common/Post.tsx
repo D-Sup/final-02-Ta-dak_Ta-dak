@@ -36,7 +36,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useLazyLoading(observeImage, post.image);
+  useLazyLoading(observeImage, post.image, loading);
 
   const isLike = post.hearted;
   const id = post.id || post._id || '';
@@ -93,7 +93,6 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
     )
   }
 
-
   const timeFormat = (time: string): string => {
     const originalDate = new Date(time);
     const formattedDate = `
@@ -143,14 +142,13 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
             {loading && <Skeleton baseColor={'var(--skeleton-color)'} height={currentWidth > 768 ? 332 : 228} style={{ width: '100%', marginBottom: '16px' }} />}
             {!loading && post.image !== 'false' &&
               <img
-                src={post.image}
                 ref={observeImage}
-                style={{ display: loading ? 'none' : 'block' }}
                 onError={(event) => {
                   (event.target as HTMLImageElement).src = errorImg;
                 }}
                 alt={`${!loading && post.author.accountname}의 포스팅 이미지`}
-              />}
+              />
+            }
           </Link>
           {
             loading ?
@@ -293,6 +291,8 @@ const PostContainerStyle = styled.div<{ locationPathname: string, contentMore: b
   }
 
   img {
+    display: block;
+    background-color: var(--skeleton-color);
     animation: ${fadeIn} 1s ease-in;
     /* width: 304px; */
     width: 100%;
