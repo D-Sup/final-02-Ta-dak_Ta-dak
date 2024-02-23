@@ -55,8 +55,10 @@ const ProfilePage = () => {
     const profilePosts = await getProfilePost(accountname);
     setSaleItemProps([...saleItems.product]);
     Array.isArray(profilePosts.post) && setProfilePostProps([...(profilePosts.post as Posts[])]);
-    setPostLoading(false);
-    setProfileLoading(false);
+    setTimeout(() => {
+      setPostLoading(false);
+      setProfileLoading(false);
+    }, 300)
   }
 
   const handleLogout = (): void => {

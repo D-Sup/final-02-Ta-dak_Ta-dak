@@ -46,7 +46,7 @@ const UploadPage = () => {
   const handleUploadBtnClick = async (): Promise<void> => {
     if (location.pathname === '/upload') {
       const uploadPost = await upload(text, imagePath as string);
-      navigate(`/profile/${uploadPost.post?.author.accountname}`);
+      navigate(`/profile/${uploadPost.post?.author.accountname}/posts`);
     } else if (location.pathname === '/editpost') {
       await editPost(locationValue.id, text, imagePath || locationValue?.image);
       navigate(-1);

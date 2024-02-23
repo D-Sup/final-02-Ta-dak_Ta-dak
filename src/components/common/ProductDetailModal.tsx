@@ -86,7 +86,7 @@ const ProductDetailModalStyle = styled.div`
   img {
     display: block;
     width: 100%;
-    max-height: 300px;
+    aspect-ratio: 16/10;
     margin: 0 auto;
     border-radius: 10px;
     z-index: 1;

@@ -139,7 +139,7 @@ const AddProductPageStyle = styled.div`
   height: var(--screen-height);
   margin: 0 auto;
   overflow-y: scroll;
-  
+
   ::-webkit-scrollbar {
     background-color: transparent;
     width: 0px;
@@ -147,6 +147,7 @@ const AddProductPageStyle = styled.div`
 
   .showImg {
     width: 100%;
+    aspect-ratio: 16/10;
     margin-top: 10px;
     border-radius: 10px;
     object-fit: cover;
