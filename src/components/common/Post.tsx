@@ -70,6 +70,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
         image: post.image
       }
     })
+    clear();
   }
 
   const deletePostReq = async (): Promise<void> => {
