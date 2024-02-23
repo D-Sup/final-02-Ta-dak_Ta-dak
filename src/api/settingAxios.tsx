@@ -19,7 +19,7 @@ const axiosAuth: AxiosInstance = axios.create({
 axiosAuth.interceptors.request.use(
   (config) => {
     const TOKEN = JSON.parse(sessionStorage.getItem('user') as string)?.UserAtom.token;
-    config.headers = config.headers ? config.headers : new AxiosHeaders();
+    config.headers = config.headers ? config.headers : {};
     config.headers['Authorization'] = `Bearer ${TOKEN}`;
     return config;
   },
@@ -29,3 +29,6 @@ axiosAuth.interceptors.request.use(
 );
 
 export { axiosUnauth, axiosAuth };
+
+
+
