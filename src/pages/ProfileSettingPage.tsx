@@ -163,6 +163,7 @@ export default ProfileSettingPage
 
 const ProfileSignUpPageStyle = styled.form`
   position: relative;
+  height: var(--basic-height);
   background-color: var(--background-color);
   display: flex;
   flex-direction: column;
