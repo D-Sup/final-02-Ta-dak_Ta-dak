@@ -136,13 +136,10 @@ export default AddProductPage
 const AddProductPageStyle = styled.div`
   position: relative;
   width: 322px;
-  /* padding: 0 2px; */
-  /* display: flex;
-  flex-direction: column;
-  align-items: center; */
   height: var(--screen-height);
   margin: 0 auto;
   overflow-y: scroll;
+  
   ::-webkit-scrollbar {
     background-color: transparent;
     width: 0px;
@@ -223,4 +220,4 @@ const FileInputStyle = styled.button`
     position: relative;
     display: block;
     margin: 0 auto;
-  `;
+`;

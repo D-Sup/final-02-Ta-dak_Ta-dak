@@ -112,7 +112,7 @@ const Comment = ({ item, myInfo, setReset, loading }: CommentProps) => {
 export default Comment
 
 const CommentContainerStyle = styled.div`
-  width: 390px;
+  width: 100%;
   min-height: 58px;
   display: flex;
   position: relative;

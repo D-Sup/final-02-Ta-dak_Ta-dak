@@ -205,29 +205,34 @@ const CarouselModalWrapper = styled.div<{ isOpen: boolean }>`
   }
   .prev-btn, 
   .next-btn {
-    width: 100px;
-    height: 70%;
+    width: 80px;
+    height: 80px;
     position: absolute;
-    top: 50%;
     opacity: 0.7;
+    bottom: -80px;
+    
+    @media (min-width: 768px) {
+      width: 100px;
+      height: 70%;
+      top: 50%;
+    } 
   }
   .prev-btn {
-    left: 0;
-    transform: translateY(30%);
+    left: 50px;
     
     @media (min-width: 768px) {
       transform: translateY(-50%);
       left: -100px;
-  } 
+    } 
   }
   .next-btn {
-    right: 0;
-    transform: translateY(30%) rotate(180deg);
+    right: 50px;
+    transform: rotate(180deg);
     
     @media (min-width: 768px) {
       transform: translateY(-50%) rotate(180deg);
       right: -100px;
-  } 
+    } 
   }
   .cancel-btn {
     position: absolute;
