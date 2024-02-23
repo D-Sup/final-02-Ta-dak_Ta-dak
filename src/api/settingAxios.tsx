@@ -1,4 +1,4 @@
-import axios, { AxiosInstance, AxiosError } from 'axios';
+import axios, { AxiosInstance, AxiosError, AxiosRequestConfig } from 'axios';
 
 const BASE_URL = 'https://api.mandarin.weniv.co.kr';
 
@@ -17,10 +17,10 @@ const axiosAuth: AxiosInstance = axios.create({
 });
 
 axiosAuth.interceptors.request.use(
-  (config) => {
+  (config: AxiosRequestConfig) => {
     const TOKEN = JSON.parse(sessionStorage.getItem('user') as string)?.UserAtom.token;
     config.headers = config.headers || {};
-    config.headers['Authorization'] = `Bearer ${TOKEN}`
+    config.headers['Authorization'] = `Bearer ${TOKEN}`;
     return config;
   },
   (error: AxiosError) => {
