@@ -123,7 +123,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
             )
         }} />
         <div className='profileComponent'>
-          <SearchProfile info={post.author || ''} loading={loading} />
+          <SearchProfile info={post.author} loading={loading} />
         </div>
         <PostContainerStyle locationPathname={location.pathname} contentMore={contentMore}>
           <Link to={`/postdetail/${id}`}>
