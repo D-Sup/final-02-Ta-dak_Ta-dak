@@ -30,7 +30,7 @@ const ChatRoomPage = () => {
   const userInfo = location.state;
   const selectedData = dummyData[dummyData.findIndex(item => item.accountname === userId)] || ""
 
-  const [chatHistory, setChatHistory] = useState<MessagesType[]>(selectedData.messages || []);
+  const [chatHistory, setChatHistory] = useState<MessagesType[]>(typeof selectedData === 'string' ? [] : selectedData.messages);
   const [chatMessage, setChatMessage] = useState<string>('');
 
   const { handleImageChange, imagePath } = useImageUploader();
@@ -91,7 +91,8 @@ const ChatRoomPage = () => {
 
   return (
     <>
-      <ChatHeader name={selectedData.name || userInfo.username} isButton={true} handleFunc={() => push(Modal, {}, ['채팅방 나가기'], [handleChatRoomOut], 'SlideUpModal')} />
+      <ChatHeader name={typeof selectedData === 'string' ? userInfo.username : selectedData.name} isButton={true} handleFunc={() => push(Modal, {}, ['채팅방 나가기'], [handleChatRoomOut], 'SlideUpModal')} />
+
       <ChatRoomContainer>
         <ChatRoomPageStyle ref={chatContainerRef} >
           {chatHistory?.map((item, index) => {

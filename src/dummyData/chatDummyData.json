@@ -80,7 +80,8 @@
       {
         "Msg": "그렇네요 팔공산 캠핑장 저도 가봐야겠어요~",
         "createdAt": "23. 08. 30. 오전 09:34",
-        "receive": true
+        "receive": true,
+        "confirm": false
       }
     ]
   }
