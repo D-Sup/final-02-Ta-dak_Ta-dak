@@ -162,157 +162,61 @@ import postImg2 from './../../assets/testImg/post2.png';
 <br />
 
 ## 기능 UI
-<table>
-  <tr align="center">
-      <th colspan="2">스플래시</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/20f4b76f-763d-4980-8a70-fcfdf7b74b05" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/9f82018f-b538-4fb4-b1b1-4342225b98c6" /></td>
-  </tr>
-   <tr align="center">
-      <th colspan="2">회원가입</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/5540ffd2-114e-4ad7-8c79-d3cdc5fa00d8" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/28870202-c8f5-4285-ba5f-c0a034ef8368" /></td>
-  </tr>
-   <tr align="center">
-      <th colspan="2">로그인</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/70fd36d0-4674-40e9-894c-90e2e438a6f1" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/dca5bc76-932f-4916-b8d3-76d8ff040e14" /></td>
-  </tr>
-   <tr align="center">
-      <th colspan="2">홈피드</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/04dc0394-cc38-45ea-8986-f39dd354d5cb" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/4915ecb8-0771-40ff-8717-a119aa161970" /></td>
-  </tr>
-   <tr align="center">
-      <th colspan="2">게시글 업로드</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/720e6e8e-ca99-49b9-ae5a-fc7e8621085c" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/14323869-f1dd-48ec-ab41-fc65f64ab83f" /></td>
-  </tr>
- <tr align="center">
-      <th colspan="2">게시글 상세</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/a88cbcbb-8fb5-43d8-b183-9e75c6f88094" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/fe45ebac-933c-493d-814a-a84026330b1e" /></td>
-  </tr>
- <tr align="center">
-      <th colspan="2">상품업로드</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/d1f3b98d-815b-4eb5-b58f-4046bccfcd99" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/e7c80cd7-d087-485e-9b82-b3a662e98927" /></td>
-  </tr>
- <tr align="center">
-      <th colspan="2">프로필 페이지</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/995ff45b-7ef0-4b82-af69-832977ab1826" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/74e863cd-7980-43bf-a65c-8699cbd34575" /></td>
-  </tr>
- <tr align="center">
-      <th colspan="2">프로필 수정</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/e0e1be10-57de-48bd-b081-c6120a6d9f2e" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/7ff86842-a2bb-47ee-a1d9-f2048c60a080" /></td>
-  </tr> 
-  <tr align="center">
-      <th colspan="2">검색</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr> 
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/d7efba65-db9a-4dc7-a672-3a839f029536" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/5a23eb22-6432-4c91-a603-81d283a5864d" /></td>
-  </tr>
-<tr align="center">
-      <th colspan="2">채팅</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/eb76ff62-49a0-4abd-b06e-f1b6df0e4a38" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/6719c42b-0c80-45e5-bedd-146a44c69c7b" /></td>
-  </tr> 
-  <tr align="center">
-      <th colspan="2">로그아웃</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/3a9a4f73-e721-4668-808d-7de9af6ca41b" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/6c083da4-69dc-4858-8547-5cb8491cb734" /></td>
-  </tr> 
-  <tr align="center">
-      <th colspan="2">404 페이지</th>
-  </tr>
-  <tr align="center">
-    <td>PC💻</td>
-    <td>Mobile📲</td> 
-  </tr>
-  <tr align="center">
-    <td><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/9114124a-ed4a-4a76-964f-20482cb66285" /></td>
-    <td><img src="https://github.com/JoWonYeong/Next-study/assets/92977925/689cf91b-0de5-43a8-a0cd-6947262ed603" /></td>
-  </tr> 
-  <tr align="center">
-    <th colspan="2">팔로우 추천목록</th>
-  </tr>
-  <tr align="center">
-     <td colspan="2"><center><img src="https://github.com/FRONTENDSCHOOL5/final-02-Ta-dak_Ta-dak/assets/126536438/479bd13c-a8f8-4a1b-abeb-0ee8e802fdde" /></center></td>
-  </tr>
-</table>
+
+### 초기화면
+|스플래시|회원가입|로그인|
+|---|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/c481225d-7bb9-4d21-b99b-1faa86ca6e0f" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/c42c9ad8-d9ad-45f3-bcfe-7ef5bdb3dad2" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/e2423bdd-e48d-40dd-9b5d-0e36705c3eb2" />
+
+
+### 피드
+|게시글|게시글 상세|
+|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/556f49e9-aa69-458e-9815-ed25b328915e" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/7519fa7a-2fee-4f54-bf23-2648f57b90ae" />|
+
+### PC버전
+|PC화면|팔로우추천|
+|---|---|
+|![PC](https://github.com/D-Sup/resume/assets/96939334/3454e3cf-17ae-4299-94e4-9e793104efb0)|![팔로우추천소통](https://github.com/D-Sup/resume/assets/96939334/66b05681-a571-452d-8a92-04d068fa18d6)|
+
+### 검색
+|모바일|PC|
+|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/dd2ba015-8364-4fea-ab2b-1a42c1f65a41" />|![PC](https://github.com/D-Sup/resume/assets/96939334/b0664d25-8946-4c27-942a-91c5e8b2e95b)|
+
+### 채팅
+|모바일|
+|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/71893bc6-8eab-47d9-9b95-d8cccf59ce8e" />|
+
+### 업로드
+|게시글 작성|상품등록|
+|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/3ef4a89a-52f5-4eed-be41-581ce65b659f" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/55b404cb-c28f-415c-9404-61db6f5a4206" />|
+
+### 프로필
+|모바일|
+|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/8ccf5e86-2f30-426a-a354-5e5a268a1d8e" />|
+
+### 스토리
+|모바일|PC|
+|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/be446e93-08a7-46b6-abd9-3e9a4ad7a30c" />|![PC](https://github.com/D-Sup/resume/assets/96939334/549cff1c-a425-4a22-b85f-21c80b61417e)|
+
+### 모달
+|게시글수정|게시글삭제|게시글신고|
+|---|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/8f54c178-9132-466b-812a-8bf82e66da21" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/80a0912d-270d-42ac-af68-56f276222af1" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/2c6fd893-8b6e-496a-bbf9-19aead0597c9" />
+
+|댓글삭제|상품삭제|로그아웃|
+|---|---|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/404e015d-b7ed-4076-aeaf-0c2c548d8680" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/2a4b114b-af93-4d56-83b1-74a27f643bc7" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/b762038b-aefa-40c9-92bd-70154ce35557" />
+
+### 다크모드
+|모바일|
+|---|
+|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/90da7127-be13-4289-a6bc-501d3e24df05" />|
 
 <br />
 
