@@ -28,31 +28,29 @@ const UserPostList = ({ saleItem, post, loading }: UserPostListProps) => {
   const selectedPath = (path.split('/'))[3];
 
   return (
-    <>
-      <section>
-        <TypeTabsWrapperStyle style={{ border: loading ? 'none' : '' }}>
-          <TypeTabsStyle style={{ display: loading ? 'none' : 'block' }}>
-            <TabStyle to={`/profile/${accountname}`}>
-              <span className='a11y-hidden'>앨범형 포스트 버튼</span>
-              {selectedPath === undefined ? <IconPostAlbumOn /> : <IconPostAlbumOff />}
-              <TabStyle to={`/profile/${accountname}/posts`}>
-                <span className='a11y-hidden'>포스트 버튼</span>
-                {selectedPath === 'posts' ? <IconPostListOn /> : <IconPostListOff />}
-              </TabStyle>
+    <section>
+      <TypeTabsWrapperStyle style={{ border: loading ? 'none' : '', marginTop: loading ? '44px' : '0' }}>
+        <TypeTabsStyle style={{ display: loading ? 'none' : 'block' }}>
+          <TabStyle to={`/profile/${accountname}`}>
+            <span className='a11y-hidden'>앨범형 포스트 버튼</span>
+            {selectedPath === undefined ? <IconPostAlbumOn /> : <IconPostAlbumOff />}
+            <TabStyle to={`/profile/${accountname}/posts`}>
+              <span className='a11y-hidden'>포스트 버튼</span>
+              {selectedPath === 'posts' ? <IconPostListOn /> : <IconPostListOff />}
             </TabStyle>
-            <TabStyle to={`/profile/${accountname}/saleitem`}>
-              <span className='a11y-hidden'>판매상품 버튼</span>
-              {selectedPath === 'saleitem' ? <IconSaleOn /> : <IconSaleOff />}
-            </TabStyle>
-          </TypeTabsStyle>
-          <PostWrapperStyle>
-            {selectedPath === 'posts' && <PostList visiblePost={post} loading={loading} />}
-            {selectedPath === undefined && <AlbumList visiblePost={post} loading={loading} />}
-            {selectedPath === 'saleitem' && <SaleItemList saleItem={saleItem} loading={loading} />}
-          </PostWrapperStyle>
-        </TypeTabsWrapperStyle>
-      </section>
-    </>
+          </TabStyle>
+          <TabStyle to={`/profile/${accountname}/saleitem`}>
+            <span className='a11y-hidden'>판매상품 버튼</span>
+            {selectedPath === 'saleitem' ? <IconSaleOn /> : <IconSaleOff />}
+          </TabStyle>
+        </TypeTabsStyle>
+        <PostWrapperStyle>
+          {selectedPath === 'posts' && <PostList visiblePost={post} loading={loading} />}
+          {selectedPath === undefined && <AlbumList visiblePost={post} loading={loading} />}
+          {selectedPath === 'saleitem' && <SaleItemList saleItem={saleItem} loading={loading} />}
+        </PostWrapperStyle>
+      </TypeTabsWrapperStyle>
+    </section>
   );
 }
 

@@ -5,7 +5,7 @@ import styled, { keyframes } from 'styled-components'
 import { ReactComponent as SubTitle } from '../assets/img/subtitle.svg';
 import { ReactComponent as TadakTitle } from '../assets/img/tadaktitle.svg';
 
-import splash from '../assets/img/splash.gif';
+import splash from '../assets/img/splash.webp';
 
 const SplashPage = () => {
 

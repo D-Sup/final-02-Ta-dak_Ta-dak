@@ -56,8 +56,8 @@ const ProfilePage = () => {
     setSaleItemProps([...saleItems.product]);
     Array.isArray(profilePosts.post) && setProfilePostProps([...(profilePosts.post as Posts[])]);
     setTimeout(() => {
-      setPostLoading(false);
       setProfileLoading(false);
+      setPostLoading(false);
     }, 300)
   }
 

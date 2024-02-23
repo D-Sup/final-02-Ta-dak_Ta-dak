@@ -152,7 +152,7 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
           </Link>
           {
             loading ?
-              <Skeleton baseColor={'var(--skeleton-color)'} width={100} height={21} style={{ marginBottom: '16px' }} />
+              <Skeleton baseColor={'var(--skeleton-color)'} width={100} height={21} />
               :
               <div className='likeCommentCount'>
                 <button
@@ -183,12 +183,12 @@ const Post = ({ post, loading }: { post: Posts, loading?: boolean }) => {
 
           {
             loading ?
-              <Skeleton baseColor={'var(--skeleton-color)'} width={130} height={17}
+              <Skeleton baseColor={'var(--skeleton-color)'} width={120} height={21}
                 style={{
                   position: 'absolute',
                   right: '0',
                   bottom: '0',
-                  marginBottom: '35px'
+                  marginBottom: '16px'
                 }}
               />
               :

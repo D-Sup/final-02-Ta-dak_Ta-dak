@@ -65,7 +65,7 @@ const StoryBoard = () => {
         Array(10).fill(1).map((_, index) => (
           <div key={index} className='skeleton-container'>
             <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={50} circle={true} />
-            <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={15} style={{ marginTop: '10px', borderRadius: '30px' }} />
+            <Skeleton baseColor={'var(--skeleton-color)'} width={50} height={15} style={{ marginTop: '10px', marginRight: '8px', borderRadius: '30px' }} />
           </div>
         ))
       ) : (
