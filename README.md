@@ -168,50 +168,69 @@ import postImg2 from './../../assets/testImg/post2.png';
 |---|---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/c481225d-7bb9-4d21-b99b-1faa86ca6e0f" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/c42c9ad8-d9ad-45f3-bcfe-7ef5bdb3dad2" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/e2423bdd-e48d-40dd-9b5d-0e36705c3eb2" />
 
+---
 
 ### 피드
 |게시글|게시글 상세|
 |---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/556f49e9-aa69-458e-9815-ed25b328915e" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/7519fa7a-2fee-4f54-bf23-2648f57b90ae" />|
 
+---
+
 ### PC버전
 |PC화면|팔로우추천|
 |---|---|
 |![PC](https://github.com/D-Sup/resume/assets/96939334/3454e3cf-17ae-4299-94e4-9e793104efb0)|![팔로우추천소통](https://github.com/D-Sup/resume/assets/96939334/66b05681-a571-452d-8a92-04d068fa18d6)|
+
+---
 
 ### 검색
 |모바일|PC|
 |---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/dd2ba015-8364-4fea-ab2b-1a42c1f65a41" />|![PC](https://github.com/D-Sup/resume/assets/96939334/b0664d25-8946-4c27-942a-91c5e8b2e95b)|
 
+---
+
 ### 채팅
 |모바일|
 |---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/71893bc6-8eab-47d9-9b95-d8cccf59ce8e" />|
+
+---
 
 ### 업로드
 |게시글 작성|상품등록|
 |---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/3ef4a89a-52f5-4eed-be41-581ce65b659f" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/55b404cb-c28f-415c-9404-61db6f5a4206" />|
 
+---
+
 ### 프로필
 |모바일|
 |---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/8ccf5e86-2f30-426a-a354-5e5a268a1d8e" />|
+
+---
 
 ### 스토리
 |모바일|PC|
 |---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/be446e93-08a7-46b6-abd9-3e9a4ad7a30c" />|![PC](https://github.com/D-Sup/resume/assets/96939334/549cff1c-a425-4a22-b85f-21c80b61417e)|
 
+---
+
 ### 모달
 |게시글수정|게시글삭제|게시글신고|
 |---|---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/8f54c178-9132-466b-812a-8bf82e66da21" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/80a0912d-270d-42ac-af68-56f276222af1" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/2c6fd893-8b6e-496a-bbf9-19aead0597c9" />
 
+---
+
 |댓글삭제|상품삭제|로그아웃|
 |---|---|---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/404e015d-b7ed-4076-aeaf-0c2c548d8680" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/2a4b114b-af93-4d56-83b1-74a27f643bc7" />|<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/b762038b-aefa-40c9-92bd-70154ce35557" />
+
+---
 
 ### 다크모드
 |모바일|
