@@ -38,7 +38,7 @@ const ChatList = () => {
                 }}
               >
                 <div className="imgcontainer">
-                  <ProfileSm url={''} confirm={!loading && !item.messages.slice().reverse().find(message => message.receive === true)?.confirm} loading={loading} />
+                  <ProfileSm url={''} confirm={!loading && !(item.messages.slice().reverse().find(message => message.receive === true)?.confirm ?? false)} loading={loading} />
                 </div>
                 <div className="text">
                   <span>{loading ? <Skeleton baseColor={'var(--skeleton-color)'} width={150} height={15} /> : item.name}</span>
