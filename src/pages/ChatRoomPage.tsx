@@ -152,6 +152,10 @@ const ChatRoomContainer = styled.div`
   border-bottom: 60px solid var(--background-color);
   overflow-y: scroll;
 
+  ::-webkit-scrollbar {
+      width: 0px;
+  } 
+
 @media (min-width: 768px) {
   height: calc(var(--screen-nav-height) - 48px);
 }
