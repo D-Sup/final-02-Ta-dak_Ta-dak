@@ -49,10 +49,7 @@ const CarouselModal = ({ visiblePost, selectedIndex, closeModal }: CarouselProps
 
       </button>
       <button className="cancel-btn"
-        onClick={() => {
-          closeModal()
-          setTimeout(() => setSlideIndex(0), 300)
-        }}>
+        onClick={closeModal}>
         <img src={iconCancel} />
       </button>
     </>

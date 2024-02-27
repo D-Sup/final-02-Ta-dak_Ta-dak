@@ -47,9 +47,9 @@ const StoryBoard = () => {
     }
 
     setVisiblePost((PrevValue) => [...PrevValue, ...result]);
-    setTimeout(() => {
-      setLoading(false)
-    }, 600)
+    // setTimeout(() => {
+    setLoading(false)
+    // }, 600)
   }
 
   useEffect(() => {

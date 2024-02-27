@@ -29,7 +29,7 @@ const FeedHomePage = () => {
       setVisiblePost((PrevValue) => [...PrevValue, ...data.posts]);
       setTimeout(() => {
         setLoading(false)
-      }, 600)
+      }, 300)
       return data
     }
     else if (location.pathname === '/recommendfeed') {
@@ -37,7 +37,7 @@ const FeedHomePage = () => {
       setVisiblePost((PrevValue) => [...PrevValue, ...data.posts]);
       setTimeout(() => {
         setLoading(false)
-      }, 600)
+      }, 300)
       return data;
     }
     return null

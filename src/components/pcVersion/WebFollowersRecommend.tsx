@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import useUserInfo from 'hooks/useUserInfo';
+import useWindowSize from 'hooks/useWindowSize';
 
 import { getRecFollowingList } from '../../api/followListAPI';
 
@@ -7,13 +8,14 @@ import styled from 'styled-components';
 
 import FollowersProfile from "./../common/FollowersProfile";
 
-const FollowersRecommend = () => {
+const WebFollowersRecommend = () => {
 
   const [myFollowList, setMyFollowList] = useState<Author[]>([])
   const [recFollowList, setRecFollowList] = useState<Author[]>([])
   const [firstMount, setFirstMount] = useState<boolean>(true)
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { currentWidth } = useWindowSize();
   const { accountname: myAccountname, id: myId } = useUserInfo()
 
   const fetchRecFollowList = () => {
@@ -67,7 +69,7 @@ const FollowersRecommend = () => {
       let list = await getRecFollowingList(myAccountname);
       setMyFollowList((prevValue) => [...prevValue, ...list]);
     }
-    fetchMyFollowList();
+    currentWidth > 768 && fetchMyFollowList();
   }, [myAccountname]);
 
 
@@ -100,7 +102,7 @@ const FollowersRecommend = () => {
   );
 }
 
-export default FollowersRecommend
+export default WebFollowersRecommend
 
 
 const RecWrapperStyle = styled.div`
