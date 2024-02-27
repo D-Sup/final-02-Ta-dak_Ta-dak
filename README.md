@@ -125,7 +125,7 @@
 
 ### 다크모드
 ---
-|모바일|
+|📱|
 |---|
 |<img width="243" src="https://github.com/D-Sup/resume/assets/96939334/90da7127-be13-4289-a6bc-501d3e24df05" />|
 
