@@ -21,7 +21,7 @@ const StoryBoard = () => {
   const upDateFeed = async (value: number): Promise<void> => {
     const data = await getPostAll(value)
 
-    const arr: any[] = data.posts.filter(item => item.image !== 'false' && item.image !== '' && item.image !== null && !item.image.includes('data:'))
+    const arr: any[] = data.posts.filter(item => item.image !== 'false' && item.image !== '' && item.image !== null && typeof item.image === 'string' && !item.image.includes('data:'))
 
     let result: any[] = [];
     let map: any = {};
